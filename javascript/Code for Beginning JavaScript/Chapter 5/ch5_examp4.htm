@@ -1,0 +1,23 @@
+<HTML>
+<BODY>
+
+<SCRIPT LANGUAGE="JavaScript">
+
+function linkSomePage_onclick()
+{
+   alert('This link is going nowhere');
+   return false;
+}
+
+</SCRIPT>
+
+<A HREF="somepage.htm" NAME="linkSomePage">
+   Click Me
+</A>
+
+<SCRIPT LANGUAGE=JavaScript>
+   window.document.links[0].onclick = linkSomePage_onclick;
+</SCRIPT>
+
+</BODY>
+</HTML>

@@ -1,0 +1,127 @@
+<HTML>
+<HEAD>
+<SCRIPT LANGUAGE=JavaScript>
+
+function writeOptions(startNumber, endNumber)
+{
+  var optionCounter;
+  for (optionCounter = startNumber; optionCounter <= endNumber; optionCounter++)
+  {
+      document.write('<OPTION value=' + optionCounter + '>' + optionCounter);
+  }
+}
+
+function writeMonthOptions()
+{
+   var theMonth;
+   var monthCounter;
+   var theDate = new Date();
+
+   for (monthCounter = 0; monthCounter < 12; monthCounter++)
+   {
+      theDate.setMonth(monthCounter);
+      theMonth = theDate.toString();
+      theMonth = theMonth.substr(4,3);
+      document.write('<OPTION value=' + theMonth + '>' + theMonth);
+   }
+}
+
+function recalcDateDiff() 
+{
+  var myForm = document.form1;
+
+   var firstDay = myForm.firstDay.options[myForm.firstDay.selectedIndex].value;
+   var secondDay = 
+      myForm.secondDay.options[myForm.secondDay.selectedIndex].value;
+
+   var firstMonth =
+      myForm.firstMonth.options[myForm.firstMonth.selectedIndex].value;
+   var secondMonth =
+      myForm.secondMonth.options[myForm.secondMonth.selectedIndex].value;
+
+   var firstYear =
+      myForm.firstYear.options[myForm.firstYear.selectedIndex].value;
+   var secondYear =
+      myForm.secondYear.options[myForm.secondYear.selectedIndex].value;
+
+   var firstDate = new Date(firstDay + " " + firstMonth + " " + firstYear);
+   var secondDate = new Date(secondDay + " " + secondMonth + " " + secondYear);
+
+   var daysDiff = (secondDate.valueOf() - firstDate.valueOf());
+   daysDiff = Math.floor(Math.abs((((daysDiff  / 1000) / 60) / 60) / 24));
+   myForm.txtDays.value = daysDiff;
+
+   return true;
+}
+
+function window_onload()
+{
+   var theForm = document.form1;
+   var nowDate = new Date();
+
+   theForm.firstDay.options[nowDate.getDate() - 1].selected = true;
+   theForm.secondDay.options[nowDate.getDate() - 1].selected = true;
+
+   theForm.firstMonth.options[nowDate.getMonth()].selected = true;
+   theForm.secondMonth.options[nowDate.getMonth()].selected = true;
+
+   theForm.firstYear.options[nowDate.getFullYear()- 1970].selected = true;
+   theForm.secondYear.options[nowDate.getFullYear() - 1970].selected = true;
+}
+
+</SCRIPT>
+</HEAD>
+<BODY LANGUAGE=JavaScript onload="return window_onload()">
+
+<FORM NAME=form1>
+<P>
+First Date<BR>
+
+<SELECT NAME=firstDay SIZE=1 onchange="return recalcDateDiff()">
+<SCRIPT LANGUAGE=JavaScript>
+   writeOptions(1,31);
+</SCRIPT>
+</SELECT>
+
+<SELECT NAME=firstMonth SIZE=1 onchange="return recalcDateDiff()">
+<SCRIPT LANGUAGE=JavaScript>
+   writeMonthOptions();
+</SCRIPT>
+</SELECT>
+
+<SELECT NAME=firstYear SIZE=1 onchange="return recalcDateDiff()">
+<SCRIPT LANGUAGE=JavaScript>
+   writeOptions(1970,2010);
+</SCRIPT>
+</SELECT>
+</P>
+
+<P>
+Second Date<BR>
+
+<SELECT NAME=secondDay SIZE=1 onchange="return recalcDateDiff()">
+<SCRIPT LANGUAGE=JavaScript>
+   writeOptions(1,31);
+</SCRIPT>
+</SELECT>
+
+<SELECT NAME=secondMonth SIZE=1 onchange="return recalcDateDiff()">
+<SCRIPT LANGUAGE=JavaScript>
+   writeMonthOptions();
+</SCRIPT>
+</SELECT>
+
+<SELECT NAME=secondYear SIZE=1 onchange="return recalcDateDiff()">
+<SCRIPT LANGUAGE=JavaScript>
+   writeOptions(1970,2010);
+</SCRIPT>
+</SELECT>
+</P>
+
+Total difference in days
+<INPUT TYPE="text" NAME=txtDays VALUE=0>
+<BR>
+</FORM>
+
+</BODY>
+</HTML>

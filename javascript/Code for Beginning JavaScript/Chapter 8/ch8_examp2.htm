@@ -1,0 +1,34 @@
+<HTML>
+<BODY>
+<SCRIPT LANGUAGE=JavaScript>
+
+function regExpIs_valid(text)
+{
+   var myRegExp = /[^a-z\d ]/i;
+   return !(myRegExp.test(text));
+}
+
+function butCheckValid_onclick()
+{
+   if (regExpIs_valid(document.form1.txtPhrase.value) == true)
+   {
+      alert("Your passphrase contains valid characters");
+   }
+   else
+   {
+      alert("Your passphrase contains invalid characters");
+   }
+}
+
+</SCRIPT>
+<FORM NAME=form1>
+Enter your passphrase:
+<BR>
+<INPUT TYPE="text" NAME=txtPhrase>
+<BR>
+<INPUT TYPE="button" VALUE="Check Character Validity" NAME=butCheckValid
+   onclick="butCheckValid_onclick()">
+</FORM>
+</BODY>
+</HTML>
+

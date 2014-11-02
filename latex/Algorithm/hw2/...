@@ -1,0 +1,31 @@
+\documentclass[11pt]{article}
+
+%============引用宏包 和 自定义命令========================%
+\usepackage{CJK}
+\usepackage{graphicx}
+\usepackage{latexsym,bm}
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+%============ 重定义字体、字号命令 =======================%
+\newcommand{\hei}{\CJKfamily{hei}}
+
+\begin{document}
+\begin{CJK}{UTF8}{gkai}
+%------------------------文章标题---------------------------------------------------------
+\rhead{\tt L.J.SHOU I.C.T.}  %页眉
+\title{ \textbf{Assignment 2 of Algorithm Design and Analysis}}
+\author{L.J.SHOU  寿林钧\\{\slshape No}. \bf 201228013229133}
+\date{Oct.22 2012}
+\maketitle % 生成题头
+\section{Divide and Conquer(2)}
+
+
+
+\newpage \section{Counting Inversions}
+\newpage
+\end{CJK}
+\end{document}
+

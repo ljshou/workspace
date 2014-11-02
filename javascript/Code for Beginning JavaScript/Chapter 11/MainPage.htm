@@ -1,0 +1,82 @@
+<HTML>
+<HEAD>
+<SCRIPT LANGUAGE=JavaScript>
+
+var lastUpdated = new Date("Tue, 28 Dec 2010");
+
+function getCookieValue(cookieName)
+{
+   var cookieValue = document.cookie;
+   var cookieStartsAt = cookieValue.indexOf(" " + cookieName + "=");
+
+   if (cookieStartsAt == -1)
+   {
+      cookieStartsAt = cookieValue.indexOf(cookieName + "=");
+   }
+
+   if (cookieStartsAt == -1)
+   {
+      cookieValue = null;
+   }
+   else
+   {
+      cookieStartsAt = cookieValue.indexOf("=", cookieStartsAt) + 1;
+      var cookieEndsAt = cookieValue.indexOf(";", cookieStartsAt);
+      if (cookieEndsAt == -1)
+      {
+         cookieEndsAt = cookieValue.length;
+      }
+      cookieValue = unescape(cookieValue.substring(cookieStartsAt,
+         cookieEndsAt));
+   }
+
+   return cookieValue;
+}
+
+function setCookie(cookieName, cookieValue, cookiePath, cookieExpires)
+{
+   cookieValue = escape(cookieValue);
+
+   if (cookieExpires == "")
+   {
+      var nowDate = new Date();
+      nowDate.setMonth(nowDate.getMonth() + 6);
+      cookieExpires = nowDate.toGMTString();
+   }
+
+   if (cookiePath != "")
+   {
+      cookiePath = ";Path=" + cookiePath;
+   }
+
+   document.cookie = cookieName + "=" + cookieValue + 
+      ";expires=" + cookieExpires + cookiePath;
+}
+
+</SCRIPT>
+</HEAD>
+
+<BODY>
+<H2 ALIGN=center>Welcome to my website</H2>
+<BR><BR>
+<CENTER>
+<SCRIPT>
+
+var lastVisit = getCookieValue("LastVisit");
+if (lastVisit != null)
+{
+   lastVisit = new Date(lastVisit);
+   if (lastVisit < lastUpdated)
+   {
+      document.write("<A HREF=\"WhatsNew.htm\">");
+      document.write("<IMG SRC=\"WhatsNew.gif\" BORDER=0></A>");
+   }
+}
+
+var nowDate = new Date();
+setCookie("LastVisit", nowDate.toGMTString(),"","")
+
+</SCRIPT>
+</CENTER>
+</BODY>
+</HTML>

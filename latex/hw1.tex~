@@ -1,0 +1,25 @@
+\documentclass[dvips,11pt]{article}
+\usepackage{CJK}
+\usepackage{graphicx}
+\begin{document}
+\begin{CJK}{UTF8}{gkai}
+
+\title{Assignment 1 of Algorithm Design and Analysis}
+\author{L.J.SHOU 寿林钧 201228013229133}
+\date{Oct.17 2012}
+\maketitle
+
+\section{Stable Matching}
+\subsection{Gale-Shapley altorithm}
+Based on my implementation(details in the amendment), the statement is false.\\ 
+
+If men propose to women, we can get a stable matching as shown in figure1.\\
+
+On the contrary, if women propose to men, another stable matching is obtained as shown in figure2.\\
+
+
+\section{Complexity Analysis}
+
+
+\end{CJK} \end{document}
+

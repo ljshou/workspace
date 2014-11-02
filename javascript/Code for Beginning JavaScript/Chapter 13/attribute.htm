@@ -1,0 +1,25 @@
+<HTML>
+<HEAD
+</HEAD>
+<BODY>
+<SCRIPT LANGUAGE=JavaScript>
+var newText;
+var newElem;
+
+newText = document.createTextNode("My Heading")
+newElem = document.createElement("H1")
+newElem.setAttribute("align","center")
+newElem.appendChild(newText)
+document.body.appendChild(newElem)
+
+newText = document.createTextNode("This is some text in a paragraph")
+newElem = document.createElement("P")
+alert(newElem.getAttribute("align"))
+newElem.setAttribute("align","right")
+alert(newElem.getAttribute("align"))
+newElem.appendChild(newText)
+document.body.appendChild(newElem)
+
+</SCRIPT>
+</BODY>
+</HTML>

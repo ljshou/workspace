@@ -1,0 +1,90 @@
+// 模仿别人的写的
+#include<stdio.h>
+#include<math.h>
+#include<stdlib.h>
+struct node
+{
+  int x,y;
+};
+int stack[101];
+int top;
+struct node point[101]; 
+void swap(struct node point[],int x,int y) //交换两点
+{
+  struct node temp;
+  temp=point[x];
+  point[x]=point[y];
+  point[y]=temp;
+}
+
+double distance(struct node p1,struct node p2) //两点间的距离
+{
+  return sqrt(double((p1.x-p2.x)*(p1.x-p2.x)+(p1.y-p2.y)*(p1.y-p2.y)));
+}
+
+double multi(struct node p1,struct node p2,struct node p0) //叉乘
+{
+  return (p1.x-p0.x)*(p2.y-p0.y)-(p2.x-p0.x)*(p1.y-p0.y);
+}
+
+int cmp(const void *a,const void *b) 
+{
+  struct node *c=(struct node*)a;
+  struct node *d=(struct node*)b;
+  double k=multi(*c,*d,point[0]);
+  if(k<=0)return 1; // k<=0 说名c在d的逆时针方向,相对于point[0]，c的极角比d的大
+  return -1; //如果 k>0 时返回1那么就会按 (p1.x-p0.x)*(p2.y-p0.y)从小到大排序，那么也
+}        //就是按极角从大到小排序 ，应该要按极角从小到大排序，所以返回-1 
+void merge(int n)
+{
+  int u=0;
+  int i;
+  for(i=0;i<n;i++)
+    if((point[i].y < point[u].y) || (point[i].y == point[u].y && point[i].x < point[u].x))
+      u=i;
+  swap(point,0,u);
+  qsort(point+1,n-1,sizeof(point[0]),cmp);
+  for(i=0;i<=2;i++)
+    stack[i]=i;
+  top=2;
+  for(i=3;i<n;i++)
+  {
+    while(multi(point[stack[top]],point[i],point[stack[top-1]])<=0)
+      top--;
+    //	top++;
+    stack[++top]=i;
+  }
+}
+double length(int n)
+{
+  double sumlen=0;
+  int i;
+  for(i=0;i<=n-1;i++)
+    sumlen+=distance(point[stack[i]],point[stack[i+1]]);
+  sumlen+=distance(point[0],point[stack[n]]);
+  return sumlen;
+}
+
+
+int main()
+{
+  int i,n;
+  while(scanf("%d",&n),n)
+  {
+    for(i=0;i<n;i++)
+      scanf("%d%d",&point[i].x,&point[i].y);
+    if(n<2)
+    {
+      printf("0.00/n");
+      continue;
+    }
+    if(n==2)
+    {
+      printf("%.2lf/n",distance(point[0],point[1]));
+      continue;
+    }
+    merge(n);
+    printf("%.2lf\n",length(top));
+  }
+  return 0;
+}

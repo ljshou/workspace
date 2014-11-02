@@ -1,0 +1,92 @@
+<HTML>
+<HEAD>
+<TITLE>Wrox Online Trivia Quiz</TITLE>
+
+<SCRIPT LANGUAGE=JavaScript>
+
+function answerCorrect(questionNumber, answer)
+{
+   // declare a variable to hold return value
+   var correct = false;
+   
+   // if answer provided is same as correct answer then correct variable is true
+   if (answer == answers[questionNumber])
+      correct = true;
+   
+   // return whether the answer was correct (true or false)
+   return correct;
+}
+
+</SCRIPT>
+</HEAD>
+
+<BODY>
+<SCRIPT LANGUAGE=JavaScript>
+
+// Questions variable will holds questions
+var questions = new Array();
+var answers = new Array();
+
+// define question 1 
+questions[0] = new Array();
+
+// the question
+questions[0][0] = "The Beatles were";
+
+// first choice
+questions[0][1] = "A sixties rock group from Liverpool";
+
+// second choice
+questions[0][2] = "Four musically gifted insects";
+
+// third choice
+questions[0][3] = "I don't know - can I have the questions on Baseball please";
+
+// assign answer for question 1 
+answers[0] = "A";
+
+// define question 2
+questions[1] = new Array();
+questions[1][0] = "Homer Simpson's favorite food is";
+questions[1][1] = "Fresh salad";
+questions[1][2] = "Doughnuts";
+questions[1][3] = "Bread and water";
+questions[1][4] = "Apples";
+
+// assign answer for question 2
+answers[1] = "B";
+
+// define question 3
+questions[2] = new Array();
+questions[2][0] = "Lisa Simpson plays which musical instrument";
+questions[2][1] = "Clarinet";
+questions[2][2] = "Oboe";
+questions[2][3] = "Saxophone";
+questions[2][4] = "Tubular Bells"; 
+
+// assign answer for question 3 
+answers[2] = "C";
+
+var possibleAnswers = new Array("A","B","C","D","E");
+var questionNumber;
+var arrayIndex;
+
+for (questionNumber = 0; questionNumber < answers.length; questionNumber++)
+{
+   for (arrayIndex = 0; arrayIndex < 5; arrayIndex++)
+   {
+      
+      if (answerCorrect(questionNumber,possibleAnswers[arrayIndex]))
+      {
+         alert("The Answer to Question " + questionNumber + " is " + 
+               possibleAnswers[arrayIndex]);
+         break;
+      }
+   }
+}
+
+
+</SCRIPT>
+
+</BODY>
+</HTML>

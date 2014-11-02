@@ -1,0 +1,91 @@
+<HTML>
+<HEAD>
+
+<SCRIPT LANGUAGE=JavaScript>
+
+var radCpuSpeedIndex = 0;
+
+function radCPUSpeed_onclick(radIndex)
+{
+   var returnValue = true;
+
+   if (radIndex == 1)
+   {
+      returnValue = false;
+      alert("Sorry that processor speed is currently unavailable");
+      document.form1.radCPUSpeed[radCpuSpeedIndex].checked = true;
+   }
+   else
+   {
+      radCpuSpeedIndex = radIndex;
+   }
+   return returnValue;
+}
+
+function butCheck_onclick()
+{
+   var controlIndex;
+   var element;
+   var numberOfControls = document.form1.length;
+   var compSpec = "Your chosen processor speed is ";
+   compSpec = compSpec + document.form1.radCPUSpeed[radCpuSpeedIndex].value;
+   compSpec = compSpec + "\nWith the following addtional components\n";
+   for (controlIndex = 0; controlIndex < numberOfControls; controlIndex++)
+   {
+      element = document.form1[controlIndex];
+      if (element.type == "checkbox")
+      {
+         if (element.checked == true)
+         {
+            compSpec = compSpec + element.value + "\n";
+         }
+      }
+   }
+   alert(compSpec);
+}
+
+</SCRIPT>
+</HEAD>
+<BODY>
+
+<FORM NAME=form1>
+<P>
+Tick all of the components you want included on your computer
+<BR><BR>
+<TABLE>
+<TR>
+   <TD>DVD-ROM</TD>
+   <TD><INPUT TYPE="checkbox" NAME=chkDVD VALUE="DVD-ROM"></TD>
+</TR>
+<TR>
+   <TD>CD-ROM</TD>
+   <TD><INPUT TYPE="checkbox" NAME=chkCD VALUE="CD-ROM"></TD>
+</TR>
+<TR>
+   <TD>Zip Drive</TD>
+   <TD><INPUT TYPE="checkbox" NAME=chkZip VALUE="ZIP Drive"></TD>
+</TR>
+</TABLE>
+<P>
+Select the processor speed you require
+<TABLE>
+<TR>
+   <TD><INPUT TYPE="radio" NAME=radCPUSpeed CHECKED 
+      onclick="return radCPUSpeed_onclick(0)" VALUE="800 MHz"></TD>
+   <TD>800 MHz</TD>
+   <TD><INPUT TYPE="radio" NAME=radCPUSpeed 
+      onclick="return radCPUSpeed_onclick(1)" VALUE="1 GHz"></TD>
+   <TD>1 GHz</TD>
+   <TD><INPUT TYPE="radio" NAME=radCPUSpeed 
+      onclick="return radCPUSpeed_onclick(2)" VALUE="1.5 GHz"></TD>
+   <TD>1.5 GHz</TD>
+</TR>
+</TABLE>
+</P>
+<INPUT TYPE="button" VALUE="Check Form" NAME=butCheck 
+   onclick="return butCheck_onclick()">
+
+</FORM>
+
+</BODY>
+</HTML>

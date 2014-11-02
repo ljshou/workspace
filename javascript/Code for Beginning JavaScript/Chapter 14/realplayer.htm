@@ -1,0 +1,86 @@
+<HTML>
+<HEAD>
+<OBJECT CLASSID="clsid:CFCDAA03-8BE4-11CF-B84B-0020AFBBCCFA" ID="real1">
+   <PARAM NAME="HEIGHT" VALUE="0">
+   <PARAM NAME="WIDTH" VALUE="0">
+   <EMBED NAME="real1" 
+      ID="real1"
+      BORDER="0" 
+      CONTROLS="play"
+      HEIGHT=0 
+      WIDTH=0 
+      TYPE="audio/x-pn-realaudio-plugin">
+</OBJECT>
+<SCRIPT LANGUAGE=JavaScript>
+
+
+var fileName = "";
+
+function butPlay_onclick() 
+{
+   document.real1.SetSource("file://" + fileName);
+   document.real1.DoPlay();
+}
+
+function butStop_onclick() 
+{
+   document.real1.DoStop();
+}
+
+function file1_onblur() 
+{
+   fileName = document.form1.file1.value;
+}
+
+
+
+function window_onload() 
+{
+   var plugInInstalled = false;
+
+   if (navigator.appName.indexOf("Microsoft") == -1)
+   {
+      var plugInCounter;
+
+      for (plugInCounter = 0; plugInCounter < navigator.plugins.length; 
+         plugInCounter++)
+      {
+         if (navigator.plugins[plugInCounter].name.indexOf("RealPlayer") >= 0)
+         {
+            plugInInstalled = true;
+            break;
+         }
+      }
+   }
+   else
+   {
+      if (real1.readyState == 4)
+      {
+         plugInInstalled = true;
+      }
+   }
+
+   if (plugInInstalled == false)   {
+      window.location.replace("NoRealPlayerPage.htm");
+   }
+}
+
+</SCRIPT>
+
+</HEAD>
+
+<BODY onload="return window_onload()">
+<NOEMBED>
+   <H2>This Page requires a browser supporting Plug-ins or ActiveX controls</H2>
+</NOEMBED>
+<FORM ID=form1 NAME=form1>
+<INPUT TYPE="button" VALUE="Play Sound" ID=butPlay NAME=butPlay
+   LANGUAGE=JavaScript onclick="return butPlay_onclick()">
+<INPUT TYPE="button" VALUE="Stop Sound" ID=butStop NAME=butStop
+   LANGUAGE=JavaScript onclick="return butStop_onclick()">
+<INPUT TYPE="file" ID=file1 NAME=file1 
+   LANGUAGE=JavaScript onblur="return file1_onblur()">
+</FORM>
+
+</BODY>
+</HTML>

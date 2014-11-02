@@ -1,0 +1,178 @@
+<HTML>
+<HEAD>
+<SCRIPT LANGUAGE=JavaScript>
+
+ // questions and answers variables will holds questions and answers
+var questions = new Array();
+var answers = new Array(); 
+var questionsAsked;
+var numberOfQuestionsAsked = 0;
+var numberOfQuestionsCorrect = 0;
+var currentQNumber = -1;
+
+// define question 1 
+questions[0] = new Array();
+questions[0][0] = "The Beatles were";
+questions[0][1] = "A sixties rock group from Liverpool";
+questions[0][2] = "Four musically gifted insects";
+questions[0][3] = "I don't know - can I have the questions on Baseball please";
+
+// assign answer for question 1
+answers[0] = "A";
+
+// define question 2
+questions[1] = new Array();
+questions[1][0] = "Homer Simpson's favorite food is";
+questions[1][1] = "Fresh salad";
+questions[1][2] = "Doughnuts";
+questions[1][3] = "Bread and water";
+questions[1][4] = "Apples";
+
+// assign answer for question 2
+answers[1] = "B";
+
+// define question 3
+questions[2] = new Array();
+questions[2][0] = "Lisa Simpson plays which musical instrument";
+questions[2][1] = "Clarinet";
+questions[2][2] = "Oboe";
+questions[2][3] = "Saxophone";
+questions[2][4] = "Tubular Bells"; 
+
+// assign answer for question 3 
+answers[2] = "C";
+
+// define question 4
+questions[3] = "In the Simpsons, Bleeding Gums Murphy played which instrument?" 
+// assign answer for question 4
+answers[3] = "\\bsax(ophone)?\\b";
+
+// define question 5
+questions[4] = "Which American President was involved in the Watergate Scandal?" 
+// assign answer for question 5
+answers[4] = "\\b((Richard |R\\.? ?)(Milhous |M\\.? )?)?Nixon\\b";
+
+
+
+
+function resetQuiz()
+{
+   var indexCounter;
+   currentQNumber = -1;
+   questionsAsked = new Array();
+
+   for (indexCounter = 0; indexCounter < questions.length;indexCounter++)
+   {
+      questionsAsked[indexCounter] = false;
+   }
+
+   numberOfQuestionsAsked = 0;
+   numberOfQuestionsCorrect = 0;
+}
+
+function answerCorrect(questionNumber, answer)
+{
+   // declare a variable to hold return value
+   var correct = false;
+
+   // if answer provided is same as answer then correct answer is true
+   var answerRegExp = new RegExp(answers[questionNumber],"i");
+   if (answer.search(answerRegExp) != -1)
+   {
+      numberOfQuestionsCorrect++;
+      correct = true;
+   }
+
+   // return whether the answer was correct (true or false)
+   return correct;
+}
+
+function getQuestion()
+{
+   if (questions.length != numberOfQuestionsAsked)
+   {
+      var questionNumber = Math.floor(Math.random() * questions.length);
+
+      while (questionsAsked[questionNumber] == true)
+      {
+         questionNumber = Math.floor(Math.random() * questions.length);
+      }
+
+      var questionLength = questions[questionNumber].length;
+      var questionChoice;
+
+      numberOfQuestionsAsked++;
+
+      var questionHTML = "<H4>Question " + numberOfQuestionsAsked +  "</H4>";
+
+      // Check if array or string
+      if (typeof questions[questionNumber] == "string")
+      {
+         questionHTML = questionHTML + "<P>" + questions[questionNumber] + "</P>";
+         questionHTML = questionHTML + "<P><INPUT type=text name=txtAnswer ";
+         questionHTML = questionHTML + " maxlength=100 size=35></P>"
+      }
+      else
+      {
+      questionHTML = questionHTML + "<P>" + questions[questionNumber][0];
+      questionHTML = questionHTML + "</P>";
+      for (questionChoice = 1;questionChoice < questionLength;questionChoice++)
+      {
+         questionHTML = questionHTML + "<INPUT type=radio ";
+         questionHTML = questionHTML + "name=radQuestionChoice";
+         if (questionChoice == 1)
+         {
+            questionHTML = questionHTML + " checked";
+         }
+         questionHTML = questionHTML + ">" +
+            questions[questionNumber][questionChoice];
+         questionHTML = questionHTML + "<BR>"
+      }
+      }
+
+      questionHTML = questionHTML + "<BR><INPUT type='button' "
+      questionHTML = questionHTML + " value='Answer Question'";
+      questionHTML = questionHTML + "name=buttonNextQ "; 
+      questionHTML = questionHTML + "onclick='return buttonCheckQ_onclick()'>";
+
+      currentQNumber = questionNumber;
+      questionsAsked[questionNumber] = true;
+   }
+   else
+   {
+      questionHTML = "<H3>Quiz Complete</H3>";
+      questionHTML = questionHTML + "You got " + numberOfQuestionsCorrect;
+      questionHTML = questionHTML + " questions correct out of "  
+      questionHTML = questionHTML + numberOfQuestionsAsked;
+      questionHTML = questionHTML + "<BR><BR>Your trivia rating is "
+
+      switch(Math.round(((numberOfQuestionsCorrect / numberOfQuestionsAsked) * 10)))
+      {
+         case 0:
+         case 1:
+         case 2:
+         case 3:
+            questionHTML = questionHTML + "Beyond embarrasing";
+            break;
+         case 4:
+         case 5:
+         case 6:
+         case 7:
+            questionHTML = questionHTML + "Average";
+            break;
+         default:
+            questionHTML = questionHTML + "Excellent"
+      }
+
+      questionHTML = questionHTML + "<BR><BR><A "
+      questionHTML = questionHTML + "href='quizpage.htm'><STRONG>"
+      questionHTML = questionHTML + "Start again</STRONG></A>"
+   }
+
+   return questionHTML;
+}
+
+</SCRIPT>
+</HEAD>
+</HTML>
+

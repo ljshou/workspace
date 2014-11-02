@@ -1,0 +1,287 @@
+\documentclass[12pt,hyperref={CJKbookmarks=true},compress]{beamer}
+\usepackage[space,noindent]{ctex}
+\usepackage{amsmath}
+\usefonttheme{serif}
+\usetheme{Warsaw}
+\begin{document}
+  \title[LBM小结]{格子Boltzmann方法学习小结}
+  \author{王政道}
+  \begin{frame}
+    \titlepage
+  \end{frame}
+  \section{来源}
+  \subsection{气体动理论}
+  \begin{frame}
+    气体动理论(gas kinetic theory)\\
+    密度分布函数$f$是空间${\bf x}$，时间$t$，速度空间$\xi$的函数\\
+    \pause
+    其于某时刻，某位置的密度即为:
+    \pause
+    $$n=\int f({\bf x},{\boldsymbol \xi},t){\mathrm d}{\boldsymbol \xi}$$
+  \end{frame}
+  \begin{frame}
+    宏观统计平均量定义即为:$$<\psi>=\frac{1}{n}\int f\psi{\mathrm d}{\boldsymbol \xi}$$\pause
+    宏观速度定义$u$为:\pause
+    $${\bf u}=\frac{1}{n}\int {\boldsymbol \xi}f{\mathrm d}{\boldsymbol \xi}$$\pause
+    宏观总能$E$定义为:$$E=\frac{1}{n}\int \frac{\xi^2}{2}f{\mathrm d}{\boldsymbol \xi}$$
+  \end{frame}
+  \begin{frame}
+    宏观通量的定义:$$nF_{\psi}=n<{\bf C}\psi>$$\pause
+    动量通量:$$\hyperlink{pom}{\bf P}=m\int {\bf CC}f{\mathrm d}{\boldsymbol \xi}$$\pause
+    热通量:$$\hyperlink{qom}{\bf Q}=m\int {\bf C}\frac{C^2}{2}f{\mathrm d}{\boldsymbol \xi}$$
+    \label{mom}
+  \end{frame}
+  \subsection{Boltzmann方程}
+  \begin{frame}
+    若作无碰撞的迁移，有:
+    $$\dfrac{\partial f}{\partial t}+{\boldsymbol \xi}\cdot\dfrac{\partial f}{\partial{\bf x}}+{\bf a}\cdot\dfrac{\partial f}{\partial {\boldsymbol \xi}}=0$$
+  \end{frame}
+  \begin{frame}
+    考虑碰撞项可得Boltzmann方程:
+    $$\frac{\partial{f}}{\partial{t}}+{\boldsymbol \xi} \cdot\frac{\partial{f}}{\partial{\bf x}}+{\bf a \cdot}\frac{\partial{f}}{\partial{\boldsymbol \xi}}=\Omega$$
+    其中$\Omega$是碰撞项。\\
+    \pause 采用两体碰撞模型，可得碰撞项为:$$\Omega=\int [f'f'_{1}-ff_{1}]B(\theta,|{\bf V}|){\mathrm d}{\Theta}{\mathrm d}{\boldsymbol \xi_{1}}$$
+  \end{frame}
+  \section{连续型的分析}
+  \subsection{Maxwell分布}
+  \begin{frame}
+    给出H定理，即:\\\pause
+    若定义:$$H(t)=\overline{\ln{f}}=\frac{1}{n}\int f\ln{f}{\mathrm d}{\boldsymbol \xi}$$\pause
+    则可导出$$\dfrac{\partial H}{\partial t}\leqslant0$$\pause
+    当且仅当平衡态是取到等号。
+  \end{frame}
+  \begin{frame}
+    由H定理可知，平衡态时满足:$$f'f'_{1}=ff_{1}$$亦即:$\ln{f}+\ln{f_{1}}$不变，为碰撞不变量。\pause\\
+    对于碰撞不变量，可以用$1,{\boldsymbol \xi},\xi^2$线性表示出来，即:$$\ln{f}=A\xi^2+{\bf B}\cdot{\boldsymbol \xi}+C$$\pause
+    通过对待定系数的求解可以得到Maxwell平衡态分布函数:$$f^{(eq)}=\dfrac{n}{(2\pi RT)^{3/2}}exp\left[-\dfrac{(\xi-{\bf\it u})^2}{2RT}\right]$$
+  \end{frame}
+  \begin{frame}
+    过于复杂的碰撞算子采取BGK(Bhatngar-Gross-Krook)近似:
+    $$\Omega=-\frac{1}{\tau_{c}}\left[f-f^{(eq)}\right]$$
+    \pause
+    关于其推广的使用了各向异性的Gauss分布的椭圆统计模型(Ellipsoidal Statistical,ES)\pause{\color{red}没看懂-\_-\#}
+  \end{frame}
+  \subsection{Maxwell输运方程}
+  \begin{frame}
+    对Boltzmann方程两边同乘关联量$\phi$然后对速度空间积分，即:
+    $$\int \phi\left(\partial_{t}f+{\boldsymbol \xi}\cdot\partial_{\bf r}f+{\bf a}\cdot\partial_{\boldsymbol \xi}f\right){\mathrm d}{\boldsymbol \xi}=\int \phi \Omega(ff_{1}){\mathrm d}{\boldsymbol \xi}$$\pause
+    经过简单的运算，可以得到:$$\frac{\partial(n\overline{\phi})}{\partial t}+\frac{\partial}{\partial{\bf r}}\cdot(n\overline{\phi {\boldsymbol \xi}})-n{\bf a}\cdot\dfrac{\overline{\partial \phi}}{\partial{\boldsymbol \xi}}=0$$
+  \end{frame}
+  \begin{frame}
+    以$\phi=m$代入上述输运方程可得连续性方程:$$\frac{\partial\rho}{\partial t}+\nabla\cdot(\rho{\bf u})=0$$\pause
+    以$\phi=m{\boldsymbol \xi}$代入可得动量方程:$$\frac{\partial(\rho{\bf u})}{\partial t}+\nabla\cdot(\rho{\bf u}{\bf u})=\nabla\cdot{\boldsymbol \sigma}+\rho{\bf a}$$\pause
+    其中${\boldsymbol \sigma}=-\hyperlink{mom}{\bf P}$为动量通量.
+    \label{pom}
+  \end{frame}
+  \begin{frame}
+    以$\phi=\frac{1}{2}m\xi^2$代入上述输运方程可得能量方程:\pause
+    \begin{displaymath}\begin{split}
+    \frac{\partial}{\partial t}\left(\rho\varepsilon+\frac{1}{2}\rho u^2\right)&+\nabla\cdot\left[\left(\rho\varepsilon+\frac{1}{2}\rho u^2\right){\bf u}\right]=\\[3mm]&-\nabla\cdot{\bf q}+\nabla\cdot({\boldsymbol \sigma}\cdot{\bf u}+\rho{\bf\cdot a})
+    \end{split}\end{displaymath}
+    其中${\bf q}=\hyperlink{mom}{\bf Q}$为热通量.
+    \label{qom}
+  \end{frame}
+  \subsection{Chapman-Enskog分析}
+  \begin{frame}
+    对连续的Boltzmann方程进行渐近分析:\\\pause
+    引入与Kn数同阶的小参量$\epsilon$.\\
+    将时间空间导数算子作如下拆解:\pause
+    $$\partial_{x}=\epsilon\partial_{x_{1}}$$
+    $$\partial_{t}=\epsilon\partial_{t_{1}}+\epsilon^2\partial_{t_{2}}$$
+  \end{frame}
+  \begin{frame}
+    \label{expand}
+    对$f$作如下拆解:\pause
+    $$f({\bf x},{\boldsymbol \xi},t;\epsilon)=\sum^{\infty}_{i=0}\epsilon^i f^{(n)}$$
+    所以，我们可以得到前两阶解\hyperlink{expandpic}{如下}:\pause
+    $$\Omega(f^{(0)})=0$$
+    $$\frac{\partial_{0}}{\partial t}f^{(0)}+{\boldsymbol \xi}\cdot\nabla f^{(0)}+{\bf a}\cdot\nabla_{\xi}f^{(0)}=-\frac{1}{\tau_c}f^{(1)}$$
+  \end{frame}
+  \begin{frame}
+    \label{interg}
+    对上述方程求解结果代入$P,Q$定义式进行\hyperlink{intergpic}{积分}\pause \\得到$P,Q$的表达式:
+    $$P^{(0)}_{ij}=\rho R T\delta_{ij}=p\delta{ij}$$\pause
+    $$Q^{(0)}_{i}=0$$\pause
+    {\color{red}高阶解中的f不知道如何表示，高阶解不会恢复。。。比如，$f^{(1)}$可以用$f^{(0)}$表示没错，但这个关于$f^{(0)}$的表达式有对$f^{(0)}$关于时间$t$和空间${\bf x}$的求导。而等于$f^{(eq)}$的$f^{(0)}$不含显含时间、空间变量。}
+  \end{frame}
+
+  \section{离散的分析}
+  \subsection{基本方程}
+  \begin{frame}
+    对Boltzmann方程进行离散有:
+    $$f_{i}({\bf x}+{\bf c}_{i}\delta_{t},t+\delta_{t})-f_{i}({\bf x},t)=-\frac{1}{\tau}\left[f_{i}({\bf x},t)-f^{(eq)}_{i}({\bf x},t)\right]$$
+    从这里开始，为方便，将方程乘以分子质量m。所以某时刻、某位置的各方向f之和表示该时刻，该点的密度。
+  \end{frame}
+  \subsection{LBGK}
+  \begin{frame}
+    将连续分布中的$f^{(eq)}$进行离散，并取2阶精度可得到如下方程:
+    $$f^{(eq)}=\omega_{i}\rho\left[1+\frac{\bf c_i\cdot u}{c_s^2}+\frac{({\bf c_i\cdot u})^2}{2c_s^4}-\frac{u^2}{2c_s^2}\right]$$
+    为确定方程中的未知参量$\omega_i$和未知参量$c_s$由回复的宏观矩方程组确定。\\\pause
+    矩方程组:
+    $$\sum f_i=\rho$$
+    $$\sum f_i{\bf c}_i=\rho{\bf u}$$
+    $$\sum f_i{\bf c}_i{\bf c}_i=\rho{\bf u}{\bf u}+p{\bf I}$$
+    $$\sum f_i{\bf c}_{i\alpha}{\bf c}_{i\beta}{\bf c}_{i\gamma}=c_s^2\rho[u\delta]_{\alpha\beta\gamma}$$
+  \end{frame}
+  \begin{frame}[label=d1q3]
+    对于D1Q3模型，${\bf c_i}=c[0,1,-1]$。其中$c=\frac{\Delta x}{\Delta t}$。
+    \hyperlink{d1q3pic}{求解}得:\pause
+    $$c_s=\frac{c}{\sqrt{3}}$$
+    $$\omega_i=
+    \begin{cases}
+    2/3,~~c_i^2=0\\
+    1/6,~~c_i^2=c^2
+    \end{cases}$$\pause
+    同理，其它单松弛的DdQn模型的各参数也可通过上述方式获得。
+  \end{frame}
+  \subsection{宏观方程恢复}
+  \begin{frame}
+    \frametitle{Chapman-Enskog分析}
+    首先将方程展开:
+    $$\delta_t D_{\alpha}f_{\alpha}+\frac{\delta_t}{2}D^2_{\alpha}f_{\alpha}=-\frac{1}{\tau_c}(f_{\alpha}-f^{(eq)}_{\alpha})$$
+    利用Kn数($\lambda/L$分子自由程同特征尺度之比，看到过有文献说在$10^{(-4)}$\~{}$10^{(-1)}$之间)引入小参量$\epsilon=Kn$有: $$\partial_t=\epsilon\partial_{t_0}+\epsilon^2\partial_{t_1}$$
+    $$\partial_x=\epsilon\partial_{x_0}$$\pause
+    {\color{red}对书上表述的物理意义不理解。}
+  \end{frame}
+  \begin{frame}
+    这样利用Chapman-Enskog分析可得$\epsilon$各阶项，其前3阶为:
+    \begin{flalign}
+      \epsilon^0&:f_i^{(0)}=f_i^{(eq)}\\
+      \epsilon^1&:D_{0i}f_i^{(0)}=-\frac{1}{\tau_c}f_i^{(1)}\\
+      \epsilon^2&:\partial_{t_1}f_i^{(0)}+\left(1-\frac{1}{2\tau}\right)D_{0i}f_i^{(1)}=-\frac{1}{\tau_c}f_i^{(2)}
+    \end{flalign}\pause
+    其中，我们会用到关系式$\tau=\tau_c\delta_t$\\\pause
+    {\color{red}(当然由于对上述物理意义不明确，无法排除这个想法，觉得可能$\tau=\tau_c\frac{\delta_x}{\delta_t}=\tau_c{bf c}$是与格子声速联系的，而且后面的多松弛模型中也有提及类似作用的变换矩阵M是与格子速度$c=\delta_x/\delta_t$相关的。)}
+  \end{frame}
+  \begin{frame}
+    对$(2)$式求0阶、1阶速度矩分别有:
+    $$\partial_{t_0}\rho+\nabla_0\cdot(\rho{\bf u})=0$$
+    $$\partial_{t_0}(\rho{\bf u})+\nabla_0\cdot(\rho{\bf u}{\bf u})=-\partial_{\alpha0}p$$\pause
+    此即Euler方程。
+  \end{frame}
+  \begin{frame}
+    对$(3)$式求0阶、1阶速度矩分别有:
+    $$\partial_{t_1}\rho=0$$
+    $$\partial_{t_1}+\nabla_0\cdot\pi^{(1)}=0$$
+    其中
+    \begin{equation*}
+    \pi^{(1)}=\left(1-\frac{1}{2\tau}\right)\sum_{i}{\bf c}_i{\bf c}_if_i^{(1)}
+    \end{equation*}
+  \end{frame}
+  \begin{frame}
+    考虑$-\frac{1}{\tau_c}\sum_{i}{\bf c}_i{\bf c}_if_i^{(1)}$有利用$(2)$式其化简结果为:
+    $$-\frac{1}{\tau_c}\sum_{i}{\bf c}_i{\bf c}_if_i^{(1)}=c_s^2\rho[\nabla{\bf u}+(\nabla{\bf u})^T]-\nabla({\bf u}{\bf u}{\bf u})$$\pause
+    作不可压缩化简，在该假定下与不可压N-S方程对比，可得:$$\nu=c_s^2\left(\tau-\frac{1}{2}\right)\delta_t$$\pause
+    将0阶，1阶解叠加，即可得到对应的流体力学连续方程和动量方程。
+  \end{frame}
+  \subsection{MRT}
+  \begin{frame}
+    \frametitle{多松弛模型}
+    {\color{red}因从这里开始并没有仔细推导书上的公式，仅是大致了解其作用。故其后仅介绍自己对其作用的理解。}\\
+    多松弛模型一方面可以解决非标准格子的问题，更重要的是多松弛模型恢复的宏观方程含更多的可调参数，可以得到剪切粘性、体粘性参数，另外的一些与宏观方程无关的松弛参数可用来优化运算。
+  \end{frame}
+  \begin{frame}
+  \frametitle{基本模型}
+    引入张量形式松弛因子$\Lambda_{ij}$(称为:碰撞矩阵)有:\pause
+    $$f_{i}({\bf x}+{\bf c}_{i}\delta_{t},t+\delta_{t})-f_{i}({\bf x},t)=-\Lambda_{ij}\left[f_{j}({\bf x},t)-f^{(eq)}_{j}({\bf x},t)\right]$$\pause
+    对方程作用变换矩阵得:$${\bf m}'={\bf m}-{\bf S}\left[{\bf m}-{\bf m}^{(eq)}\right]$$
+    其中${\bf m=Mf}$，${\bf S}$为对$\Lambda$合同变换的结果:${\bf S=M\Lambda M}^{-1}=diag(s_1,s_2,\cdots,s_b)$
+  \end{frame}
+  \section{初边值条件}
+  \subsection{初始条件}
+  \begin{frame}
+    对于稳态或准稳态流动，因其对初始条件的依赖性不强，所以，一般以$f_\alpha=f_{\alpha}^{(eq)}(\rho_0,{\bf u}_0,T_0)$即可。\\
+    但对于，非稳态的和对初始条件敏感的强非线性流动，一般有平衡态矫正和迭代方法。
+  \end{frame}
+  \begin{frame}
+    \frametitle{初始条件}
+    \framesubtitle{平衡态矫正}
+    通过对方程的Taylor展开可得近似形式:
+    $$f_i({\bf x},t=0)=f_i^{(eq)}({\bf x},0)+f_i^{(ne),1}({\bf x},0)$$\pause
+    关于$f_i^{(ne)}$的提法有很多种，这里写出一种低Mach数下的非平衡态近似：
+    $$f_i^{(ne),G}=-\tau\delta_t\omega_i\frac{\rho_0}{c_s^2}{\bf c}_i{\bf c}_i:\nabla{\bf u}$$
+  \end{frame}
+  \begin{frame}
+    \frametitle{初始条件}
+    \framesubtitle{迭代方法}
+    \begin{enumerate}
+      \item 矩空间碰撞
+      \item 速度空间迁移
+      \item 校正估计
+      \item 判断
+    \end{enumerate}
+  \end{frame}
+  \subsection{边界条件}
+  \begin{frame}
+    \frametitle{边界条件}
+    \framesubtitle{启发式格式}
+    \begin{enumerate}
+      \item 周期性边界
+      \item 反弹格式
+      \item 修正反弹格式
+      \item Half-way反弹格式
+      \item 镜面反射格式
+      \item 对称格式
+    \end{enumerate}\pause
+    优点：简单直观~~~缺点：精度低
+  \end{frame}
+  \begin{frame}
+    \frametitle{边界条件}
+    \framesubtitle{动力学格式}
+    $$f_i=f_i^{(eq)}(\rho'_w,{\bf u}'_w)$$
+    其中$\rho'_w$和${\bf u}'_w$为伪壁面密度和速度。\\\pause
+    优点:准确满足宏观边界条件~~~缺点:非常依赖所用的模型，角点需要特殊处理。
+  \end{frame}
+  \begin{frame}
+    \frametitle{边界条件}
+    \framesubtitle{外推格式}
+    $$f_i(-1)=2f_i(0)-f_i(1),~~i=2,5,6$$
+    这里的外推可以照先碰撞后迁移的方法外推，也可以先迁移，后碰撞。\\
+    这种边界处理可以达到二阶精度。
+  \end{frame}
+  \begin{frame}
+    \frametitle{边界条件}
+    \framesubtitle{非平衡态外推格式}
+    \begin{enumerate}
+      \item $\rho({\bf x}_b,t)=\rho({\bf x}_f,t)$
+      \item $f_i({\bf x}_b,t)=f_i^{(eq)}(\rho({\bf x}_b,t),{\bf u}_w)+[f_i({\bf x}_f,t)-f^{(eq)}_i({\bf x}_f,t)],~~i=2,5,6$
+    \end{enumerate}
+    可以达到二阶精度。
+  \end{frame}
+  \begin{frame}
+    \frametitle{边界条件}
+    \framesubtitle{曲面边界}
+    \begin{enumerate}
+      \item 反弹格式
+      \item 虚拟平衡态格式
+      \item 插值格式
+      \item 非平衡态外推格式
+    \end{enumerate}
+  \end{frame}
+  \begin{frame}
+    \frametitle{边界条件}
+    \framesubtitle{压力边界条件}
+    基本方程组:
+    $$f_1+f_5+f_8=\rho_{in}-(f_0+f_2+f_3+f_4+f_6+f_7)$$
+    $$f_1+f_5+f_8-\rho_{in}u_{in}/c=f_3+f_6+f_7$$
+    $$f_5-f_8=-f_2+f_4-f_6+f_7$$
+    补充条件(Zou的非平衡态反弹假设):
+    $$f_1+f_1^{(eq)}=f_3-f_3^{(eq)}$$
+  \end{frame}
+  \begin{frame}
+    以上是已经看了，或是推导过，或是浏览了的目前了解LBM。
+  \end{frame}
+  \section{附录}
+  \begin{frame}[label=expandpic]
+    \centerline{\includegraphics[height=0.72\paperheight]{expand.jpg}}
+    \hyperlink{expand}{\beamerreturnbutton{back}}
+  \end{frame}
+  \begin{frame}[label=intergpic]
+    \centerline{\includegraphics[height=0.72\paperheight]{interg.jpg}}
+    \hyperlink{interg}{\beamerreturnbutton{back}}
+  \end{frame}
+  \begin{frame}[label=d1q3pic]
+    \centerline{\includegraphics[height=0.72\paperheight]{D1Q3.jpg}}
+    \hyperlink{d1q3}{\beamerreturnbutton{back}}
+  \end{frame}
+\end{document} 

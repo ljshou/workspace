@@ -1,0 +1,137 @@
+<HTML>
+<HEAD>
+
+<SCRIPT>
+var CompItems = new Array();
+CompItems[100] = 1000;
+CompItems[101] = 1250;
+CompItems[102] = 1500;
+
+CompItems[200] = 35;
+CompItems[201] = 65;
+CompItems[202] = 95;
+
+CompItems[300] = 50;
+CompItems[301] = 75;
+CompItems[302] = 100;
+
+CompItems[400] = 10;
+CompItems[401] = 15;
+CompItems[402] = 25;
+
+function updateOrderDetails()
+{
+   var total = 0;
+   var orderDetails = "<H3>Your selected system</H3>";
+   var orderForm = "";
+   var formElement;
+   formElement = document.form1.cboProcessor[document.form1.cboProcessor.selectedIndex];
+   total = parseFloat(CompItems[formElement.value]);
+   orderDetails = orderDetails + "Processor : " + formElement.text
+   orderDetails = orderDetails + " $" + CompItems[formElement.value] + "<BR>";
+
+   formElement = document.form1.cboHardDrive[document.form1.cboHardDrive.selectedIndex];
+   total = total + parseFloat(CompItems[formElement.value]);
+   orderDetails = orderDetails + "Hard Drive : " + formElement.text
+   orderDetails = orderDetails + " $" + CompItems[formElement.value] + "<BR>";
+
+   formElement = document.form1.chkCDROM
+   if (formElement.checked == true)
+   {
+      orderDetails = orderDetails + "CD-ROM : $" + CompItems[formElement.value] + "<BR>";
+      total = total + parseFloat(CompItems[formElement.value]);
+   }
+
+   formElement = document.form1.chkDVD
+   if (formElement.checked == true)
+   {
+      orderDetails = orderDetails + "DVD-ROM : $" + CompItems[formElement.value] + "<BR>";
+      total = total + parseFloat(CompItems[formElement.value]);
+   }
+
+   formElement = document.form1.chkScanner
+   if (formElement.checked == true)
+   {
+      orderDetails = orderDetails + "Scanner : $" + CompItems[formElement.value] + "<BR>";
+      total = total + parseFloat(CompItems[formElement.value]);
+   }
+
+   formElement = document.form1.radCase
+   if (formElement[0].checked == true)
+   {
+      orderDetails = orderDetails + "Desktop Case : $" + CompItems[formElement[0].value] + "<BR>";
+      total = total + parseFloat(CompItems[formElement[0].value]);
+   }
+   else if (formElement[1].checked == true)
+   {
+      orderDetails = orderDetails + "Mini Tower Case : $" + CompItems[formElement[1].value] + "<BR>";
+      total = total + parseFloat(CompItems[formElement[1].value]);
+   }
+   else
+   {
+      orderDetails = orderDetails + "Full Tower Case : $" + CompItems[formElement[2].value]
+      total = total + parseFloat(CompItems[formElement[2].value]);
+   }
+
+   orderForm = orderForm + "<FORM action='ch15Q2_BuySystem.asp' method=post "
++ "name=form1 target=_top><INPUT type='submit' " + "value='Buy System'>"
++ "<INPUT type='hidden' name='txtCost' " + " value='" + total + "'>"
++ "<INPUT type='hidden' name='txtDescription' " + "value='" + orderDetails
++ "'></FORM>"
+
+   orderDetails = orderDetails + "<P>Total Order Cost is $" + total + "</P>";
+
+   window.parent.systemSummary.document.open();
+   window.parent.systemSummary.document.write(orderDetails + orderForm);
+   window.parent.systemSummary.document.close();
+}
+
+</SCRIPT>
+
+</HEAD>
+<BODY>
+<FORM name=form1>
+<TABLE>
+<TR>
+<TD width=300>
+Processor
+<BR>
+<SELECT name=cboProcessor>
+   <OPTION value=100 selected>MegaPro 1ghz</OPTION>
+   <OPTION value=101>MegaPro 1.2</OPTION>
+   <OPTION value=102>MegaPro 1.5ghz</OPTION></SELECT>&nbsp;
+<BR><BR>
+Hard Drive
+Size&nbsp;
+<BR>
+<SELECT name=cboHardDrive>
+   <OPTION value=200 selected>30gb</OPTION>
+   <OPTION value=201>40gb</OPTION>
+<OPTION value=202>60gb</OPTION>
+</SELECT>
+<BR><BR>
+CD-ROM
+<INPUT type="checkbox" name=chkCDROM value="300">
+<BR>
+DVD-ROM
+<INPUT type="checkbox" name=chkDVD value="301">
+<BR>
+Scanner
+<INPUT type="checkbox" name=chkScanner value="302">
+<BR><BR>
+Desktop Case
+<INPUT type="radio" name=radCase checked value="400">
+<BR>
+Mini Tower
+<INPUT type="radio" name=radCase value="401">
+<BR>
+Full Tower
+<INPUT type="radio" name=radCase value="402">
+<P>
+<INPUT type="button" value="Update" name=butUpdate onclick="updateOrderDetails()">
+</P>
+</TD></TR>
+</TABLE>
+</FORM>
+</BODY>
+</HTML>

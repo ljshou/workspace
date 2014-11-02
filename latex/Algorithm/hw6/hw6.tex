@@ -1,0 +1,83 @@
+\documentclass[11pt]{article}
+
+%============引用宏包 和 自定义命令========================%
+\usepackage{CJK}
+\usepackage{graphicx}
+\usepackage{latexsym,bm}
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+%============ 重定义字体、字号命令 =======================%
+\newcommand{\hei}{\CJKfamily{hei}}
+
+\begin{document}
+\begin{CJK}{UTF8}{gkai}
+%------------------------文章标题---------------------------------------------------------
+\rhead{\tt L.J.SHOU  \includegraphics[scale=0.2]{ICT.eps} }  %页眉
+\title{ \textbf{Assignment 6 of Algorithm Design and Analysis}}
+\author{L.J.SHOU  寿林钧\\{\slshape No}. \bf 201228013229133}
+\date{Dec.24 2012}
+\maketitle % 生成题头
+\noindent
+{\bf \large  2 Problem Reduction}\\[2mm]
+Let M be an n × n matrix with each entry equal to either 0 or 1. Let mij denote
+the entry in row i and column j. A diagonal entry is one of the form mii for
+some i.\\
+Swapping rows i and j of the matrix M denotes the following action: we
+swap the values mik and mjk for k = 1, 2, ..., n. Swapping two columns is defined
+analogously.\\
+We say that M is rearrangeable if it is possible to swap some of the pairs of
+rows and some of the pairs of columns (in any sequence) so that, after all the
+swapping, all the diagonal entries of M are equal to 1.\\
+\indent
+(a) Give an example of a matrix M that is not rearrangeable, but for which
+at least one entry in each row and each column is equal to 1.\\
+\indent
+(b) Give a polynomial-time algorithm that determines whether a matrix M
+with 0-1 entries is rearrangeable.\\
+解：\\
+(a)
+$\left(
+  \begin{array}{ccc}
+    0 & 1 & 0 \\
+    0 & 1 & 0 \\
+    1 & 0 & 1 \\
+  \end{array}
+\right)$
+is not rearrangeable.\\
+(b) 令\\
+\begin{eqnarray*}
+V=\{v_1,v_2,...,v_n,v_{11},v_{22},...,v_{nn}\}\cup\{s,t\}\\
+E_0=\cup_{i=0}^n\{(s,v_i)\},\\
+E_1=\cup_{i=0}^n\{(v_i,v_{kk})|m_{ik}=1\},\\
+E_2=\cup_{i=0}^n\{(v_{ii},t)\},\\
+E=E_0\cup E_1 \cup E_2,\\
+c(e)=
+\begin{cases}
+	1;     &\forall e\in E_0\cup E_2,\\
+	\infty;&\forall e\in E_1 \\
+\end{cases}
+\end{eqnarray*}
+
+定义最大流问题 $P = (V, E, c, s, t)$. 如果问题 P 的最大流函数 $f$ 满足 $f (s, V ) = n$, 则矩
+阵 $M$ 是可重排的,则是不可重排的。因此只需要按照上面的方法,
+将问题转化成最大流问题,再用求解最大流问题的算法求解即可。\\[2mm]
+
+{\bf \large  3 Unique Cut}\\
+
+Let$ G = (V, E)$ be a directed graph, with source $s\in V$ , sink$ t\in V$ , and
+nonnegative edge capacities ${c_e}$. Give a polynomial-time algorithm to decide
+whether G has a {\bf unique} minimum $s − t$ cut.\\
+{\bf 解}:\\
+应用 Ford-Fulkerson 算法计算最大流,
+并得到最小割 $(S, T )$. 对每一条边 $e\in E(G)$ 且 $e = (u, v)$,$ u\in S$,$ v \in T$ . 将$ (u, v)$ 的容量增加一个单位得新的网络流 $G_e$,
+如果对所有新的网络流的最大流有 $f_{G_e} (s, V ) > f_G (s, V )$, 则唯一,
+否则不唯一。\\
+
+
+
+\end{CJK}
+\end{document}
+

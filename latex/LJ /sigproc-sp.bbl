@@ -1,0 +1,30 @@
+\begin{thebibliography}{1}
+
+\bibitem{clark:pct}
+M.~Clark.
+\newblock Post congress tristesse.
+\newblock In {\em TeX90 Conference Proceedings}, pages 84--89. TeX Users Group,
+  March 1991.
+
+\bibitem{herlihy:methodology}
+H.~S. D.~Sulsky, Z.~Chen.
+\newblock A particle method for history-dependent materials.
+\newblock {\em Computer Methods in Applied Mechanics and Engineering},
+  (118):179--196, 1994.
+
+\bibitem{Lamport:LaTeX}
+L.~Lamport.
+\newblock {\em LaTeX User's Guide and Document Reference Manual}.
+\newblock Addison-Wesley Publishing Company, Reading, Massachusetts, 1986.
+
+\bibitem{salas:calculus}
+S.~Salas and E.~Hille.
+\newblock {\em Calculus: One and Several Variable}.
+\newblock John Wiley and Sons, New York, 1978.
+
+\bibitem{rongtian:method}
+R.~Tian.
+\newblock Co-design thinking toward exascale computing.
+\newblock {\em Information Technology Letter}, 10(3):50--63, November 2010.
+
+\end{thebibliography}

@@ -1,0 +1,27 @@
+<HTML>
+<HEAD>
+<SCRIPT LANGUAGE=JavaScript>
+
+function myPara_onmouseout() 
+{
+   myPara.innerText = "Roll your mouse over my text";
+   myPara.style.color = "Black"
+}
+
+function myPara_onmouseover() 
+{
+   myPara.innerText = "Wow that feels good!!!";
+   myPara.style.color = "Red"
+}
+
+</SCRIPT>
+</HEAD>
+
+<BODY>
+<P ID="myPara" 
+   onmouseout="return myPara_onmouseout()" 
+   onmouseover="return myPara_onmouseover()">
+      Roll your mouse over my text
+</P>
+</BODY>
+</HTML>

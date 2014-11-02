@@ -1,0 +1,50 @@
+<HTML>
+<HEAD>
+<SCRIPT LANGUAGE=JavaScript>
+
+var paraOneLeft = 100;
+var paraTwoLeft = 400;
+var switchDirection = false;
+
+function window_onload() 
+{
+   window.setInterval("moveParas()",50);
+}
+
+function moveParas()
+{
+   if (switchDirection == false)
+   {
+      paraOneLeft++;
+      paraTwoLeft--;
+
+      if (paraOneLeft == 400)
+      {
+         switchDirection = true;
+      }
+   }
+   else
+   {
+      paraOneLeft--;
+      paraTwoLeft++;
+
+      if (paraOneLeft == 100)
+      {
+         switchDirection = false;
+      }
+   }
+
+   para1.style.left = paraOneLeft + "px";
+   para2.style.left = paraTwoLeft + "px";
+}
+
+</SCRIPT>
+</HEAD>
+
+<BODY LANGUAGE=JavaScript onload="window_onload()">
+
+<P STYLE="position:relative;left:100px;top:30px" ID="para1">Para 1</P>
+<P STYLE="position:relative;left:400px;top:10px" ID="para2">Para 2</P>
+
+</BODY>
+</HTML>

@@ -1,0 +1,194 @@
+<HTML>
+<HEAD>
+<SCRIPT LANGUAGE=JavaScript>
+var ns = (navigator.appName.indexOf('Netscape')>-1);
+var ie = (navigator.appName.indexOf('Microsoft Internet Explorer')>-1);
+var woodMenuItems = new Array(
+   ["Oak", "OakWood.htm", "Oak Timber"],
+   ["Teak", "TeakWood.htm", "Teak Timber"],
+   ["Pine", "PineWood.htm", "Pine Timber"],
+   ["Yew", "YewWood.htm", "Yew Timber"]);
+var metalMenuItems = new Array(
+   ["Steel", "SteelMetal.htm", "Steel Girders"],
+   ["Copper", "CopperMetal.htm", "Copper Pipes"],
+   ["Gold", "GoldMetal.htm", "Gold Ingots"]);
+var bricksMenuItems = new Array(
+   ["StdHouse", "StdHousebricks.htm", "Standard House Brick"],
+   ["LargeHouseBrick", "LargeHousebricks.htm", "Large House Bricks"],
+   ["BreezeBlock", "BreezeBlock.htm", "Breeze Block"]);
+
+function createMenu(menuName, menuItems)
+{
+   var divHTML = '<DIV ID="' + menuName + 'MenuDiv" CLASS="DivMenu"';
+   divHTML = divHTML + 'onmouseout="return hideMenu(this, ' + menuName.length + ',event)">';
+
+   var tableHTML = '<TABLE BORDER=0 CELLSPACING=1 CELLPADDING=1 ID="' + 
+      menuName + 'Table"><TBODY ID="' + menuName + 'TableBody">';
+   var tableRowHTML = "";
+   var rowCount;
+   var totalNoRows = menuItems.length;
+   for (rowCount = 0; rowCount < totalNoRows; rowCount++)
+   {
+      tableRowHTML = tableRowHTML + '<TR ID="' + menuName + 
+         menuItems[rowCount][0] +  'TR"><TD ID="' + menuName + 
+         menuItems[rowCount][0];
+      tableRowHTML = tableRowHTML + '" onclick="goPage(\'' + 
+         menuItems[rowCount][1] + '\')"';
+      tableRowHTML = tableRowHTML + 'CLASS="TDMenu">' + menuItems[rowCount][2] +
+         '</TD></TR>';
+   }
+  
+   return divHTML + tableHTML + tableRowHTML + '</TBODY></TABLE></DIV>';
+}
+
+function showMenu(menuToShow, e)
+{
+   if (ns)
+   {
+      var srcElement = e.target;
+   } 
+   else
+   {
+      var srcElement = event.srcElement; 
+   }
+   var xPos = parseInt(srcElement.style.left);
+   var yPos = parseInt(srcElement.style.top); 
+   menuToShow.style.left = xPos + (srcElement.width)
+   menuToShow.style.top = yPos;
+}
+
+function hideMenu(menuToHide, menuIDLength, e)
+{   
+   var toElementID;
+   if (ns)
+   {
+      var mouseLastIn = e.relatedTarget;       
+   }
+   else
+   {
+      var mouseLastIn =  event.toElement; 
+   }
+   if (mouseLastIn != null)
+   {
+      if (mouseLastIn.nodeType == 3)
+      {
+         mouseLastIn = mouseLastIn.parentNode; 
+      }
+      toElementID = mouseLastIn.id;
+   }
+   else 
+   {  
+       return false;
+   }
+
+   if (typeof(toElementID) == "undefined")
+   {
+      toElementID = "UNDEF";
+   }
+   toElementID = toElementID.substr(0,menuIDLength);
+   var divMenuID = menuToHide.id;
+   divMenuID = divMenuID.substr(0,menuIDLength);
+   if (toElementID != divMenuID)
+   {
+      menuToHide.style.left = -200 + 'px';
+      menuToHide.style.top = -1000 + 'px';
+   }
+}
+
+function document_onmouseover(e) 
+{
+   if (ns)
+   {
+      var srcElement = e.target;
+   } 
+   else
+   {
+      var srcElement = event.srcElement;
+   }
+
+   if (srcElement.nodeType == 3)
+   {
+       srcElement = srcElement.parentNode; 
+   }
+
+   if (srcElement.tagName=="TD")
+   {
+      srcElement.style.color = "white";
+      srcElement.style.backgroundColor = "darkblue"
+   }
+}
+
+function document_onmouseout(e) 
+{
+    if (ns)
+   {
+      var srcElement = e.target;
+   } 
+   else
+   {
+      var srcElement = event.srcElement;
+   }
+
+   if (srcElement.nodeType == 3)
+   {
+      srcElement = srcElement.parentNode; 
+   }
+   if (srcElement.tagName == "TD")
+   {
+      srcElement.style.color ="darkblue";
+      srcElement.style.backgroundColor = "darkorange";
+   }
+}
+
+function goPage(src)
+{
+   window.location.href = src;
+}
+</SCRIPT>
+<STYLE>
+   .DivMenu {position:absolute;
+      left:-200;
+      top:-1000;
+      width:180;
+      z-index:100;
+      background-color:darkorange;
+      border: 4px groove lightgrey;
+   }
+
+   .TDMenu {
+      color:darkblue;
+      font-family:verdana;
+      font-size:70%;
+      width:100%;
+      cursor:default;
+   }
+</STYLE>
+</HEAD>
+
+<BODY onmouseover="document_onmouseover(event)" 
+   onmouseout="document_onmouseout(event)">
+<SCRIPT LANGUAGE=JavaScript>
+   document.write(createMenu('Wood', woodMenuItems)) 
+   document.write(createMenu('Metal', metalMenuItems))
+   document.write(createMenu('Bricks', bricksMenuItems)) 
+</SCRIPT>
+
+<IMG id="WoodMenuImage" 
+   SRC="WoodButton.gif" 
+   style="position:absolute;left:10;top:75"
+   onmouseover="return showMenu(document.getElementById('WoodMenuDiv'), event)"
+   onmouseout="return hideMenu(document.getElementById('WoodMenuDiv'),4,event)">
+
+<IMG id="MetalMenuImage" 
+   SRC="MetalButton.gif" 
+   style="position:absolute;left:10;top:115"
+   onmouseover="return showMenu(document.getElementById('MetalMenuDiv'),event)"
+   onmouseout="return hideMenu(document.getElementById('MetalMenuDiv'),5,event)">
+
+<IMG id="BricksMenuImage"
+   SRC="BricksButton.gif" 
+   style="position:absolute;left:10;top:155"
+   onmouseover="return showMenu(document.getElementById('BricksMenuDiv'),event)"
+   onmouseout="return hideMenu(document.getElementById('BricksMenuDiv'),6,event)">
+</BODY>
+</HTML>

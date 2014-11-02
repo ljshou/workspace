@@ -1,0 +1,19 @@
+digraph binary_tree {
+    dummy -> 8
+    x1[style=invis]
+    dummy -> x1[style=invis]
+    8 -> 4
+    8 -> 7
+    4 -> 1
+    4 -> 3
+    3 -> 2
+    x2[style=invis]
+    3 -> x2[style=invis] 
+    x3[style=invis]
+    7 -> x3[style=invis]
+    7 -> 6
+    6 -> 5
+    x4[style=invis]
+    6 -> x4[style=invis]
+}
+

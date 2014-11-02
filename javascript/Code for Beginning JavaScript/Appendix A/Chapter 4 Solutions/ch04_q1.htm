@@ -1,0 +1,15 @@
+<HTML>
+<BODY>
+<SCRIPT>
+
+var months = new Array("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");
+var nowDate = new Date();
+
+nowDate.setMonth(nowDate.getMonth() + 12)
+document.write("Date 12 months ahead is " + nowDate.getDate())
+document.write(" " + months[nowDate.getMonth()])
+document.write(" " + nowDate.getFullYear())
+
+</SCRIPT>
+</BODY>
+</HTML>

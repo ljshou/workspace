@@ -1,0 +1,59 @@
+<HTML>
+<HEAD>
+
+<SCRIPT LANGUAGE=JavaScript>
+
+function butShowVisited_onclick() 
+{
+   document.form1.txtaPagesVisited.value = window.top.returnPagesVisited();
+}
+
+function setFrameAndPageControls(linkIndex)
+{
+   var formobject = window.parent.parent.fraMenu.document.form1;
+   formobject.choosePage.selectedIndex = linkIndex;
+   if (window.parent.fraTop == window.self)
+   {
+      formobject.radFrame[0].checked = true
+   }
+   else
+   {
+      formobject.radFrame[1].checked = true
+   }
+
+   return true;
+}
+
+
+</SCRIPT>
+</HEAD>
+<BODY LANGUAGE=JavaScript 
+   onload="return window.top.addPage(window.location.href);">
+
+
+<CENTER>
+   <FONT SIZE=6 COLOR=MidnightBlue FACE=verdana>
+      This is Page B
+   </FONT>
+</CENTER>
+<P>
+<A HREF="page_a.htm" name="pageALink" onclick="return setFrameAndPageControls(0)">Page A</A>
+<A HREF="page_b.htm" name="pageBLink" onclick="return setFrameAndPageControls(1)">Page B</A>
+<A HREF="page_c.htm" name="pageCLink" onclick="return setFrameAndPageControls(2)">Page C</A>
+<A HREF="page_d.htm" name="pageDLink" onclick="return setFrameAndPageControls(3)">Page D</A>
+
+</P>
+
+<FORM NAME=form1>
+<TEXTAREA ROWS=8 COLS=35 NAME=txtaPagesVisited>
+
+</TEXTAREA>
+<BR>
+<INPUT TYPE="button" VALUE="List Pages Visited" NAME=butShowVisited
+   onclick="butShowVisited_onclick()">
+</FORM>
+</BODY>
+</HTML>
+
+
+

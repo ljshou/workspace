@@ -1,0 +1,27 @@
+<HTML>
+<HEAD>
+<SCRIPT LANGUAGE=JavaScript>
+
+var currentImgNumber = 1;
+var numberOfImages = 3;
+
+function window_onload()
+{
+   setTimeout("switchImage()",3000);
+}
+
+function switchImage()
+{
+   currentImgNumber++;
+   document.imgAdvert.src = "AdvertImage" + currentImgNumber + ".jpg";
+
+   if (currentImgNumber < numberOfImages)   {
+      setTimeout("switchImage()",3000);   }
+}
+
+</SCRIPT>
+</HEAD>
+<BODY onload="window_onload()">
+<IMG SRC="AdvertImage1.jpg" NAME="imgAdvert">
+</BODY>
+</HTML>

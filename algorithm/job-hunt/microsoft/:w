@@ -1,0 +1,93 @@
+/**
+ * @file 3.cc
+ * @brief 
+ * @author L.J.SHOU shoulinjun@126.com
+ * @version 0.1.00
+ * @date 2014-10-18
+ */
+
+#include <iostream>
+#include <vector>
+#include <unordered_set>
+using namespace std;
+
+int e[101][101];
+vector<int> f;
+vector<int> path;
+int n, m;
+int parent[101];
+
+void BFS(int x, int y) {
+  fill_n(parent, 101, 0);
+  queue<int> q;
+  q.push(x);
+  
+  while(!q.empty()) {
+    x = q.top(); q.o=pop();
+    //neighbor
+    for(int i=1; i<=n; ++i) {
+      if(e[x][y] !=0) {
+        parent[y] = x;
+        return;
+      }
+      if(e[x][i] != 0) {
+        parent[i] = x;
+        q.push(i);
+      }
+    }
+  }
+}
+
+bool Valid(int index)
+{
+  unordered_set<int> flag(path.begin(), path.end());
+  for(int i=index; i<m; ++i)
+    if(flag.find(f[i]) != flag.end()) {
+      return false;
+    }
+  return true;
+}
+
+void Solve() 
+{
+  if(n < 2) {
+    cout << "YES" << endl;
+    return;
+  }
+  BFS(1, f[0]);
+  if(!Valid(1)) {
+    cout << "NO" << endl;
+    return; 
+  }
+  for(int i=1; i<m; ++i) {
+    BFS(f[i-1], f[i]);
+    if(!Valid(i+1)) {
+      cout << "NO" << endl;
+      return; 
+    }
+  }
+  cout << "YES" << endl;
+}
+
+int main(void)
+{
+  int num;
+  int a, b;
+  cin >> num;
+  for(int i=0; i<num; ++i) {
+    fill_n(&e[0][0], 101*101, 0);
+    cin >> n;
+    for(int j=0; j<n-1; ++j) {
+      cin >> a >> b;
+      e[a][b] = e[b][a] = 1;
+    }
+    cin >> m;
+    f.resize(m);
+    for(int k=0; k<m; ++k) {
+      cin >> f[k];
+    }
+    Solve();
+  }
+  return 0;
+}
+

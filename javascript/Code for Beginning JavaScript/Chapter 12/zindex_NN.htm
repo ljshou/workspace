@@ -1,0 +1,29 @@
+<HTML>
+<HEAD>
+<STYLE>
+   DIV { position: absolute; left : 100; }
+</STYLE>
+</HEAD>
+
+<BODY>
+<DIV ID="layer1" STYLE="background-color: red; top: 100;z-index: 2">
+HHHHHHHH
+<BR>
+HHHHHHHH
+<BR>
+HHHHHHHH
+</DIV>
+<DIV ID="layer2" STYLE="background-color: blue; top: 120; z-index: 1">
+XXXXXXXX
+<BR>
+XXXXXXXX
+<BR>
+XXXXXXXX
+</DIV>
+<FORM>
+<INPUT TYPE="button" VALUE="Red Div Above" onclick="layer1.moveAbove(layer2)"
+   NAME=button1>
+<INPUT TYPE="button" VALUE="Red Div Below" onclick="layer1.moveBelow(layer2)" 
+   NAME=button2>
+</BODY>
+</HTML>

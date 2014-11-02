@@ -1,0 +1,56 @@
+#ifndef debuging
+#define FIN  ;
+#define FOUT ;
+#define OUT(x)  ;
+#define ERR(x)  ;
+#endif
+#include <cstdio>
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+#include <cmath>
+#include <vector>
+using namespace std ;
+#define For(i , n) for(int i = 0 ; i < (n) ; ++i)
+#define SZ(x)  (int)((x).size())
+typedef long long lint ;
+const int maxint = -1u>>2 ;
+const double eps = 1e-6 ; 
+class EmoticonsDiv1
+{
+public:
+int printSmiles(int smiles)
+{
+  return helper(1, smiles-1); 
+}
+private:
+int helper(int cur, int n)
+{
+  if(n == 0) return 0;
+  if(n < cur) return 0xffff;
+  
+  int res(n), time(0);
+  for(int i=1; i<=n/cur; ++i)
+  {
+    time = i + 1; // one copy and i's paste
+    res = min(res, time + helper(cur*(i+1), n-i*cur));
+    // delete
+    if(cur > 1)
+      res = min(res, (++time) + helper(cur*(i+1)-1, n-i*cur + 1));
+  }
+  return res;
+}
+
+
+};// BEGIN CUT HERE
+int main(){
+EmoticonsDiv1 ___test;
+___test.run_test(-1);
+//getch() ;
+return 0;
+}
+
+
+// Powered by FileEdit
+// Powered by TZTester 1.01 [25-Feb-2003]
+// Powered by CodeProcessor

@@ -1,0 +1,77 @@
+<HTML>
+<HEAD>
+<SCRIPT LANGUAGE=JavaScript>
+
+function getCookieValue(cookieName)
+{
+   var cookieValue = document.cookie;
+   var cookieStartsAt = cookieValue.indexOf(" " + cookieName + "=");
+
+  if (cookieStartsAt == -1)
+  {
+      cookieStartsAt = cookieValue.indexOf(cookieName + "=");
+  }
+
+   if (cookieStartsAt == -1)
+   {
+      cookieValue = null;
+   }
+   else
+   {
+
+      cookieStartsAt = cookieValue.indexOf("=", cookieStartsAt) + 1;
+      var cookieEndsAt = cookieValue.indexOf(";", cookieStartsAt);
+      if (cookieEndsAt == -1)
+         cookieEndsAt = cookieValue.length;
+      cookieValue = unescape(cookieValue.substring(cookieStartsAt, cookieEndsAt));
+
+   }
+
+   return cookieValue;
+}
+
+function setCookie(cookieName,cookieValue, cookiePath, cookieExpires)
+{
+   cookieValue = escape(cookieValue);
+   if (cookieExpires == "")
+   {
+      var nowDate = new Date();
+      nowDate.setMonth(nowDate.getMonth() + 6);
+      cookieExpires = nowDate.toGMTString();
+   }
+
+   if (cookiePath != "")
+   {
+      cookiePath = ";Path=" + cookiePath;
+   }
+   document.cookie = cookieName + "=" + cookieValue + ";Expires=" + cookieExpires + cookiePath;
+}
+
+var pageViewCount = getCookieValue("pageViewCount");
+var pageFirstVisited = getCookieValue("pageFirstVisited");
+
+if (pageViewCount == null)
+{
+   pageViewCount = 1;
+   pageFirstVisited = new Date();
+   pageFirstVisited.setMonth(pageFirstVisited.getMonth())
+   pageFirstVisited = pageFirstVisited.toGMTString();
+   setCookie("pageFirstVisited",pageFirstVisited,"",pageFirstVisited)
+}
+else
+{
+   pageViewCount = Math.floor(pageViewCount) + 1;
+}
+
+setCookie("pageViewCount",pageViewCount,"",pageFirstVisited)
+
+</SCRIPT>
+</HEAD>
+<BODY>
+<SCRIPT>
+var pageHTML = "You've visited this page " + pageViewCount;
+pageHTML = pageHTML + " times since " + pageFirstVisited;
+document.write(pageHTML);
+</SCRIPT>
+</BODY>
+</HTML>

@@ -1,0 +1,130 @@
+<HTML>
+<HEAD>
+
+<SCRIPT>
+var CompItems = new Array();
+CompItems[100] = 1000;
+CompItems[101] = 1250;
+CompItems[102] = 1500;
+
+CompItems[200] = 35;
+CompItems[201] = 65;
+CompItems[202] = 95;
+
+CompItems[300] = 50;
+CompItems[301] = 75;
+CompItems[302] = 100;
+
+CompItems[400] = 10;
+CompItems[401] = 15;
+CompItems[402] = 25;
+
+function updateOrderDetails()
+{
+   var total = 0;
+   var orderDetails = "<H3>Your selected system</H3>";
+   var formElement;
+   formElement = document.form1.cboProcessor[document.form1.cboProcessor.selectedIndex];
+   total = parseFloat(CompItems[formElement.value]);
+   orderDetails = orderDetails + "Processor : " + formElement.text
+   orderDetails = orderDetails + " $" + CompItems[formElement.value] + "<BR>";
+
+   formElement = document.form1.cboHardDrive[document.form1.cboHardDrive.selectedIndex];
+   total = total + parseFloat(CompItems[formElement.value]);
+   orderDetails = orderDetails + "Hard Drive : " + formElement.text
+   orderDetails = orderDetails + " $" + CompItems[formElement.value] + "<BR>";
+
+   formElement = document.form1.chkCDROM
+   if (formElement.checked == true)
+   {
+      orderDetails = orderDetails + "CD-ROM : $" + CompItems[formElement.value] + "<BR>";
+      total = total + parseFloat(CompItems[formElement.value]);
+   }
+
+   formElement = document.form1.chkDVD
+   if (formElement.checked == true)
+   {
+      orderDetails = orderDetails + "DVD-ROM : $" + CompItems[formElement.value] + "<BR>";
+      total = total + parseFloat(CompItems[formElement.value]);
+   }
+
+   formElement = document.form1.chkScanner
+   if (formElement.checked == true)
+   {
+      orderDetails = orderDetails + "Scanner : $" + CompItems[formElement.value] + "<BR>";
+      total = total + parseFloat(CompItems[formElement.value]);
+   }
+
+   formElement = document.form1.radCase
+   if (formElement[0].checked == true)
+   {
+      orderDetails = orderDetails + "Desktop Case : $" + CompItems[formElement[0].value] + "<BR>";
+      total = total + parseFloat(CompItems[formElement[0].value]);
+   }
+   else if (formElement[1].checked == true)
+   {
+      orderDetails = orderDetails + "Mini Tower Case : $" + CompItems[formElement[1].value] + "<BR>";
+      total = total + parseFloat(CompItems[formElement[1].value]);
+   }
+   else
+   {
+      orderDetails = orderDetails + "Full Tower Case : $" + CompItems[formElement[2].value]
+      total = total + parseFloat(CompItems[formElement[2].value]);
+   }
+
+   orderDetails = orderDetails + "<P>Total Order Cost is $" + total + "</P>";
+
+   window.parent.systemSummary.document.open();
+   window.parent.systemSummary.document.write(orderDetails);
+   window.parent.systemSummary.document.close();
+}
+
+</SCRIPT>
+
+</HEAD>
+<BODY>
+<FORM NAME=form1>
+<TABLE>
+<TR>
+<TD WIDTH=300>
+Processor
+<BR>
+<SELECT NAME=cboProcessor>
+   <OPTION VALUE=100>MegaPro 1ghz</OPTION>
+   <OPTION VALUE=101>MegaPro 1.2</OPTION>
+   <OPTION VALUE=102>MegaPro 1.5ghz</OPTION>
+</SELECT>
+<BR><BR>
+Memory
+<BR>
+<SELECT NAME=cboHardDrive>
+   <OPTION VALUE=200>30gb</OPTION>
+   <OPTION VALUE=201>40gb</OPTION>
+   <OPTION VALUE=202>60gb</OPTION>
+</SELECT>
+<BR><BR>
+CD-ROM
+<INPUT TYPE="checkbox" NAME=chkCDROM VALUE="300">
+<BR>
+DVD-ROM
+<INPUT TYPE="checkbox" NAME=chkDVD VALUE="301">
+<BR>
+Scanner
+<INPUT TYPE="checkbox" NAME=chkScanner VALUE="302">
+<BR><BR>
+Desktop Case
+<INPUT TYPE="radio" NAME=radCase CHECKED VALUE="400">
+<BR>
+Mini Tower
+<INPUT TYPE="radio" NAME=radCase VALUE="401">
+<BR>
+Full Tower
+<INPUT TYPE="radio" NAME=radCase VALUE="402">
+<P>
+<INPUT TYPE="button" VALUE="Update" NAME=butUpdate onclick="updateOrderDetails()">
+</P>
+</TD>
+</TABLE>
+</FORM>
+</BODY>
+</HTML>

@@ -1,0 +1,23 @@
+<HTML>
+<HEAD>
+<SCRIPT LANGUAGE=JavaScript>
+
+function writeTimesTable(timesTable)
+{
+   var counter;
+   var writeString;
+   for (counter = 1; counter < 12; counter++)
+   {
+      writeString = counter + " * " + timesTable + " = ";
+      writeString = writeString + (timesTable * counter);
+      writeString = writeString + "<BR>";
+      documents.write(writeString);
+   }
+}
+
+</SCRIPT>
+</HEAD>
+<BODY>
+<P><SCRIPT LANGUAGE=JavaScript>writeTimesTable(2)</SCRIPT></P>
+</BODY>
+</HTML>

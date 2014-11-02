@@ -1,0 +1,59 @@
+<HTML>
+<HEAD>
+<SCRIPT LANGUAGE=JavaScript>
+
+var globalFunctions;
+globalFunctions = window.top.fraTopFrame.fraGlobalFunctions;
+
+function getAnswer()
+{
+   var answer = 0;
+
+    if (document.QuestionForm[0].type == "radio")
+   {
+      while (document.QuestionForm.radQuestionChoice[answer].checked != true)
+         answer++;
+      answer =  String.fromCharCode(65 + answer);
+   }
+   else
+   {
+      answer = document.QuestionForm.txtAnswer.value;
+   }
+
+   return answer;
+}
+
+function buttonCheckQ_onclick()
+{
+   var questionNumber = globalFunctions.currentQNumber;
+
+   if (globalFunctions.answerCorrect(questionNumber,getAnswer()) == true)
+   {
+      alert("You got it right");
+   }
+   else
+   {
+      alert("You got it wrong");
+   }
+
+   window.location.reload();
+}
+
+</SCRIPT>
+</HEAD>
+<BODY BACKGROUND="bluewashqs.jpg">
+<TABLE ALIGN=center BORDER="2" WIDTH="70%">
+<TR>
+<TD BGCOLOR=RoyalBlue>
+<FORM NAME="QuestionForm">
+
+<SCRIPT LANGUAGE=JavaScript>
+   document.write(globalFunctions.getQuestion());
+</SCRIPT>
+
+</FORM>
+</TD>
+</TR>
+</TABLE>
+</BODY>
+</HTML>

@@ -1,0 +1,117 @@
+<HTML>
+<HEAD>
+<SCRIPT LANGUAGE=JavaScript>
+
+var isIE;
+
+var floatingDivHeight = 65;
+var floatingDivWidth = 265;
+var timerId;
+var screenWidth;
+var screenHeight;
+var horizontalMovement = Math.ceil(Math.random() * 6);
+var verticalMovement = Math.ceil(Math.random() * 3);
+
+function startTimer()
+{
+	timerId = window.setInterval("moveDiv()",100);
+
+
+	if (document.all)
+	{
+		floatingDiv.style.left = "6px";
+		floatingDiv.style.top = "6px";
+
+		screenWidth = document.body.clientWidth;
+		screenHeight = document.body.clientHeight;
+
+		isIE = true;
+	}
+	else
+	{
+		screenWidth = window.innerWidth;
+		screenHeight = window.innerHeight;
+		isIE = false;
+	}
+}
+
+function moveDiv()
+{
+
+	var currentLeft;
+	var currentTop;
+
+	if (isIE)
+	{
+		// IE4+ Code
+		currentLeft = parseInt(floatingDiv.style.left);
+		currentTop = parseInt(floatingDiv.style.top);
+	}
+	else
+	{
+		// NN4 Code
+		currentLeft = parseInt(document.floatingDiv.left);
+		currentTop = parseInt(document.floatingDiv.top);
+	}
+
+	if (currentTop < 6)
+	{
+		verticalMovement = Math.ceil(Math.random() * 5);
+	}
+	else if ( ( currentTop + floatingDivHeight) > screenHeight )
+	{
+		verticalMovement = -(Math.ceil(Math.random() * 5));
+	}
+
+	if (currentLeft < 6)
+	{
+		horizontalMovement = Math.ceil(Math.random() * 5);
+	}
+	else if ( ( currentLeft + floatingDivWidth) > screenWidth )
+	{
+		horizontalMovement = -(Math.ceil(Math.random() * 5));
+	}
+
+
+	currentLeft = currentLeft + horizontalMovement;
+	currentTop = currentTop + verticalMovement;
+
+	if (isIE)
+	{
+		// IE4+ Code
+		floatingDiv.style.left = currentLeft;
+		floatingDiv.style.top = currentTop;
+	}
+	else
+	{
+		// NN4 Code
+		document.floatingDiv.left = currentLeft;
+		document.floatingDiv.top = currentTop;
+	}
+}
+
+</SCRIPT>
+<STYLE>
+
+	.FloatingDiv {
+					position: absolute;
+					left: 6px;
+					top: 6px;
+					width : 410px;
+					height : 260px;
+				 }
+</STYLE>
+
+</HEAD>
+<BODY onload="startTimer()">
+<H3>Hello World</H3>
+<DIV id=floatingDiv name=floatingDiv class="FloatingDiv">
+	<A href="WhatsNew.htm"
+			onmouseover="document.FloatingImage.src = 'clickforwhatsnew.jpg'"
+			onmouseout="document.FloatingImage.src = 'Welcome.jpg'">
+		<IMG name="FloatingImage" id="FloatingImage" src="Welcome.jpg" border=0>
+	</A>
+</DIV>
+
+</BODY>
+</HTML>

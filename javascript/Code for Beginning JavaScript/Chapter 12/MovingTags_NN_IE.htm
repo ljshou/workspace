@@ -1,0 +1,71 @@
+<HTML>
+<HEAD>
+<SCRIPT LANGUAGE=JavaScript>
+
+var paraOneLeft = 100;
+var paraTwoLeft = 400;
+var switchDirection = false;
+
+function window_onload() 
+{
+   window.setInterval("moveParas()",50);
+}
+
+function moveParas()
+{
+   if (switchDirection == false)
+   {
+      paraOneLeft++;
+      paraTwoLeft--;
+
+      if (paraOneLeft == 400)
+      {
+         switchDirection = true;
+      }
+   }
+   else
+   {
+      paraOneLeft--;
+      paraTwoLeft++;
+
+      if (paraOneLeft == 100)
+      {
+         switchDirection = false;
+      }
+   }
+
+   var para1Style;
+   var para2Style;
+
+   if (document.all)
+   {
+      para1Style = para1.style;
+      para2Style = para2.style;
+   }
+   else if (document.layers)
+   {
+      para1Style = document.para1;
+      para2Style = document.para2;
+   }
+   else
+   {
+      para1Style = document.getElementById("para1").style;
+      para2Style = document.getElementById("para2").style;
+   }
+
+   para1Style.left = paraOneLeft;
+   para2Style.left = paraTwoLeft;
+
+}
+
+</SCRIPT>
+</HEAD>
+
+<BODY LANGUAGE=JavaScript onload="window_onload()">
+
+<DIV ID="para1" STYLE="position:absolute;left:100;top:30"><P>Para 1</P></DIV>
+<DIV ID="para2" STYLE="position:absolute;left:400;top:10"><P>Para 2</P></DIV>
+
+
+</BODY>
+</HTML>

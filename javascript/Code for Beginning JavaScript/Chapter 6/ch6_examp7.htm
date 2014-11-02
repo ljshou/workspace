@@ -1,0 +1,64 @@
+<HTML>
+<HEAD>
+
+<SCRIPT LANGUAGE=JavaScript>
+
+function butRemoveWed_onclick() 
+{
+   if (document.form1.theDay.options[2].text == "Wednesday") 
+   {
+      document.form1.theDay.options[2] = null;
+   } 
+   else 
+   {
+      alert('There is no Wednesday here!');
+   }
+}
+
+function butAddWed_onclick() 
+{
+   if (document.form1.theDay.options[2].text != "Wednesday") 
+   {
+      var indexCounter;
+      var days = document.form1.theDay;
+      var lastoption = new Option();
+      days.options[6] = lastoption;
+
+      for (indexCounter = 6;indexCounter > 2; indexCounter--)
+      {
+      days.options[indexCounter].text = days.options[indexCounter - 1].text;
+      days.options[indexCounter].value = days.options[indexCounter - 1].value;
+      }
+
+      var option = new Option("Wednesday",2);
+      days.options[2] = option;
+   }
+   else 
+   {
+      alert('Do you want to have TWO Wednesdays?????');
+   }
+}
+
+</SCRIPT>
+</HEAD>
+<BODY>
+
+<FORM NAME=form1>
+<SELECT NAME=theDay SIZE=5>
+   <OPTION VALUE=0 SELECTED>Monday
+   <OPTION VALUE=1>Tuesday
+   <OPTION VALUE=2>Wednesday
+   <OPTION VALUE=3>Thursday
+   <OPTION VALUE=4>Friday
+   <OPTION VALUE=5>Saturday
+   <OPTION VALUE=6>Sunday
+</SELECT>
+<BR>
+<INPUT TYPE="button" VALUE="Remove Wednesday" NAME=butRemoveWed 
+   onclick="butRemoveWed_onclick()">
+<INPUT TYPE="button" VALUE="Add Wednesday" NAME=butAddWed 
+   onclick="butAddWed_onclick()">
+<BR>
+</FORM>
+</BODY>
+</HTML>

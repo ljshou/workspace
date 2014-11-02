@@ -1,0 +1,19 @@
+<HTML>
+<BODY>
+<SCRIPT Language=JavaScript>
+
+var myNumber = prompt("Enter the number to be rounded","");
+
+document.write("<H3>The number you entered was " + myNumber + "</H3><BR>");
+document.write("<P>The rounding results for this number are</P>");
+document.write("<TABLE WIDTH=150 BORDER=1>");
+document.write("<TR><TH>Method</TH><TH>Result</TH></TR>");
+document.write("<TR><TD>parseInt()</TD><TD>"+ parseInt(myNumber) +"</TD></TR>");
+document.write("<TR><TD>ceil()</TD><TD>" + Math.ceil(myNumber) + "</TD></TR>");
+document.write("<TR><TD>floor()</TD><TD>"+ Math.floor(myNumber) + "</TD></TR>");
+document.write("<TR><TD>round()</TD><TD>" + Math.round(myNumber) +"</TD></TR>");
+document.write("</TABLE>")
+
+</SCRIPT>
+</BODY>
+</HTML>

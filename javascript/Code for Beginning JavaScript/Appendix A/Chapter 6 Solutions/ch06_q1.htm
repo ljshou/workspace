@@ -1,0 +1,39 @@
+<HTML>
+<HEAD>
+<SCRIPT>
+function convertToCentigrade(degFahren)
+{
+   var degCent;
+   degCent = degCent = 5/9 * (degFahren - 32);
+   
+   return degCent;
+}
+
+function butToCent_onclick()
+{
+   var CalcBox = document.form1.txtCalcBox;
+
+   if (isNaN(CalcBox.value) == true || CalcBox.value == "")
+   {
+      CalcBox.value = "Error Invalid Value";
+   }
+   else
+   {
+      CalcBox.value = convertToCentigrade(CalcBox.value);
+   }
+}
+</SCRIPT>
+</HEAD>
+<BODY>
+
+<FORM NAME=form1>
+<P>
+   <INPUT type="text" name=txtCalcBox value="0.0">
+</P>
+   <INPUT type="button" 
+         value="Convert to centigrade" 
+         name=butToCent
+         onclick="butToCent_onclick()">
+</FORM>
+</BODY>
+</HTML>

@@ -1,0 +1,70 @@
+<HTML>
+<HEAD>
+
+<SCRIPT LANGUAGE=JavaScript>
+
+function play(fileName)
+{
+   document.real1.SetSource(fileName);
+   document.real1.DoPlay();
+}
+
+
+function window_onload()
+{
+   var plugInInstalled = false;
+
+   if (navigator.appName.indexOf("Microsoft") == -1)
+   {
+      var plugInCounter;
+
+      for (plugInCounter = 0; plugInCounter < navigator.plugins.length; plugInCounter++)
+      {
+         if (navigator.plugins[plugInCounter].name.indexOf("RealPlayer") >= 0)
+         {
+            plugInInstalled = true
+            break;
+         }
+      }
+   }
+   else
+   {
+      if (real1.readyState == 4)
+         plugInInstalled = true;
+   }
+
+   if (plugInInstalled == false)
+      window.location.replace("NoRealAudioPage.htm");
+}
+
+</SCRIPT>
+
+<OBJECT classid="clsid:CFCDAA03-8BE4-11CF-B84B-0020AFBBCCFA"
+   id="real1" VIEWASTEXT>
+   <PARAM NAME="HEIGHT" VALUE="0">
+   <PARAM NAME="WIDTH" VALUE="0">
+<EMBED name="real1" id="real1"
+   BORDER="0"
+   CONTROLS="play"
+   HEIGHT=0 WIDTH=0 TYPE="audio/x-pn-realaudio-plugin">
+</OBJECT>
+
+</HEAD>
+<BODY onload="window_onload()">
+<A onmouseover="play('Evil_Laugh.ra')"
+   onmouseout=document.real1.DoStop();
+   href="#">
+   <IMG src="AdvertImage1.jpg" border=0>
+</A>
+<A onmouseover="play('Whoosh.ra')"
+   onmouseout=document.real1.DoStop();
+   href="#">
+   <IMG src="AdvertImage2.jpg" border=0>
+</A>
+<A onmouseover="play('Explosion.ra')"
+   onmouseout=document.real1.DoStop();
+   href="#">
+   <IMG src="AdvertImage3.jpg" border=0>
+</A>
+</BODY>
+</HTML>

@@ -1,0 +1,34 @@
+<HTML>
+<HEAD>
+<SCRIPT LANGUAGE=JavaScript>
+
+function cmdStartQuiz_onclick() 
+{
+   window.top.fraTopFrame.fraGlobalFunctions.resetQuiz();
+   window.location.href = "AskQuestion.htm";
+}
+
+</SCRIPT>
+</HEAD>
+
+<BODY BACKGROUND="bluewash.jpg">
+<H2 ALIGN="center">
+   <FONT COLOR=coral FACE="Comic Sans MS" SIZE=6>
+      Welcome to the Wrox Online Trivia Quiz
+   </FONT>
+</H2>
+<P>
+<FONT COLOR=darkslateblue FACE="Comic Sans MS" >
+   <STRONG>
+      Click the Start Quiz button below to challenge your trivia knowledge.
+   </STRONG>
+</FONT>
+</P>
+<P>
+<FORM NAME="frmQuiz">
+   <INPUT NAME=cmdStartQuiz TYPE=button VALUE="Start Quiz"
+      onclick="return cmdStartQuiz_onclick()">
+</FORM>
+</P>
+</BODY>
+</HTML>

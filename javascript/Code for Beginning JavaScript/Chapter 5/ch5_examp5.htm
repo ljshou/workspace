@@ -1,0 +1,36 @@
+<HTML>
+<HEAD>
+
+<SCRIPT LANGUAGE=JavaScript>
+
+var myImages = new Array("usa.gif","canada.gif","jamaica.gif","mexico.gif");
+
+function changeImg(imgNumber)
+{
+   var imgClicked = document.images[imgNumber];
+   var newImgNumber = Math.round(Math.random() * 3);
+
+   while (imgClicked.src.indexOf(myImages[newImgNumber]) != -1)
+   {
+      newImgNumber = Math.round(Math.random() * 3);
+   }
+
+   imgClicked.src = myImages[newImgNumber];
+   return false;
+}
+
+</SCRIPT>
+</HEAD>
+
+<BODY>
+
+<A HREF="" NAME="linkImg1" onclick="return changeImg(0)">
+   <IMG NAME=img1 SRC="usa.gif" BORDER=0 >
+</A>
+
+<A HREF="" NAME="linkImg2" onclick="return changeImg(1)">
+   <IMG NAME=img1 SRC="mexico.gif" BORDER=0 >
+</A>
+
+</BODY>
+</HTML>

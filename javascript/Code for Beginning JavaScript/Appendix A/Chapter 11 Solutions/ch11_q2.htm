@@ -1,0 +1,80 @@
+<HTML>
+<HEAD>
+<SCRIPT LANGUAGE=JavaScript>
+
+function getCookieValue(cookieName)
+{
+   var cookieValue = document.cookie;
+   var cookieStartsAt = cookieValue.indexOf(" " + cookieName + "=");
+
+  if (cookieStartsAt == -1)
+  {
+      cookieStartsAt = cookieValue.indexOf(cookieName + "=");
+  }
+
+   if (cookieStartsAt == -1)
+   {
+      cookieValue = null;
+   }
+   else
+   {
+
+      cookieStartsAt = cookieValue.indexOf("=", cookieStartsAt) + 1;
+      var cookieEndsAt = cookieValue.indexOf(";", cookieStartsAt);
+      if (cookieEndsAt == -1)
+         cookieEndsAt = cookieValue.length;
+      cookieValue = unescape(cookieValue.substring(cookieStartsAt, cookieEndsAt));
+
+   }
+
+   return cookieValue;
+}
+
+function setCookie(cookieName,cookieValue, cookiePath, cookieExpires)
+{
+   cookieValue = escape(cookieValue);
+   if (cookieExpires == "")
+   {
+      var nowDate = new Date();
+      nowDate.setMonth(nowDate.getMonth() + 6);
+      cookieExpires = nowDate.toGMTString();
+   }
+
+   if (cookiePath != "")
+   {
+      cookiePath = ";Path=" + cookiePath;
+   }
+   document.cookie = cookieName + "=" + cookieValue + ";Expires=" + cookieExpires + cookiePath;
+}
+
+</SCRIPT>
+</HEAD>
+<BODY>
+<IMG SRC="AdvertImage1.jpg" NAME="imgAdvert">
+<SCRIPT>
+
+var imageNumber = getCookieValue("displayedImages");
+var totalImages = 3;
+
+if (imageNumber == null)
+{
+   imageNumber = "1";
+}
+else
+{
+   imageNumber = Math.floor(imageNumber) + 1;
+}
+
+if (totalImages == imageNumber)
+{
+   setCookie("displayedImages","","","Mon, 1 Jan 1970 00:00:00")
+}
+else
+{
+   setCookie("displayedImages",imageNumber,"","")
+}
+
+document.imgAdvert.src = "AdvertImage" + imageNumber + ".jpg";
+</SCRIPT>
+</BODY>
+</HTML>

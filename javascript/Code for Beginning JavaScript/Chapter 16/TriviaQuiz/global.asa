@@ -1,0 +1,9 @@
+<SCRIPT RUNAT=Server LANGUAGE=JavaScript>
+
+function Session_OnStart()
+{
+   Session("NoQsToAsk") = 3;
+   Session("TimeLimit") = -1;
+}
+
+</SCRIPT>

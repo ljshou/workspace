@@ -1,0 +1,64 @@
+<HTML>
+<HEAD>
+<SCRIPT LANGUAGE=JavaScript>
+
+function form1_onsubmit() 
+{
+   var returnValue = false;
+
+   if (document.form1.txtName.value == "")
+   {
+      alert("Please enter your name");
+      document.form1.txtName.focus();
+   }
+   else if (document.form1.txtEmail.value == "")
+   {
+      alert("Please enter your e-mail address");
+      document.form1.txtEmail.focus();
+   }
+   else if (document.form1.txtaSuggestion.value == "")
+   {
+      alert("Please enter your suggestion");
+      document.form1.txtaSuggestion.focus();
+   }
+   else
+   {
+      returnValue = true;
+   }
+
+   return returnValue;
+}
+
+</SCRIPT>
+</HEAD>
+<BODY>
+<FORM ACTION="ReceiveComplexForm.asp"
+   METHOD=post 
+   NAME=form1 
+   onsubmit="return form1_onsubmit()">
+      <P>Name : <INPUT NAME=txtName></P>
+      <P>E-mail : <INPUT NAME=txtEmail></P>
+      Gender : <BR>
+      Female <INPUT TYPE="radio" CHECKED NAME=radGender VALUE=Female>
+      Male <INPUT TYPE="radio" NAME=radGender VALUE=Male> 
+      <BR><BR>
+      Your age range
+      <SELECT NAME=selAgeRange SIZE=1>
+         <OPTION VALUE=0_18 SELECTED>Under 18</OPTION>
+         <OPTION VALUE=19_40>19 - 40</OPTION>
+         <OPTION VALUE=41_70>41 - 70</OPTION>
+         <OPTION VALUE=70+>70+</OPTION>
+      </SELECT>
+      <BR><BR>
+      Tick if you want a response 
+      <INPUT NAME=chkResponse TYPE=checkbox VALUE=SendResponse>
+      <BR><BR>
+      Your suggestion <BR>
+      <TEXTAREA COLS=20 ROWS=10 NAME=txtaSuggestion WRAP=hard></TEXTAREA>
+      <BR><BR>
+      <P>
+      <INPUT NAME=submit1 TYPE=submit VALUE="Send Suggestion">
+      </P>
+</FORM>
+</BODY>
+</HTML>

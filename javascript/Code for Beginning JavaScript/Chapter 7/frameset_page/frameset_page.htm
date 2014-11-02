@@ -1,0 +1,41 @@
+<HTML>
+<HEAD>
+
+<TITLE>The Unchanging frameset page</TITLE>
+<SCRIPT Language=JavaScript>
+
+var pagesVisited = new Array();
+
+function returnPagesVisited()
+{
+   var returnValue = "So far you have visited the following pages\n";
+   var pageVisitedIndex;
+   var numberOfPagesVisited = pagesVisited.length;
+   for (pageVisitedIndex = 0; pageVisitedIndex < numberOfPagesVisited;
+      pageVisitedIndex++)
+   {
+      returnValue = returnValue + pagesVisited[pageVisitedIndex] + "\n";
+   }
+
+   return returnValue;
+}
+
+function addPage(fileName)
+{
+   var fileNameStart = fileName.lastIndexOf("/") + 1;
+   fileName = fileName.substr(fileNameStart);
+   pagesVisited[pagesVisited.length] = fileName;
+
+   return true;
+}
+
+</SCRIPT>
+
+</HEAD>
+<FRAMESET COLS="50%,*">
+   <FRAME NAME=fraLeft SRC="page_a.htm">
+   <FRAME NAME=fraRight SRC="page_b.htm">
+</FRAMESET>
+</HTML>
+
+

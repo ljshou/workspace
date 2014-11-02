@@ -1,0 +1,134 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{CJK}
+\usepackage{latexsym,bm}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{indentfirst}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                           重定义字体、字号命令                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\song}{\CJKfamily{song}}    % 宋体   (Windows自带simsun.ttf)
+\newcommand{\fs}{\CJKfamily{fs}}        % 仿宋体 (Windows自带simfs.ttf)
+\newcommand{\kai}{\CJKfamily{kai}}      % 楷体   (Windows自带simkai.ttf)
+\newcommand{\hei}{\CJKfamily{hei}}      % 黑体   (Windows自带simhei.ttf)
+\newcommand{\li}{\CJKfamily{li}}        % 隶书   (Windows自带simli.ttf)
+\newcommand{\you}{\CJKfamily{you}}      % 幼圆   (Windows自带simyou.ttf)
+\newcommand{\chuhao}{\fontsize{42pt}{\baselineskip}\selectfont}     % 字号设置
+\newcommand{\xiaochuhao}{\fontsize{36pt}{\baselineskip}\selectfont} % 字号设置
+\newcommand{\yichu}{\fontsize{32pt}{\baselineskip}\selectfont}      % 字号设置
+\newcommand{\yihao}{\fontsize{28pt}{\baselineskip}\selectfont}      % 字号设置
+\newcommand{\erhao}{\fontsize{21pt}{\baselineskip}\selectfont}      % 字号设置
+\newcommand{\xiaoerhao}{\fontsize{18pt}{\baselineskip}\selectfont}  % 字号设置
+\newcommand{\sanhao}{\fontsize{15.75pt}{\baselineskip}\selectfont}  % 字号设置
+\newcommand{\xiaosanhao}{\fontsize{15pt}{\baselineskip}\selectfont} % 字号设置
+\newcommand{\sihao}{\fontsize{14pt}{\baselineskip}\selectfont}      % 字号设置
+\newcommand{\xiaosihao}{\fontsize{12pt}{\baselineskip}\selectfont}  % 字号设置
+\newcommand{\wuhao}{\fontsize{10.5pt}{\baselineskip}\selectfont}    % 字号设置
+\newcommand{\xiaowuhao}{\fontsize{9pt}{\baselineskip}\selectfont}   % 字号设置
+\newcommand{\liuhao}{\fontsize{7.875pt}{\baselineskip}\selectfont}  % 字号设置
+\newcommand{\qihao}{\fontsize{5.25pt}{\baselineskip}\selectfont}    % 字号设置
+%%%%%%%%%  END %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+\begin{CJK*}{GBK}{song}
+
+
+\title{非对称矩阵的预对称化方法
+      \thanks{{\hei 收稿日期}: 2008208227}
+}
+
+\author{李某某\thanks{通讯作者}\\某某大学某某学院某某系, \\ 北京, 100000
+   \and 吴某某\\某某研究院某某研究所, \\ 上海, 200000}
+
+\date{2010~年~3~月~29~日}
+
+\maketitle % 生成题头
+
+\begin{abstract}
+针对二维与三维二阶偏微分方程, 在矩形网格上分别采用五点与七点差分离散,
+并采用自然排序得到的矩阵, 证明了比已有结论更弱的可对称化的充分条件.
+实验数值表明:文中方法优于传统的、直接应用到原线性方程组的BICG、
+CGS、BICGSTAB、GMRES 及QMR 等Krylov 子空间迭代法.
+\end{abstract}
+
+
+\section{概述}
+许多物理应用问题求解的核心是:如何高效求解稀疏线性方程组.
+由于直接解法在进行矩阵分解时常引入大量填充元,
+导致存储量与计算量很大, 而且当系数矩阵条件数很大时,
+直接法稳定性差, 使得任何中间舍入误差均可能引起最终计算结果的失真.
+基于这些考虑, 近年来, 迭代法越来越受到重视,
+成为求解稀疏线性方程组的主要方法.
+但迭代法存在不收敛与收敛速度慢~2~个潜在问题,
+解决该问题又有多种方法.
+
+\begin{enumerate}
+\item 构造预条件子. 如果原系数矩阵性质不好, 则难以构造有效的预条件.
+
+\item Smith 于~1984 年在文献~\cite{Smith}~中提出了另一种解决方法,
+他将一个在所有非对角线上元素同时为正数或同时为负数的三对角矩阵,
+通过变换化为对称矩阵, 从而得出原三对角矩阵特征值全为实数的结论.
+\end{enumerate}
+
+\subsection{GMRES~算法}
+文献~\cite{Saad} 中提出了一类针对非对称矩阵的迭代解法,
+实验表明该算法的效果还是不错的.
+
+\subsection{预对称~CG 法}
+为消除以上限制,文献~\cite{Sun}~中考虑了
+~$ C1 = \mathrm{tridiag}\big((-a-\omega_1 h)I, T, (-a+\omega_1 h)I\big)$,
+与
+~$ C = \mathrm{tridiag}\big((-b-\omega_2 h)I , C1 , (-b+\omega_2 h)I\big)$~
+的预对称化, 并考虑了预对称~CG 法的实现. 实验表明: 该算法在迭代次数上虽比
+~BICG、GMRES 及~QMR 少, 但一般比~CGS、BICGSTAB 多, 而且预对称化后再用
+~GMRES 比直接用~GMRES 好. 预对称化时, 仍需~$a,b,\alpha,\beta,\gamma$
+与~$\omega_1, \omega_2$ 均为满足一定条件的实常数, 且在计算时间上仅与
+~GMRES 比较, 未考虑预对称化与预条件子同时使用时的效果.
+
+\section{二维问题的预对称化}
+考虑二维二阶偏微分方程
+\begin{eqnarray}\label{problem}
+Au=g(x,y)
+\end{eqnarray}
+其中
+$$
+Au = c_1\frac{\partial^2 u}{\partial^2 x} +
+     c_2\frac{\partial^2 u}{\partial^2 y}
+$$
+且~$c_1, c_2$ 为~$x,y$ 的实二元函数.
+在矩形网格上用五点差分离散~\eqref{problem}.
+
+
+
+\begin{thebibliography}{99}
+
+\bibitem{Smith}
+G.D.~Smith,
+``Numerical solution of partial differential equations",
+Oxford Clarendon Press ,1984.
+
+\bibitem{Sun}
+孙家昶,
+正定可对称化矩阵与预对称迭代算法,
+计算数学, 22(2000), 379--384.
+
+\bibitem{Saad}
+Y.~Saad, ``Iterative methods for sparse linear systems",
+Boston PWS Publication Corporation, 1996.
+
+\bibitem{Vorst}
+H.A.~Van der Vorst,
+{\em BiCGSTAB : a fast and smoothly converging variant of BiCGfor
+    the solution of non2symmetric linear systems},
+SIAM, Journal on Scientific and Statistical Computing, 12(1992), 631--644.
+
+\bibitem{Golub}
+G.H.~戈卢布, C.F.~范洛恩, 袁亚湘等译,
+``矩阵计算",
+科学出版社, 2001.
+
+\end{thebibliography}
+
+\end{CJK*}
+\end{document}

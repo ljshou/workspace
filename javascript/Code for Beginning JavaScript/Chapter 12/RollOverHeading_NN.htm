@@ -1,0 +1,29 @@
+<HTML>
+<BODY>
+<DIV ID=RollOverDiv STYLE="position:absolute;left:10;top:10"> 
+   <P STYLE='color:black'>Roll your mouse over me</P>
+</DIV>
+
+<SCRIPT LANGUAGE=JavaScript>
+function RollOverDiv_mouseOver()
+{
+   document.RollOverDiv.document.open();
+   document.RollOverDiv.document.write("<P STYLE='color:red'>" +
+      "Wow that feels good</P>");
+   document.RollOverDiv.document.close();
+}
+
+function RollOverDiv_mouseOut()
+{
+   document.RollOverDiv.document.open();
+   document.RollOverDiv.document.write("<P STYLE='color:black'>" +
+      "Roll your mouse over me</P>");
+   document.RollOverDiv.document.close();
+}
+
+document.RollOverDiv.onMouseOver = RollOverDiv_mouseOver
+document.RollOverDiv.onMouseOut = RollOverDiv_mouseOut
+</SCRIPT>
+
+</BODY>
+</HTML>

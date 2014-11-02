@@ -1,0 +1,28 @@
+<HTML>
+<HEAD>
+<SCRIPT LANGUAGE=JavaScript>
+
+function button1_onclick() 
+{
+   var myString = "<TABLE align=center><TR><TD>"
+   myString = myString + "Hello World</TD></TR></TABLE>"
+   myString = myString +"<BR><H2>Heading</H2>";
+
+   var myRegExp = /<[^>\r\n]+>|[^<>\r\n]+/g
+   var resultsArray = myString.match(myRegExp);
+
+   document.form1.textarea1.value = "";
+   document.form1.textarea1.value = resultsArray.join("\r\n");
+}
+
+</SCRIPT>
+</HEAD>
+
+<BODY>
+<FORM NAME=form1>
+   <TEXTAREA ROWS=20 COLS=40 NAME=textarea1></TEXTAREA>
+   <INPUT TYPE="button" VALUE="Split HTML" NAME=button1 
+      onclick="return button1_onclick()">
+</FORM>
+</BODY>
+</HTML>

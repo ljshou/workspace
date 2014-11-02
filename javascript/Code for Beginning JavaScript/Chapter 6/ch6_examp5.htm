@@ -1,0 +1,30 @@
+<HTML>
+<HEAD>
+
+<SCRIPT LANGUAGE=JavaScript>
+function DisplayEvent(eventName)
+{
+   var myMessage = window.document.form1.textarea2.value;
+   myMessage = myMessage + eventName;
+   window.document.form1.textarea2.value = myMessage;
+}
+</SCRIPT>
+</HEAD>
+
+<BODY>
+<FORM NAME=form1>
+   <TEXTAREA ROWS=15 COLS=40 NAME=textarea1 
+      onchange="DisplayEvent('onchange\n');" 
+      onkeydown="DisplayEvent('onkeydown\n');" 
+      onkeypress="DisplayEvent('onkeypress\n');" 
+      onkeyup="DisplayEvent('onkeyup\n\n');">
+   </TEXTAREA>
+   <TEXTAREA ROWS=15 COLS=40 NAME=textarea2>
+   </TEXTAREA>
+   <BR><BR>
+   <INPUT TYPE="button" VALUE="Clear Event TextArea" 
+      NAME=button1 onclick="window.document.form1.textarea2.value=''">
+</FORM>
+
+</BODY>
+</HTML>

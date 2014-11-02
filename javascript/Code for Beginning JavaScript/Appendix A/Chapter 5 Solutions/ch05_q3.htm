@@ -1,0 +1,23 @@
+<HTML>
+<HEAD>
+<SCRIPT>
+
+function mouseOver()
+{
+	document.images["myImage"].src = "Img2.gif";
+}
+
+function mouseOut()
+{
+	document.images["myImage"].src = "Img1.gif";
+}
+</SCRIPT>
+</HEAD>
+<BODY>
+
+<A STYLE="cursor : default" HREF="" onclick="return false" NAME="link1" onmouseover="mouseOver()" onmouseout="mouseOut()">
+   <IMG SRC="Img1.gif" NAME="myImage">
+</A>
+
+</BODY>
+</HTML>

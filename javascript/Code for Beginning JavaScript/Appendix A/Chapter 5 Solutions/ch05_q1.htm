@@ -1,0 +1,24 @@
+<HTML>
+<HEAD>
+<SCRIPT>
+function displayLinks()
+{
+   var linksCounter
+
+   for (linksCounter = 0; linksCounter < document.links.length; linksCounter++)
+   {
+      alert(document.links[linksCounter].href)
+   }
+
+}
+</SCRIPT>
+</HEAD>
+<BODY onload="displayLinks()">
+
+<A href="link0.htm" >Link 0</A>
+<A href="link1.htm">Link 2</A>
+<A href="link2.htm">Link 2</A>
+
+
+</BODY>
+</HTML>

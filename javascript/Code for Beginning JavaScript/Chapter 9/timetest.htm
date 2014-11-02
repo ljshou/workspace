@@ -1,0 +1,27 @@
+<HTML>
+<HEAD>
+<SCRIPT LANGUAGE = JavaScript>
+   var localTime = new Date();
+</SCRIPT>
+</HEAD>
+<BODY>
+<H4>
+   UTC Time is 
+   <SCRIPT LANGUAGE = JavaScript>
+      document.write(localTime.toUTCString());
+   </SCRIPT>
+</H4>
+<H4>
+   Local Time is 
+   <SCRIPT LANGUAGE = JavaScript>
+      document.write(localTime.toLocaleString());
+   </SCRIPT>
+</H4>
+<H4>
+   Time Zone Offset is 
+   <SCRIPT LANGUAGE = JavaScript>
+      document.write(localTime.getTimezoneOffset());
+</SCRIPT>
+</H4>
+</BODY>
+</HTML>

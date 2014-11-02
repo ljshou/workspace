@@ -1,0 +1,56 @@
+<HTML>
+<HEAD>
+<SCRIPT LANGUAGE=JavaScript>
+
+function bttnAdd_onClick()
+{
+   var elemPara = document.getElementById("Para1");
+   var elemTxtBox = document.getElementById("textarea1");
+
+   var oldTxtNode = elemPara.firstChild;
+   var oldText = oldTxtNode.nodeValue;
+
+   var newText = oldText + elemTxtBox.value;
+   var newTxtNode = document.createTextNode(newText);
+
+   elemPara.replaceChild(newTxtNode, oldTxtNode);
+}
+
+function bttnNew_onClick()
+{
+   var elemPara = document.getElementById("Para1");
+   var elemTxtBox = document.getElementById("textarea1");
+
+   var newText = elemTxtBox.value;
+   var newTxtNode = document.createTextNode(newText);
+
+   var elemNew = document.createElement("P");
+   elemNew.appendChild(newTxtNode);
+
+   document.body.insertBefore(elemNew, elemTxtBox); 
+}
+
+function bttnRem_onClick()
+{
+   var elemTxtBox = document.getElementById("textarea1");
+   var elemLastPara = elemTxtBox.previousSibling;
+   document.body.removeChild(elemLastPara);
+}
+</SCRIPT>
+</HEAD>
+
+<BODY>
+<P ID="Para1">
+   Some text...
+</P>
+<TEXTAREA COLS=30 ID="textarea1" ROWS=3></TEXTAREA>
+<BR>
+<INPUT TYPE="button" VALUE="Add Text" NAME="bttnAdd" 
+   onclick="bttnAdd_onClick()">
+<INPUT TYPE="button" VALUE="New Paragraph" NAME="bttnNew" 
+   onclick="bttnNew_onClick()">
+<INPUT TYPE="button" VALUE="Remove Paragraph" NAME="bttnRem" 
+   onclick="bttnRem_onClick()">
+
+</BODY>
+</HTML>

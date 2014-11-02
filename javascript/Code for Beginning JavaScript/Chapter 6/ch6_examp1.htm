@@ -1,0 +1,32 @@
+<HTML>
+<HEAD>
+<SCRIPT LANGUAGE=JavaScript>
+
+function window_onload()
+{
+   var numberForms = document.forms.length;
+   var formIndex;
+   for (formIndex = 0; formIndex < numberForms; formIndex++)
+   {
+      alert(document.forms[formIndex].name);
+   }
+}
+
+</SCRIPT>
+</HEAD>
+<BODY LANGUAGE=JavaScript onLoad="window_onload()">
+
+<FORM NAME="form1">
+<P>This is inside form1</P>
+</FORM>
+
+<FORM NAME="form2">
+<P>This is inside form2</P>
+</FORM>
+
+<FORM NAME="form3">
+<P>This is inside form3</P>
+</FORM>
+
+</BODY>
+</HTML>

@@ -1,0 +1,88 @@
+<HTML>
+<HEAD>
+</HEAD>
+<BODY>
+<SCRIPT LANGUAGE="JavaScript">
+var TableElem = document.createElement("TABLE")
+var THElem = document.createElement("THEAD")
+var TRElem1 = document.createElement("TR")
+var TRElem2 = document.createElement("TR")
+var TRElem3 = document.createElement("TR")
+var TDElem1 = document.createElement("TD")
+var TDElem2 = document.createElement("TD")
+var TDElem3 = document.createElement("TD")
+var TDElem4 = document.createElement("TD")
+var TDElem5 = document.createElement("TD")
+var TDElem6 = document.createElement("TD")
+var TDElem7 = document.createElement("TD")
+var TDElem8 = document.createElement("TD")
+var TDElem9 = document.createElement("TD")
+var TBODYElem = document.createElement("TBODY")
+var TextNodeA1 = document.createTextNode("Car")
+var TextNodeA2 = document.createTextNode("Top Speed")
+var TextNodeA3 = document.createTextNode("Price")
+var TextNodeB1 = document.createTextNode("Chevrolet")
+var TextNodeB2 = document.createTextNode("120mph")
+var TextNodeB3 = document.createTextNode("$10,000")
+var TextNodeC1 = document.createTextNode("Pontiac")
+var TextNodeC2 = document.createTextNode("140mph")
+var TextNodeC3 = document.createTextNode("$14,000")
+
+var docNavigate = document.documentElement;  //Starts with HTML document
+docNavigate = docNavigate.lastChild;     //Moves to BODY element
+docNavigate.appendChild(TableElem);      //Adds the TABLE element
+docNavigate = docNavigate.lastChild;     //Moves to the TABLE element
+docNavigate.appendChild(THElem);         //Adds the TH element
+docNavigate = docNavigate.firstChild;    //Moves to the THEAD element
+docNavigate.appendChild(TRElem1);        //Adds the TR element
+docNavigate = docNavigate.firstChild;    //Moves the TR element
+docNavigate.appendChild(TDElem1);        //Adds the first TD element in the heading
+docNavigate.appendChild(TDElem2);        //Adds the second TD element in the heading
+docNavigate.appendChild(TDElem3);        //Adds the third TD element in the heading
+docNavigate = docNavigate.firstChild;    //Moves to the first TD element
+docNavigate.appendChild(TextNodeA1);     //Adds the second text node
+docNavigate = docNavigate.nextSibling;   //Moves to the next TD element
+docNavigate.appendChild(TextNodeA2);     //Adds the second text node
+docNavigate = docNavigate.nextSibling;   //Moves to the next TD element
+docNavigate.appendChild(TextNodeA3);     //Adds the third text node
+
+docNavigate = docNavigate.parentNode;    //Moves back to the TR element
+docNavigate = docNavigate.parentNode;    //Moves back to the THEAD element
+docNavigate = docNavigate.parentNode;    //Moves back to the TABLE element
+docNavigate.appendChild(TBODYElem);      //Adds the TBODY element
+docNavigate = docNavigate.lastChild;     //Moves to the TBODY element
+docNavigate.appendChild(TRElem2);        //Adds the second TR element
+docNavigate = docNavigate.lastChild;     //Moves to the second TR element
+docNavigate.appendChild(TDElem4);        //Adds the TD element
+docNavigate.appendChild(TDElem5);        //Adds the TD element
+docNavigate.appendChild(TDElem6);        //Adds the TD element
+docNavigate = docNavigate.firstChild;    //Moves to the first TD element
+docNavigate.appendChild(TextNodeB1);     //Adds the first text node
+docNavigate = docNavigate.nextSibling;   //Moves to the next TD element
+docNavigate.appendChild(TextNodeB2);     //Adds the second text node
+docNavigate = docNavigate.nextSibling;   //Moves to the next TD element
+docNavigate.appendChild(TextNodeB3);     //Adds the third text node
+
+docNavigate = docNavigate.parentNode;    //Moves back to the TR element
+docNavigate = docNavigate.parentNode;    //Moves back to the TBODY element
+docNavigate.appendChild(TRElem3);        //Adds the TR element
+docNavigate = docNavigate.lastChild;     //Moves to the TR element
+docNavigate.appendChild(TDElem7);        //Adds the TD element
+docNavigate.appendChild(TDElem8);        //Adds the TD element
+docNavigate.appendChild(TDElem9);        //Adds the TD element
+docNavigate = docNavigate.firstChild;    //Moves to the TD element
+docNavigate.appendChild(TextNodeC1);     //Adds the first text node
+docNavigate = docNavigate.nextSibling;   //Moves to the next TD element
+docNavigate.appendChild(TextNodeC2);     //Adds the second text node
+docNavigate = docNavigate.nextSibling;   //Moves to the next TD element
+docNavigate.appendChild(TextNodeC3);     //Adds the third text node
+
+docAttr = document.getElementsByTagName("TABLE").item(0)
+docAttr.setAttribute("border","1")
+
+docNewAttr = document.getElementsByTagName("THEAD").item(0)
+docNewAttr.setAttribute("align","center")
+
+</SCRIPT>
+</BODY>
+</HTML>

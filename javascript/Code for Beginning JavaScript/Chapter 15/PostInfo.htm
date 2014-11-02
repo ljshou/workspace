@@ -1,0 +1,24 @@
+<HTML>
+<HEAD>
+
+<SCRIPT LANGUAGE=JavaScript>
+
+function butNavigate_onclick()
+{
+   var urlData = "Name=" + escape("Paul Wilton") + "&Age=31";
+   window.location.href = "GetInfo.asp?" + urlData;
+}
+
+</SCRIPT>
+</HEAD>
+<BODY>
+
+<A HREF="GetInfo.asp?Name=Paul%20Wilton&Age=31">Get Info</A>
+<FORM NAME=form1 ID=form1>
+   <INPUT TYPE="button"
+      VALUE="Send Data"
+      NAME=butNavigate 
+      onclick="return butNavigate_onclick()">
+</FORM>
+</BODY>
+</HTML>

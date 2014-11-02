@@ -1,0 +1,76 @@
+\documentclass[11pt]{article}
+
+%============引用宏包 和 自定义命令========================%
+\usepackage{CJK}
+\usepackage{graphicx}
+\usepackage{latexsym,bm}
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+%============ 重定义字体、字号命令 =======================%
+\newcommand{\hei}{\CJKfamily{hei}}
+
+\begin{document}
+\begin{CJK}{UTF8}{gkai}
+%------------------------文章标题---------------------------------------------------------
+\rhead{\tt L.J.SHOU  \includegraphics[scale=0.2]{ICT.eps} }  %页眉
+\title{ \textbf{Assignment 8 of Algorithm Design and Analysis}}
+\author{L.J.SHOU  寿林钧\\{\slshape No}. \bf 201228013229133}
+\date{Jan.02 2013}
+\maketitle % 生成题头
+\noindent
+{\bf \large  2 Bin Packing}\\[2mm]
+Bin Packing problem is as follows: Given n items with sizes$ a_1 , ..., a_{n}\in (0, 1]$,
+find a packing in unit-sized bins that minimizes the number of bins used.
+Give a 2-approximation algorithm for this problem.\\
+解：\\
+新建一个 Bin b 和一个大顶堆 H, Bin 的值定义为其剩余容量 c. 将 b 插入 H 中。
+\bf{for} i=0 to n \bf{do}\\
+t = H 的堆顶元素。\\
+\bf{if} ai 能够放入 H 的堆顶的 Bin b 中 \bf{then}\\
+将 ai 放入 b 中;\\
+c(b) = c(b) - ai;\\
+\bf{else}\\
+新建一个 Bin t 将 ai 放入 t 中\\
+c(t) = 1 - ai;\\
+将 t 插入 H 中;\\
+\bf{end if}\\
+\bf{end for}\\
+首先不会有两个罐的剩余容量同时少于 1/2,因为否则,
+第二个罐的物品会直接放入每一个罐中。根据算法,不会新建一个罐。\\
+\indent
+
+若每个罐的容量都大于或等于 1/2,\\
+则 $\sum_{i=1}^k \geq k/2.$ 故$ k\leq2\sum_{i=1}^na_i\leq2[\sum_{i=1}^na_i]\leq2B^{*}$\\
+\indent
+若每个罐的容量小于1/2,则\\
+$\sum_{i=1}^ka_i = \sum_{i=1}^{k-1}v_i+v_k \geq \sum_{i=1}^{k-1}(1-v_k)+v_k \geq(k-1)-(k-2)v_k \geq k/2.$\\
+
+
+\noindent
+{\bf \large  4 Approximation Algorithm}\\[2mm]
+Consider the following maximization version of the 3-Dimensional Matching
+Problem. Given disjoint sets X, Y , Z, and given a set T ⊆ X × Y × Z
+of ordered triples, a subset M ⊆ T is a 3 − dimensional matching if each
+element of X ∪ Y ∪ Z is contained in at most one of these triples. The
+Maximum 3 − Dimensional M atching P roblem is to find a 3-dimensional
+matching M of maximum size. (You may assume$ |X| = |Y| = |Z|$ if you
+want.)\\
+Give a polynomial-time algorithm that finds a 3-dimensional matching of
+size at least 1 times the maximum possible size.\\
+\emph{Proof:}\\
+$T = M ; M =\emptyset;$\\ 
+\bf{while}$T\neq\emptyset$\bf{do}\\
+$t$ = any element in $T$;
+$M = M \cup {t};$\\
+$T = T \{t \text{and all its neighbors in} T \}$;\\
+\bf{end while;}\\
+
+
+
+
+\end{CJK}
+\end{document}
+

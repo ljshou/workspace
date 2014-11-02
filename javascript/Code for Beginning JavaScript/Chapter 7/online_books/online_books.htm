@@ -1,0 +1,39 @@
+<HTML>
+<HEAD>
+<TITLE>Online Books</TITLE>
+<SCRIPT LANGUAGE="JavaScript">
+
+var detailsWindow;
+
+function showDetails(bookURL)
+{
+   detailsWindow = window.open(bookURL,"bookDetails","width=400,height=350");
+   detailsWindow.focus();
+   return false;
+}
+
+</SCRIPT>
+</HEAD>
+<BODY>
+<H2 ALIGN=center>Online Book Buyer</H2>
+<P>
+Click any of the images below for more details
+</P>
+<STRONG>Beginning Active Server Pages 3</STRONG>
+<BR>
+<A NAME="begASPLink" HREF=""
+   onclick="return showDetails('beg_asp3_details.htm')">
+      <IMG SRC="beg_asp3.gif" BORDER=0>
+</A>
+<BR><BR>
+<STRONG>Professional JavaScript</STRONG>
+<BR>
+<A NAME="profJSLink" HREF=""
+   onclick="return showDetails('prof_js_details.htm')">
+      <IMG SRC="prof_js.gif" BORDER=0>
+</A>
+</BODY>
+</HTML>
+
+
+

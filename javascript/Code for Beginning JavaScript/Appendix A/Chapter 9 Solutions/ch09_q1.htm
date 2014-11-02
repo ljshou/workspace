@@ -1,0 +1,46 @@
+<HTML>
+<HEAD>
+<SCRIPT LANGUAGE=JavaScript>
+
+var imagesSelected = new Array(false,false,false);
+var noOfImages = 3;
+var totalImagesSelected = 0;
+
+function window_onload() 
+{
+   setInterval("switchImage()",4000);
+}
+
+function switchImage() 
+{
+
+   var imageIndex;
+
+   if (totalImagesSelected == noOfImages)
+   {
+      for (imageIndex = 0; imageIndex < noOfImages; imageIndex++)
+      {
+         imagesSelected[imageIndex] = false;
+      }
+
+      totalImagesSelected = 0;
+   }
+
+
+var selectedImage = Math.floor(Math.random() * noOfImages) + 1;
+while (imagesSelected[selectedImage - 1] == true)
+{
+      selectedImage = Math.floor(Math.random() * noOfImages) + 1;
+   }
+   totalImagesSelected++;
+   imagesSelected[selectedImage - 1] = true;
+   document.imgAdvert.src = "AdvertImage" + selectedImage + ".jpg";
+
+}
+
+</SCRIPT>
+</HEAD>
+<BODY ONLOAD="window_onload()">
+<IMG SRC="AdvertImage1.jpg" NAME="imgAdvert">
+</BODY>
+</HTML>

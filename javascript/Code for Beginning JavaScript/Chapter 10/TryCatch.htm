@@ -1,0 +1,24 @@
+<HTML>
+<BODY>
+<SCRIPT LANGUAGE=JavaScript>
+
+try
+{
+   alert('This is code inside the try clause');
+   alert('No Errors so catch code will not execute');
+}
+catch(exception)
+{
+   if (exception.description == null)
+   {
+      alert("Error is " + exception.message)
+   }
+   else
+   {
+      alert("Error is " + exception.description);
+   }
+}
+
+</SCRIPT>
+</BODY>
+</HTML>

@@ -1,0 +1,71 @@
+<HTML>
+<HEAD>
+<SCRIPT>
+
+var days = new Array();
+days[0] = "Sunday";
+days[1] = "Monday";
+days[2] = "Tuesday";
+days[3] = "Wednesday";
+days[4] = "Thursday";
+days[5] = "Friday";
+days[6] = "Saturday";
+
+function dayOfWeek()
+{
+
+   var form = document.form1;
+   var date = parseInt(form.txtDate.value)
+   var year = parseInt(form.txtYear.value)
+ 
+   if (isNaN(date) || isNaN(year))
+   {
+      alert("Please enter a valid whole number");
+   }
+   else
+   {
+      if (date < 1 || date > 31)
+      {
+         alert("Day of the month must be between 1 and 31");
+      }
+      else
+      {
+         userDate = date + " ";
+         userDate = userDate + form.selMonth.options[form.selMonth.selectedIndex].value;
+         userDate = userDate + " " + year;
+         var dateThen = new Date(userDate);
+         alert(days[dateThen.getDay()]);
+      }
+   }
+}
+</SCRIPT>
+</HEAD>
+<BODY>
+
+<P>Find the day of your birth</P>
+<P>
+<FORM name=form1>
+<INPUT TYPE=text name=txtDate size=2 maxlength=2>
+<SELECT name=selMonth>
+   <OPTION selected value="Jan">Jan</OPTION>
+   <OPTION selected value="Feb">Feb</OPTION>
+   <OPTION selected value="Mar">Mar</OPTION>
+   <OPTION selected value="Apr">Apr</OPTION>
+   <OPTION selected value="May">May</OPTION>
+   <OPTION selected value="Jun">Jun</OPTION>
+   <OPTION selected value="Jul">Jul</OPTION>
+   <OPTION selected value="Aug">Aug</OPTION>
+   <OPTION selected value="Sept">Sept</OPTION>
+   <OPTION selected value="Oct">Oct</OPTION>
+   <OPTION selected value="Nov">Nov</OPTION>
+   <OPTION selected value="Dec">Dec</OPTION>
+</SELECT>
+<INPUT TYPE=text name=txtYear size=4 maxlength=4>
+<BR>
+<INPUT type="button" value="Day of the week" 
+      onclick="dayOfWeek()" name=button1>
+</FORM>
+</P>
+
+</BODY>
+</HTML>

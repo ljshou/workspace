@@ -1,0 +1,27 @@
+<HTML>
+<HEAD>
+
+<SCRIPT LANGUAGE=JavaScript>
+
+function myButton_onmouseup() 
+{
+   document.form1.myButton.value = "Mouse Goes Up"
+}
+
+function myButton_onmousedown() 
+{
+   document.form1.myButton.value = "Mouse Goes Down"
+}
+
+</SCRIPT>
+</HEAD>
+<BODY>
+<FORM NAME=form1>
+   <INPUT TYPE='button' NAME='myButton' VALUE=' Mouse Goes Up ' 
+   onmouseup="myButton_onmouseup()"
+   onmousedown="myButton_onmousedown()">
+</FORM>
+</BODY>
+</HTML>
+
+

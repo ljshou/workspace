@@ -1,0 +1,63 @@
+<HTML>
+<HEAD>
+</HEAD>
+<BODY>
+<H1 ID="Heading1">My Heading</H1>
+<P ID="Paragraph1">This is some text in a paragraph</P>
+
+<SCRIPT LANGUAGE="Javascript">
+var HTMLElement;     // HTMLElement stores reference to <HTML>
+var HeadingElement;  // HeadingElement stores refrence to <HEAD>
+var BodyElement;     // BodyElement stores refrence to <BODY>
+var H1Element;       // H1Element stores reference to <H1>
+var PElement;        // PElement stores reference to <P>
+
+HTMLElement = document.documentElement;
+
+HeadingElement = HTMLElement.firstChild;
+alert(HeadingElement.tagName);
+
+if(HeadingElement.nextSibling.nodeType==3)
+{
+	BodyElement = HeadingElement.nextSibling.nextSibling;
+}
+else
+{
+	BodyElement = HeadingElement.nextSibling;
+}
+alert(BodyElement.tagName);
+
+if(BodyElement.firstChild.nodeType==3)
+{
+	H1Element = BodyElement.firstChild.nextSibling;
+}
+else
+{
+	H1Element = BodyElement.firstChild;
+}
+alert(H1Element.tagName);
+H1Element.style.fontFamily = "Arial";
+
+if(H1Element.nextSibling.nodeType==3)
+{
+	PElement = H1Element.nextSibling.nextSibling;
+}
+else
+{
+	PElement = H1Element.nextSibling;
+}
+alert(PElement.tagName);
+PElement.style.fontFamily = "Arial";
+
+if(PElement.previousSibling.nodeType==3)
+{
+	H1Element = PElement.previousSibling.previousSibling
+}
+else
+{
+	H1Element = PElement.previousSibling
+}
+H1Element.style.fontFamily = "Courier"
+</SCRIPT>
+</BODY>
+</HTML>

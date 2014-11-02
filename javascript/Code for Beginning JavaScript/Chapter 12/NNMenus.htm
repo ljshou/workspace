@@ -1,0 +1,203 @@
+<HTML>
+<HEAD>
+
+<STYLE>
+   LAYER { border : none 0px;}
+   IMG { border : none 0px;}
+   .LayerItemMenu {
+      font-family:verdana;
+      font-size:60%;
+      margin:0;
+      padding:0;
+      border: 3px groove lightgrey;
+   }
+   .textLink { color: white; text-decoration: none;}
+</STYLE>
+
+<SCRIPT LANGUAGE=JavaScript>
+
+if (!(document.layers))
+{
+   if (document.all)
+   {
+      window.location.replace("IEMenus.htm");
+   }
+   else
+   {
+      window.location.replace("NoMenus.htm");
+   }
+}
+
+
+var woodMenuItems = new Array();
+woodMenuItems[0] = new Array();
+
+woodMenuItems[0][0] = "Oak";
+woodMenuItems[0][1] = "OakWood.htm";
+woodMenuItems[0][2] = "Oak Timber";
+woodMenuItems[0][3] = 0;
+
+woodMenuItems[1] = new Array();
+woodMenuItems[1][0] = "Teak";
+woodMenuItems[1][1] = "TeakWood.htm";
+woodMenuItems[1][2] = "Teak Timber";
+woodMenuItems[1][3] = 22;
+
+woodMenuItems[2] = new Array();
+woodMenuItems[2][0] = "Pine";
+woodMenuItems[2][1] = "PineWood.htm";
+woodMenuItems[2][2] = "Pine Timber";
+woodMenuItems[2][3] = 44;
+
+woodMenuItems[3] = new Array();
+woodMenuItems[3][0] = "Yew";
+woodMenuItems[3][1] = "YewWood.htm";
+woodMenuItems[3][2] = "Yew Timber";
+woodMenuItems[3][3] = 66;
+
+var metalMenuItems = new Array();
+metalMenuItems[0] = new Array();
+
+metalMenuItems[0][0] = "Steel";
+metalMenuItems[0][1] = "SteelMetal.htm";
+metalMenuItems[0][2] = "Steel Girders";
+metalMenuItems[0][3] = 0;
+
+metalMenuItems[1] = new Array();
+metalMenuItems[1][0] = "Copper";
+metalMenuItems[1][1] = "CopperMetal.htm";
+metalMenuItems[1][2] = "Copper Pipes";
+metalMenuItems[1][3] = 22;
+
+metalMenuItems[2] = new Array();
+metalMenuItems[2][0] = "Gold";
+metalMenuItems[2][1] = "GoldMetal.htm";
+metalMenuItems[2][2] = "Gold Ingots";
+metalMenuItems[2][3] = 44;
+
+var bricksMenuItems = new Array();
+bricksMenuItems[0] = new Array();
+
+bricksMenuItems[0][0] = "StdHouse";
+bricksMenuItems[0][1] = "StdHousebricks.htm";
+bricksMenuItems[0][2] = "Standard House Brick";
+bricksMenuItems[0][3] = 0;
+
+bricksMenuItems[1] = new Array();
+bricksMenuItems[1][0] = "LargeHouseBrick";
+bricksMenuItems[1][1] = "LargeHousebricks.htm";
+bricksMenuItems[1][2] = "Large House Bricks";
+bricksMenuItems[1][3] = 22;
+
+bricksMenuItems[2] = new Array();
+bricksMenuItems[2][0] = "BreezeBlock";
+bricksMenuItems[2][1] = "BreezeBlock.htm";
+bricksMenuItems[2][2] = "Breeze Block";
+bricksMenuItems[2][3] = 44;
+
+function createMenu(menuName, menuItems)
+{
+   var outerLayerHTML = '<LAYER ID="' + menuName + 'MenuLayer" '
+   outerLayerHTML = outerLayerHTML + 
+      ' onmouseout="this.top = -1400;" LEFT=120 TOP=-1400 ZINDEX=99>'
+
+   var totalLayers = menuItems.length;
+   var layerCount;
+   var innerLayerHTML = "";
+   var layerName = "";
+   for (layerCount = 0; layerCount < totalLayers; layerCount++)
+   {
+      layerName = menuName + menuItems[layerCount][0];
+      innerLayerHTML = innerLayerHTML + '<LAYER ID="' + layerName + '" '
+      innerLayerHTML = innerLayerHTML + ' TOP=' + menuItems[layerCount][3] 
+         + ' LEFT=0 ' 
+      innerLayerHTML = innerLayerHTML + ' CLASS="LayerItemMenu" ' 
+      innerLayerHTML = innerLayerHTML + ' WIDTH=175 HEIGHT=20 BGCOLOR="orange" '
+      innerLayerHTML = innerLayerHTML + ' onmouseover="showOverMenu(this,\'' 
+         + menuItems[layerCount][2] + '\''
+      innerLayerHTML = innerLayerHTML + ',\'' 
+         + menuItems[layerCount][1] + '\')" '
+      innerLayerHTML = innerLayerHTML + ' onmouseout="showOutMenu(this,\'' 
+         + menuItems[layerCount][2] + '\')">'
+      innerLayerHTML = innerLayerHTML + menuItems[layerCount][2] + '</LAYER>';
+   }
+
+   return outerLayerHTML + innerLayerHTML + '</LAYER>';
+}
+
+
+function showNNMenu(evt)
+{
+   var srcLayer = evt.target;
+   var menuLayerId = new String(srcLayer.name).replace("ImgLayer","Layer");
+   document.layers[menuLayerId].top = srcLayer.pageY + 10;
+   document.layers[menuLayerId].left = parseInt(srcLayer.pageX 
+      + srcLayer.clip.width + 4);
+}
+
+function hideNNMenu(evt)
+{
+   var srcLayer = evt.target;
+   if (evt.pageX < srcLayer.clip.right)
+   {
+      var menuLayerId = new String(srcLayer.name).replace("ImgLayer","Layer");
+      document.layers[menuLayerId].top = -1400;
+   }
+}
+
+function showOverMenu(menuLayer, menuText, menuPage)
+{
+   menuLayer.bgColor = "blue";
+   menuLayer.document.open();
+   menuLayer.document.write('<DIV CLASS="LayerItemMenu">');
+   menuLayer.document.write('<A HREF="' + menuPage 
+      + '" CLASS="textLink">' + menuText + '</A>');
+   menuLayer.document.write('</DIV>')
+   menuLayer.document.close();
+}
+
+function showOutMenu(menuLayer, menuText)
+{
+   menuLayer.bgColor = "orange";
+   menuLayer.document.open();
+   menuLayer.document.write('<DIV CLASS="LayerItemMenu">' 
+      + menuText + '</DIV>');
+   menuLayer.document.close();
+}
+
+</SCRIPT>
+</HEAD>
+
+<BODY>
+
+<LAYER ID=WoodMenuImgLayer 
+   onmouseover="showNNMenu(event)"
+   onmouseout="hideNNMenu(event)"
+   LEFT=10
+   TOP=10>
+      <IMG SRC="WoodButton.gif" BORDER=0>
+</LAYER>
+<LAYER ID=MetalMenuImgLayer 
+   onmouseover="showNNMenu(event)"
+   onmouseout="hideNNMenu(event)"
+   TOP=50
+   LEFT=10>
+   <IMG SRC="MetalButton.gif" BORDER=0>
+</LAYER>
+<LAYER ID=BricksMenuImgLayer 
+   onmouseover="showNNMenu(event)"
+   onmouseout="hideNNMenu(event)"
+   TOP=90
+   LEFT=10>
+      <IMG SRC="BricksButton.gif" BORDER=0>
+</LAYER>
+
+<SCRIPT LANGUAGE=JavaScript>
+   document.write(createMenu("Wood",woodMenuItems));
+   document.write(createMenu("Metal",metalMenuItems));
+   document.write(createMenu("Bricks",bricksMenuItems));
+</SCRIPT>
+
+
+</BODY>
+</HTML>

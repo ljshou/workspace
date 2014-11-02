@@ -1,0 +1,26 @@
+<HTML>
+<HEAD>
+<SCRIPT LANGUAGE=JavaScript>
+
+function document_onclick(evtObj)
+{
+   if (evtObj.which == 1)
+   {
+      document.xLayer.left = evtObj.x;
+      document.xLayer.top = evtObj.y;
+   }
+}
+
+document.onclick = document_onclick;
+
+</SCRIPT>
+</HEAD>
+
+<BODY>
+
+<LAYER ID="xLayer" TOP=-100 LEFT=0>
+   <H3>X</H3>
+</LAYER>
+
+</BODY>
+</HTML>

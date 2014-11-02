@@ -1,0 +1,52 @@
+<HTML>
+<HEAD>
+<SCRIPT LANGUAGE = JavaScript>
+
+var message = "Beginning JavaScript from Wrox Press";
+var startChar = 0;
+var maxLength;
+
+function window_onload() 
+{
+   var availWidth = 0;
+   var spaces = "";
+   if (navigator.appName == "Netscape")
+   {
+      availWidth = window.innerWidth / 10;
+   }
+   else
+   {
+      availWidth = document.body.scrollWidth / 10;
+   }
+
+   while (availWidth > 0)
+   {
+      spaces = spaces + " ";
+      availWidth--;
+   }
+
+   message = spaces + message;
+
+   maxLength = message.length - 1;
+
+   setInterval("scrollMessage()",65);
+}
+
+function scrollMessage()
+{
+   window.status = message.substring(startChar);
+   startChar++;
+   if (startChar == maxLength)
+   {
+      startChar = 0;
+   }
+}
+
+</SCRIPT>
+</HEAD>
+<BODY LANGUAGE=JavaScript onload="return window_onload()">
+
+<P>Scrolling Status Bar Example</P>
+
+</BODY>
+</HTML>

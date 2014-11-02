@@ -1,0 +1,29 @@
+<HTML>
+<HEAD>
+<SCRIPT LANGUAGE=JavaScript>
+
+function myPara_onmouseout() 
+{ 
+   var myPara = document.getElementById("DynamicText");
+   myPara.firstChild.nodeValue = "Roll your mouse over my text";
+   myPara.style.color = "Black"
+}
+
+function myPara_onmouseover() 
+{
+   var myPara = document.getElementById("DynamicText");
+   myPara.firstChild.nodeValue = "Wow that feels good!!!";
+   myPara.style.color = "Red"
+}
+
+</SCRIPT>
+</HEAD>
+<BODY>
+
+<P ID="DynamicText" onmouseout="return myPara_onmouseout()" 
+onmouseover="return myPara_onmouseover()">
+   Roll your mouse over my text
+</P>
+
+</BODY>
+</HTML>

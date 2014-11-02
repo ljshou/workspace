@@ -1,0 +1,39 @@
+<HTML>
+<HEAD>
+<SCRIPT>
+
+function getBrowserName()
+{
+   var lsBrowser = navigator.appName;
+   if (lsBrowser.indexOf("Microsoft") >= 0)
+   {
+      lsBrowser = "MSIE";
+   }
+   else if (lsBrowser.indexOf("Netscape") >= 0)
+   {
+      lsBrowser = "NETSCAPE";
+   }
+   else
+   {
+      lsBrowser = "UNKNOWN";
+   }
+   return lsBrowser;
+}
+
+
+function checkBrowser()
+{
+   if (getBrowserName() == "MSIE")
+   {
+      window.location.replace("IEOnly.htm");
+   }
+}
+
+</SCRIPT>
+</HEAD>
+<BODY ONLOAD="checkBrowser()">
+
+<H2>Welcome to the Netscape Navigator only page</H2>
+
+</BODY>
+</HTML>

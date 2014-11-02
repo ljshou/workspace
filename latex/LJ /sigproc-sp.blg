@@ -1,0 +1,49 @@
+This is BibTeX, Version 0.99d (TeX Live 2012/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: sigproc-sp.aux
+The style file: abbrv.bst
+Database file #1: sigproc.bib
+Warning--I didn't find a database entry for "bramms:babel"
+Warning--there's a number but no volume in herlihy:methodology
+You've used 5 entries,
+            2118 wiz_defined-function locations,
+            534 strings with 4366 characters,
+and the built_in function-call counts, 1439 in all, are:
+= -- 140
+> -- 41
+< -- 1
++ -- 18
+- -- 12
+* -- 87
+:= -- 241
+add.period$ -- 16
+call.type$ -- 5
+change.case$ -- 19
+chr.to.int$ -- 0
+cite$ -- 6
+duplicate$ -- 67
+empty$ -- 135
+format.name$ -- 12
+if$ -- 314
+int.to.chr$ -- 0
+int.to.str$ -- 5
+missing$ -- 7
+newline$ -- 28
+num.names$ -- 10
+pop$ -- 27
+preamble$ -- 1
+purify$ -- 16
+quote$ -- 0
+skip$ -- 40
+stack$ -- 0
+substring$ -- 82
+swap$ -- 13
+text.length$ -- 1
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 16
+warning$ -- 1
+while$ -- 14
+width$ -- 6
+write$ -- 58
+(There were 2 warnings)

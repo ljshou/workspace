@@ -1,0 +1,52 @@
+<HTML>
+<HEAD>
+<SCRIPT LANGUAGE=JavaScript>
+
+function form1_onsubmit() 
+{
+   var form = document.form1;
+   var returnValue = false;
+
+   if (form.txtUsername.value == "")
+   {
+      alert("Please enter your username");
+      form.txtUsername.focus();
+   }
+   else if (form.txtPassword.value == "")
+   {
+      alert("Please enter your password");
+      form.txtPassword.focus();
+   }
+   else
+   {
+      returnValue = true;
+   }
+
+   return returnValue;
+}
+
+</SCRIPT>
+</HEAD>
+
+<BODY>
+<P>
+To access this website please enter your username and password in the boxes below
+</P>
+
+<FORM ACTION="CheckLogOn.asp"
+   METHOD=POST
+   ID=form1 NAME=form1 
+   onsubmit="return form1_onsubmit()">
+
+<P>Username : <INPUT ID=txtUsername NAME=txtUsername TYPE=text></P>
+<P>Password : <INPUT ID=txtPassword NAME=txtPassword TYPE=password></P>
+
+<P>
+<INPUT ID=reset1 NAME=reset1 TYPE=reset VALUE=Reset>&nbsp;
+<INPUT ID=submit1 NAME=submit1 TYPE=submit VALUE="Log On">
+</P>
+
+</FORM>
+
+</BODY>
+</HTML>

@@ -1,0 +1,83 @@
+<HTML>
+<HEAD>
+<SCRIPT LANGUAGE=JavaScript>
+
+ 
+var timeLeft =-1;
+var quizTimerId = 0;
+
+function stopTimer()
+{
+   window.clearInterval(quizTimerId)
+}
+
+function startTimer(timeLimit)
+{
+   timeLeft = timeLimit;
+
+   if (timeLimit == -1)
+   {
+      window.status = "No Time Limit";
+   }
+   else
+   {
+      quizTimerId = window.setInterval("updateTimeLeft()",1000);
+   }
+}
+
+
+function updateTimeLeft()
+{
+   timeLeft--;
+
+   if (timeLeft == 0)
+   {
+      alert("Time's Up");
+      
+      window.top.fraQuizPage.location.href = "OutOfTime.asp";
+   }
+   else
+   {
+      var minutes = Math.floor(timeLeft / 60);
+      var seconds = timeLeft - (60 * minutes);
+
+      if (minutes < 10)
+      {
+         minutes = "0" + minutes;
+      }
+
+      if (seconds < 10)
+      {
+         seconds = "0" + seconds; 
+      }
+
+      window.status = "Time left is " + minutes + ":" + seconds;
+   }
+}
+
+
+
+function setCookie(cookieName, cookieValue, cookiePath, cookieExpires)
+{
+   cookieValue = escape(cookieValue);
+
+   if (cookieExpires == "")
+   {
+      var nowDate = new Date();
+      nowDate.setMonth(nowDate.getMonth() + 6);
+      cookieExpires = nowDate.toGMTString();
+   }
+
+   if (cookiePath != "")
+   {
+      cookiePath = ";Path=" + cookiePath;
+   }
+
+   document.cookie = cookieName + "=" + cookieValue + 
+      ";expires=" + cookieExpires + cookiePath;
+}
+
+</SCRIPT>
+</HEAD>
+</HTML>
+

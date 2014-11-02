@@ -1,0 +1,66 @@
+<HTML>
+<HEAD>
+<SCRIPT LANGUAGE=JavaScript>
+
+function setHTML()
+{
+   var actOnTag = div1;
+
+   if (radTag[0].checked == true)
+   {
+      actOnTag = para1;
+   }
+
+   if (radInnerOuter[0].checked == true)
+   {
+      actOnTag.innerHTML = textarea1.value
+   }
+   else
+   {
+      actOnTag.outerHTML = textarea1.value;
+   }
+}
+
+function getHTML()
+{
+   var actOnTag = div1;
+
+   if (radTag[0].checked == true)
+   {
+      actOnTag = para1;
+   }
+
+   if (radInnerOuter[0].checked == true)
+   {
+      textarea1.value = actOnTag.innerHTML;
+   }
+   else
+   {
+      textarea1.value = actOnTag.outerHTML;
+   }
+}
+
+</SCRIPT>
+</HEAD>
+<BODY>
+
+<DIV ID="div1">
+   <P ID="para1">This is a <I>paragraph</I>.</P>
+   <H2>A Heading inside the DIV</H2>
+</DIV>
+
+<BR><TEXTAREA COLS=60 ROWS=10 ID=textarea1 NAME=textarea1></TEXTAREA>
+<BR>
+Paragraph <INPUT TYPE="radio" NAME="radTag" CHECKED>
+Div <INPUT TYPE="radio" NAME="radTag">
+<BR>
+InnerHTML <INPUT TYPE="radio" NAME="radInnerOuter" CHECKED>
+outerHTML <INPUT TYPE="radio" NAME="radInnerOuter">
+<P>
+<INPUT TYPE="button" VALUE="Get HTML" NAME="bttnGetInnerText" 
+   onclick="getHTML()">
+<INPUT TYPE="button" VALUE="Set HTML" NAME="bttnSetInnerText" 
+   onclick="setHTML()">
+</P>
+</BODY>
+</HTML>
