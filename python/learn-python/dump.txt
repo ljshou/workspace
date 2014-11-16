@@ -1,0 +1,14 @@
+(dp0
+S'age'
+p1
+I25
+
+sS'name'
+p2
+S'Bob'
+
+p3
+s.    jljljlj
+010-12345
+
+ljjj

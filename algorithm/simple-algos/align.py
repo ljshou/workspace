@@ -3,6 +3,7 @@
 s1 = 'AATTGCCGTAATTGG'
 s2 = 'TAATTGGTCGACGTGA'
 
+# 0矩阵
 matrix = [[0 for j in range(len(s2)+1)] for i in range(len(s1)+1)]
 
 for i in range(len(s1)):

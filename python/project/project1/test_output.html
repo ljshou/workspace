@@ -1,0 +1,29 @@
+<html><head><title>...</title><body>
+<h1>
+Welcome to ljshou's website
+</h1>
+<p>
+The only mildly <em>tricky thing</em> is to remember to implement the copy constructor, because a compiler-generated copy constructor for Widget wouldn't know to increment count.
+</p>
+<p>
+If you had to do this only for Widget, you'd be done, but counting objects is something you might want to implement for several classes. Doing the same thing over and over gets tedious, and tedium leads to errors. To forestall such tedium, it would be best to somehow package the above object-counting code so it could be reused in any class that wanted it. The ideal package would:
+be easy to use — require minimal work on the part of class authors who want to use it. Ideally, they shouldn't have to do more than one thing, that is, more than basically say "I want to count the objects of this type."
+be efficient — impose no unnecessary space or time penalties on client classes employing the package.
+</p>
+<p>
+be foolproof — be next to impossible to accidently yield a count that is incorrect. (We're not going to worry about malicious clients, ones who deliberately try to mess up the count. In C++, such clients can always find a way to do their dirty deeds.)
+Stop for a moment and think about how you'd implement a reusable object-counting package that satisfies the goals above. It's probably harder than you expect. If it were as easy as it seems like it should be, you wouldn't be reading an article about it in this magazine.
+</p>
+<p>
+From this page you may visit several of our interesting web pages:
+	- What is SPAM?
+	- How do they make it?
+	- Why should I eat it?
+</p>
+<p>
+How to get in touch with us
+</p>
+<p>
+You can get in touch with us in <em>many</em> was: By phone (555-1234), by email (shoulinjun@126.com)
+</p>
+</body></html>
