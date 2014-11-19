@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+  <channel>
+    <title>Example Top Stories</title>
+    <link>http://www.example.com<link>
+    <description>
+    Example News is a top notch provider of meaningless news items.
+    </description>
+    <item>
+      <title>Interesting stuff</title>
+      <description>Something really interesting happened today</description>
+      <link>http://www.example.com/newsitem1.html</link>
+    </item>
+    <item>
+      <title>More interesting stuff</title>
+      <description>Then something even more interesting happened</description>
+      <link>http://www.example.com/newsitem2.html</link>
+    </item>
+  </channel>
+</rss>
