@@ -1,0 +1,339 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>STL源码分析---list的sort函数 | L.J.SHOU&#39;s Technical Blog</title>
+  <meta name="author" content="L.J.SHOU">
+  
+  <meta name="description" content="《STL源码分析系列》
+面试的时候，可能面试官让你写一个链表的归并排序，但是要求不能用递归，当然也不能用栈来模拟递归。STL 库中list容器底层其实就是一个双向链表，今天就来研究下list的成员函数 sort。兼顾了效率与简洁，当然可读性相比与递归版本差很多。">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="STL源码分析---list的sort函数"/>
+  <meta property="og:site_name" content="L.J.SHOU&#39;s Technical Blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+    <link rel="alternative" href="/atom.xml" title="L.J.SHOU&#39;s Technical Blog" type="application/atom+xml">
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+	  <a class="navbar-brand" href="/">L.J.SHOU&#39;s Technical Blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>ARCHIVES
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>CATEGORIES
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>TAGS
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/booklist" title="booklist.">
+			  <i class="fa fa-archive"></i>BOOKLIST
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/bookmark" title="bookmark.">
+			  <i class="fa fa-archive"></i>BOOKMARK
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>ABOUT
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Rss feed.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header">		
+			<h1> STL源码分析---list的sort函数</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+			
+
+	<!-- content -->
+	<div class="mypage">		
+	    <h2 id="《STL源码分析系列》"><em>《STL源码分析系列》</em></h2>
+<p>面试的时候，可能面试官让你写一个链表的归并排序，但是要求<strong>不能用递归</strong>，<br>当然也不能用栈来模拟递归。STL 库中list容器底层其实就是一个双向链表，<br>今天就来研究下list的成员函数 sort。兼顾了效率与简洁，当然可读性相比<br>与递归版本差很多。<br><a id="more"></a></p>
+<h3 id="MergeSort_的递归版本">MergeSort 的递归版本</h3>
+<p>首先分析下 MergeSort 的递归版本是如何工作的。</p>
+<ul>
+<li>代码</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line">struct ListNode{  </div><div class="line">  int val;  </div><div class="line">  ListNode *next;  </div><div class="line">  ListNode(int x)  </div><div class="line">    :val(x), next(NULL){}  </div><div class="line">};</div><div class="line">*/</div><div class="line"><span class="comment">//merge two sorted lists into a sorted list  </span></div><div class="line">ListNode* merge(ListNode* &, ListNode* &);</div><div class="line">ListNode *sortList(ListNode *head) {  </div><div class="line">    <span class="keyword">if</span>(head == NULL || head-&gt;next == NULL) <span class="keyword">return</span> head;  </div><div class="line">    <span class="comment">//Divide: fast-slow scheme to divide list into two parts</span></div><div class="line">    ListNode *fast(head-&gt;next), *slow(head), *list2(NULL);  </div><div class="line">    <span class="keyword">while</span>(fast && fast-&gt;next)  </div><div class="line">    {  </div><div class="line">        fast = fast-&gt;next-&gt;next;  </div><div class="line">        slow = slow-&gt;next;  </div><div class="line">    }  </div><div class="line">    list2 = slow-&gt;next;  </div><div class="line">    slow-&gt;next = NULL;</div><div class="line">    <span class="comment">//Conquer</span></div><div class="line">    head = sortList(head);  </div><div class="line">    list2 = sortList(list2);  </div><div class="line">    <span class="keyword">return</span> mergeList(head, list2);  </div><div class="line">}</div></pre></td></tr></table></figure>
+
+<ul>
+<li>分析：<br>考虑如下的例子，对一个长度为 8 的数组进行归并排序，如下图<br><img src="http://ljshou.qiniudn.com/merge-sort-recur.png" alt=""></li>
+</ul>
+<h3 id="MergeSort_的迭代版本">MergeSort 的迭代版本</h3>
+<p>而 迭代版本恰恰相反，是 从下往上。<br>为了便于明白算法的思想，我模仿 STL 库的 list sort 重新写了归并排序。文章最后给出了 STL 的源码。</p>
+<ul>
+<li>代码：</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">void</span> ListSort(ListNode* & <span class="built_in">list</span>)  </div><div class="line">{  </div><div class="line">  <span class="keyword">if</span>(<span class="built_in">list</span> == NULL || <span class="built_in">list</span>-&gt;next == NULL) <span class="comment">/* 空或者1个元素的链表 */</span>  </div><div class="line">    <span class="keyword">return</span>;  </div><div class="line"></div><div class="line">  ListNode *carry(NULL);  </div><div class="line">  ListNode *counter[<span class="number">64</span>] = {NULL}; <span class="comment">/* 64个list, 中介数据中转站，用于模拟递归 */</span>  </div><div class="line">  <span class="keyword">int</span> fill = <span class="number">0</span>;  </div><div class="line">  <span class="keyword">while</span>(<span class="built_in">list</span>) {  </div><div class="line">    <span class="comment">/* insert first node of list into front of carry */</span>  </div><div class="line">    ListNode *node = <span class="built_in">list</span>; <span class="built_in">list</span> = <span class="built_in">list</span>-&gt;next;  </div><div class="line">    node-&gt;next = carry;  </div><div class="line">    carry = node;  </div><div class="line"></div><div class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;  </div><div class="line">    <span class="keyword">while</span>(i &lt; fill && counter[i]) {  </div><div class="line">      counter[i] = merge(counter[i], carry);  </div><div class="line">      carry = NULL; <span class="comment">/* after merge, carry is now empty */</span>  </div><div class="line">      swap(carry, counter[i++]);  </div><div class="line">    }  </div><div class="line">    swap(carry, counter[i]);  </div><div class="line">    <span class="keyword">if</span>(i == fill) ++fill;  </div><div class="line">  }  </div><div class="line"></div><div class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; fill; ++i){ <span class="comment">/* 将 64 个 lists 归并成一个 list */</span>  </div><div class="line">    counter[i] = merge(counter[i], counter[i-<span class="number">1</span>]);  </div><div class="line">    counter[i-<span class="number">1</span>] = NULL;  </div><div class="line">  }  </div><div class="line">  swap(<span class="built_in">list</span>, counter[fill-<span class="number">1</span>]);</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<ul>
+<li>代码分析：<br>上述代码中 开了一个长度为 64 的链表数组, 作为中转站。注意：还是常数空间。<br>第 i 个链表长度最长是 2^(i+1)。<br>算法的执行过程如下：<br>对 8 1 4 5 进行排序。<br><img src="http://ljshou.qiniudn.com/list-sort.png" alt=""><br>比较 <strong>递归与迭代的算法过程，可以发现两者就是互逆的过程</strong>。<br>现在相比大家对算法有了一个全面的认识。STL 库正是 利用64个链表，实现了上图中的算法。<br>这个算法能够排序的总数是 2^65-2 个数，应该够用了。</li>
+</ul>
+<h3 id="SGI_STL_的源代码（选自_STL_源码分析）如下：">SGI STL 的源代码（选自 STL 源码分析）如下：</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// list 不能使用 STL 算法 sort ()  </span></div><div class="line"><span class="comment">// 因为 STL 算法 sort() 只接受 RandomAccessIterator  </span></div><div class="line"><span class="comment">// 本函数采用 mergesort  </span></div><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> Alloc&gt;  </div><div class="line"><span class="keyword">void</span> <span class="stl_container"><span class="built_in">list</span>&lt;T, Alloc&gt;</span>::sort () {  </div><div class="line">  <span class="comment">// 以下判断，如果是空链表， 或仅有一个元素，就不进行任何操作  </span></div><div class="line">  <span class="keyword">if</span> (node-&gt;next == node || link_type(node-&gt;next)-&gt;next == node)  </div><div class="line">  <span class="keyword">return</span>;  </div><div class="line"></div><div class="line">  <span class="comment">// 一些新的 lists, 作为中介数据存放区  </span></div><div class="line">  <span class="stl_container"><span class="built_in">list</span>&lt;T, Alloc&gt;</span> carry;  </div><div class="line">  <span class="stl_container"><span class="built_in">list</span>&lt;T, Alloc&gt;</span> counter[<span class="number">64</span>];  </div><div class="line">  <span class="keyword">int</span> fill = <span class="number">0</span>;  </div><div class="line">  <span class="keyword">while</span> (!empty()) {  </div><div class="line">    carry.splice(carry.begin(), *<span class="keyword">this</span>, begin());  </div><div class="line">    in i = <span class="number">0</span>;  </div><div class="line">    <span class="keyword">while</span>(i &lt; fill && !counter[i].empty()) {  </div><div class="line">      counter[i].merge(carry);  </div><div class="line">      carry.swap(counter[i++]);  </div><div class="line">    }  </div><div class="line">    carry.swap(counter[i]);  </div><div class="line">    <span class="keyword">if</span> (i == fill) ++fill;  </div><div class="line">  }  </div><div class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; fill; ++i)  </div><div class="line">    counter[i].merge(counter[i-<span class="number">1</span>]);  </div><div class="line">  swap(counter[fill-<span class="number">1</span>]);  </div><div class="line">}</div></pre></td></tr></table></figure>
+
+	  
+	</div>
+
+	<!-- share -->
+	<div class="bdsharebuttonbox">
+<a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2014/11/05/浅谈C-的this指针/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2014/10/30/用hexo在gitcafe上搭个人博客/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+  <section id="comment">
+    <h2 class="title">Comments</h2>
+
+    
+              <!-- 多说评论框 start -->
+              <div class="ds-thread" data-thread-key=2014/10/30/STL源码分析-list的sort函数/ data-title=STL源码分析---list的sort函数 data-url=http://ljshou.gitcafe.com/2014/10/30/STL源码分析-list的sort函数/</div>
+              <!-- 多说评论框 end -->
+              <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+
+  <script type="text/javascript">
+   var duoshuoQuery = {short_name:"shoulinjun"};
+  (function() {
+   var ds = document.createElement('script');
+   ds.type = 'text/javascript';ds.async = true;
+   ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+   ds.charset = 'UTF-8';
+   (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+   })();
+  </script>
+    <!-- 多说公共JS代码 end -->
+
+    </section>
+    
+
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	Oct 30 2014 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="/categories/STL源码分析/">STL源码分析<span>1</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/STL/">STL<span>1</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2014 L.J.SHOU
+  
+      with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+tex2jax: {
+inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+processEscapes: true
+}
+});
+</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+tex2jax: {
+skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+}
+});
+</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Queue(function() {
+                  var all = MathJax.Hub.getAllJax(), i;
+                  for(i=0; i < all.length; i += 1) {
+                  all[i].SourceElement().parentNode.className += ' has-jax';
+                  }
+                  });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+   </html>
