@@ -1,34 +1,31 @@
 /**
  * @file test.cc
  * @brief 
- * @author L.J.SHOU shoulinjun@126.com
+ * @author shoulinjun@126.com ljshou.gitcafe.com
  * @version 0.1.00
- * @date 2014-07-25
+ * @date 2014-12-12
  */
 
-#include <bits/stdc++.h>
+#include <iostream>
 using namespace std;
 
-void Endian() 
+class A
 {
-  union A{
-    int num;
-    char c;
-  };
-  A a;
-  a.num = 1;
-  if(a.c == 1) cout << "little endian" << endl; 
-  else cout << "big endian" << endl;
-}
+public:
+};
 
-
-int main(int argc, char *argv[])
+class B : public A
 {
-  cout << strlen("\0") << endl;
-  cout << sizeof("\0") << endl;
-  cout << sizeof(void (*)()) << endl;
+public:
+    void func2() {
+        cout << "func2 called" << endl;
+    }
+};
 
-  Endian();
-
-  return 0;
+int main(void)
+{
+    A* p = new B();
+    p->func2();
+    delete p;
+    return 0;
 }

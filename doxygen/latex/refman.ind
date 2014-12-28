@@ -1,0 +1,20 @@
+\begin{theindex}
+
+  \item {E\+Val1}
+    \subitem {Test}, \hyperpage{9}
+  \item {E\+Val2}
+    \subitem {Test}, \hyperpage{9}
+
+  \indexspace
+
+  \item {Test}, \hyperpage{9}
+    \subitem {E\+Val1}, \hyperpage{9}
+    \subitem {E\+Val2}, \hyperpage{9}
+    \subitem {value}, \hyperpage{10}
+
+  \indexspace
+
+  \item {value}
+    \subitem {Test}, \hyperpage{10}
+
+\end{theindex}

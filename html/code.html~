@@ -1,0 +1,11 @@
+<html>
+<head>This is a code snippet</head>
+
+<body>
+<figure class="highlight py">
+    <table>
+        <tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">sum</span><span class="params">(x, y)</span>:</span></div><div class="line">    <span class="keyword">print</span> <span class="string">"x+y:"</span>, x+y</div></pre></td></tr>
+    </table>
+</figure>
+</body>
+</html>
