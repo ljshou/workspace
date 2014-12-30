@@ -1,6 +1,6 @@
 /**
  * @file min_element.cc
- * @brief 
+ * @brief find min element in a rotated sorted array
  * @author shoulinjun@126.com ljshou.gitcafe.io
  * @version 0.1.00
  * @date 2014-12-29

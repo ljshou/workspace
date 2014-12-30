@@ -28,6 +28,7 @@ class HeadlineHandler(ContentHandler):
 headlines = []
 parse('website.xml', HeadlineHandler(headlines))
 
+print dir(ContentHandler)
 print 'The following <h1> elements were found:'
 for h in headlines:
     print h
