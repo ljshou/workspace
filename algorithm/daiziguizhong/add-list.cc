@@ -7,6 +7,7 @@
  */
 #include <iostream>
 #include <vector>
+#include <cassert>
 using namespace std;
 
 struct ListNode 
@@ -75,32 +76,37 @@ ListNode* addList2(ListNode *lhs, ListNode *rhs)
     ListNode dummy(-1), *rear(&dummy);
     ListNode *p(&dummy), *q(nullptr);
     int num(0);
+
     while(lhs && rhs) {
+        //add a new node
         num = lhs->val + rhs->val;
         q = new ListNode(num % 10);
         rear->next = q;
         rear = rear->next;
-        if(num > 9) {
+
+        //deal with carry
+        if(num < 9) {
+            p = q;
+        }
+        else if(num > 9) {
             if(p == &dummy) {
-                //add a new node
-                ListNode *node = new ListNode(1);
+                //add a heading node
+                ListNode *node = new ListNode(0);
                 node->next = dummy.next;
                 dummy.next = node;
                 p = node;
             }
-            else {
-                ++p->val;
-            }
+            ++p->val;
             for(p=p->next; p!=q; p=p->next) p->val = 0;
+            assert(p == q); //p points to the node before 9999s
         }
-        else if(num < 9) {
-            p = q;
-        }
+
         lhs = lhs->next;
         rhs = rhs->next;
     }
     return dummy.next;
 }
+
 ListNode *helper(ListNode *lhs, ListNode *rhs, int &carry)
 {
     if(lhs == nullptr && rhs == nullptr) return nullptr;
