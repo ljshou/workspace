@@ -8,39 +8,25 @@
 
 #include <iostream>
 #include <unordered_map>
+#include <vector>
 #include <cassert>
 using namespace std;
 
-struct Node {
-    Node *pre, *next;
-    int val;
-    Node(int x=0):
-        val(x), pre(this), next(this) {}
-};
-
 class Set {
 public:
-    Set() : size_(0) {}
+    Set(){}
     ~Set() { clear(); }
     void insert(int x);
     void remove(int x);
     int randomPop();
-    int size() const {return size_;}
+    int size() const {return vec.size();}
 private:
-    int size_;
-    Node dummy;
-    unordered_map<int, Node*> hash;
+    unordered_map<int, int> hash;
+    vector<int> vec;
 
     void clear() {
-        size_ = 0;
+        vec.clear();
         hash.clear();
-        Node *p = dummy.next, *next = nullptr;
-        while(p != &dummy) {
-            next = p->next;
-            delete p;
-            p = next;
-        }
-        dummy.pre = dummy.next = &dummy;
     }
 
     //no copy allowed
@@ -50,35 +36,25 @@ private:
 
 void Set::insert(int x) {
     if(hash.find(x) == hash.end()) {
-        Node * node = new Node(x);
-        //insert front
-        node->next = dummy.next;
-        node->next->pre = node;
-        node->pre = &dummy;
-        dummy.next  = node;
-        ++size_;
-        hash[x] = node;
+        hash[x] = vec.size();
+        vec.push_back(x);
     }
 }
 
 void Set::remove(int x) {
     if(hash.find(x) != hash.end()) {
-        Node *node = hash[x];
-        node->pre->next = node->next;
-        node->next->pre = node->pre;
-        hash.erase(hash.find(x));
-        --size_;
-        delete node;
+        int index = hash[x];
+        hash[vec.back()] = index;
+        swap(vec[index], vec[vec.size()-1]);
+        vec.resize(vec.size()-1);
+        hash.erase(x);
     }
 }
 
 int Set::randomPop() {
-    if(size_ == 0) throw runtime_error("empty");
-    int index = rand() % size_;
-    Node *p = dummy.next;
-    for(int i=0; i<index; ++i)
-        p = p->next;
-    return p->val;
+    if(vec.empty()) throw runtime_error("empty");
+    int index = rand() % vec.size();
+    return vec[index];
 }
 
 void Test() {
