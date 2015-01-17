@@ -29,6 +29,9 @@ TreeNode* Destroy(TreeNode *root)
 }
 
 
+/**
+ * O(N)
+ */
 bool IsComplete(TreeNode *root)
 {
     if(!root) return true;
