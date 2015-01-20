@@ -21,10 +21,10 @@ struct TreeNode {
 TreeNode * buildMaxHeap(const vector<int> &vec)
 {
     TreeNode *root(nullptr), *node(nullptr);
-    stack<TreeNode *> s;
+    stack<TreeNode *> s; //parent of A[i+1]
     for(int i=0; i<vec.size(); ++i) {
         node = new TreeNode(vec[i]);
-        while(!s.empty()) {
+        while(!s.empty()) { 
             TreeNode *ptr = s.top();
             if(ptr->val > node->val) {
                 node->left = ptr->right;
@@ -34,7 +34,7 @@ TreeNode * buildMaxHeap(const vector<int> &vec)
             }
             s.pop();
         }
-        if(s.empty()) {
+        if(s.empty()) { //no parent yet
             node->left = root;
             root = node;
             s.push(node);

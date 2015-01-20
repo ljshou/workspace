@@ -20,11 +20,11 @@ int MissingNumer(vector<int> &vec)
             swap(vec[i], vec[vec[i]-1]);
         }
     }
-    int i = 0;
-    for(; i<vec.size(); ++i) {
-        if(vec[i] != i+1) break;
+    for(int i=0; i<vec.size(); ++i) {
+        if(vec[i] != i+1) 
+            return i+1;
     }
-    return i+1;
+    return vec.size() + 1;
 }
 
 int main(void)
