@@ -14,8 +14,9 @@ using namespace std;
 struct Log {
     int begin, end;
     int depth;
-    Log(int depth_=0, int b=0, int e=0)
-        :depth(depth_), begin(b), end(e) {}
+    string name;
+    Log(int depth_=0, string str = "", int b=0, int e=0)
+        :depth(depth_), name(str), begin(b), end(e) {}
 };
 
 struct Line {
@@ -30,15 +31,13 @@ vector<Line> parseFile(const string &file_name);
 
 void Print(const vector<Line> &lines)
 {
-    vector<string> names;
-    unordered_map<int, Log> hash;
+    vector<Log> hash;
     stack<int> s;
     int depth = 0, index = 0;
     for(auto line : lines) {
         if(line.enter) {
-            s.push(names.size());
-            hash[names.size()] = Log(depth, line.time);
-            names.push_back(line.name);
+            s.push(hash.size());
+            hash.push_back(Log(depth, line.name, line.time));
             ++depth;
         }
         else {
@@ -48,10 +47,10 @@ void Print(const vector<Line> &lines)
         }
     }
 
-    for(int i=0; i<names.size(); ++i) {
+    for(int i=0; i<hash.size(); ++i) {
         for(int j=0; j<hash[i].depth; ++j)
             cout << "  ";
-        cout << names[i] << " " << hash[i].end - hash[i].begin << endl;
+        cout << hash[i].name << " " << hash[i].end - hash[i].begin << endl;
     }
 }
 
