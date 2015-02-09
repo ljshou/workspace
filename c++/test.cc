@@ -8,25 +8,16 @@
 
 #include <iostream>
 #include <vector>
+#include <map>
 using namespace std;
-
-void ChangeItem(vector<int> &vec)
-{
-    vec[1] = 100;
-}
 
 int main(void)
 {
-    vector<int> vec{0, 1, 2};
-    ChangeItem(vec);
-    cout << vec[1] << endl;
-
-    vector<vector<int> > vec2(1, vector<int>(2, 0));
-    ChangeItem(vec2[0]);
-    cout << vec2[0][1] << endl;
-
-    vector<vector<vector<int> > > vec3(1, vector<vector<int> >(2, vector<int>(2, 0)));
-    ChangeItem(vec3[0][0]);
-    cout << vec3[0][0][1] << endl;
+    multimap<int, int> hash;
+    hash.insert(make_pair(1, 2));
+    hash.insert(make_pair(1, 1));
+    for(auto p : hash) {
+        cout << p.first << " " << p.second << endl;
+    }
     return 0;
 }
