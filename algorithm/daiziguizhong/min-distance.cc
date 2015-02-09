@@ -40,12 +40,56 @@ double MinDistance(vector<Point> &points)
         }
     }
     return f[n-1][n-1];
+=======
+ * @author L.J.SHOU, shoulinjun@126.com
+ * @version 0.1.00
+ * @date 2015-01-30
+ */
+
+#include <iostream>
+#include <cassert>
+using namespace std;
+#define For(i, n) for(int i=0; i<(n); ++i)
+
+const int MAX_V = 10000;
+const int MAX_E = 10000;
+int V;
+
+int cost[MAX_V][MAX_V];
+bool used[MAX_V]; 
+int d[MAX_V]; //distance
+
+void dijkstra(int s)
+{
+    assert(s < V);
+    fill_n(used, V, false);
+    fill_n(d, V, INT_MAX);
+    d[s] = 0;
+
+    while(true)
+    {
+        int v = -1;
+        for(int u = 0; u < V; ++ u) {
+            if(!used[u] && (v == -1 || d[u] < d[v])) {
+                v = u;
+            }
+        }
+        if(v == -1) break;
+        used[v] = true;
+
+        for(int u=0; u<V; ++u) {
+            if(cost[v][u] != -1) //reachable
+                d[u] = min(d[u], d[v] + cost[v][u]);
+        }
+    }
+
+    // for(int u=0; u<V; ++u)
+    //     cout << d[u] << " ";
+    // cout << endl;
 }
 
 void Test()
 {
-    vector<Point> points{{0, 0}, {30, 40}, {31, 0}};
-    cout << MinDistance(points) << endl;
 }
 
 int main(void)

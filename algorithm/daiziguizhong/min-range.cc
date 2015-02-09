@@ -20,11 +20,6 @@ struct Element
         val(v), row(r), col(c) {}
 };
 //min heap
-/*
-bool operator<(const Element &lhs, const Element &rhs) {
-    return lhs.val > rhs.val;
-}
-*/
 struct cmp: public binary_function<Element, Element, bool>
 {
     bool operator() (const Element &lhs, const Element &rhs) const {
@@ -41,7 +36,6 @@ pair<int, int> MinRange(const vector<vector<int> > &vec)
     priority_queue<Element, vector<Element>, cmp> q;
     int largest = INT_MIN;
     for(int i=0; i<vec.size(); ++i) {
-        if(vec[i].empty()) continue;
         largest = max(largest, vec[i][0]);
         q.push(Element(vec[i][0], i, 0));
     }
