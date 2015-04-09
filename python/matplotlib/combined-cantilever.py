@@ -1,10 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-data = np.loadtxt("input.txt")
+data = np.loadtxt("input1.txt")
 x = range(0, 155, 5)
 
-p0 = plt.plot(x, data[:, 0], '*-', linewidth=3.5, label='fem_ref')
+p0 = plt.plot(x, data[:, 0], '*-', linewidth=3.5, label='reference')
 #plt.scatter(x, data[:, 0])
 
 p1 = plt.plot(x, data[:, 1], '>-', linewidth=3.5, label='mfree')
