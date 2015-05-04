@@ -1,13 +1,10 @@
 from visual import *
 
-# Two double pendula, to illustrate high sensitivity to initial conditions
-# in a simple system. Bruce Sherwood, Fall 2002.
-
 # The analysis is in terms of Lagrangian mechanics.
 # The Lagrangian variables are angle of upper bar, angle of lower bar,
 # measured from the vertical.
 
-twopendula = 1 # if true, show two pendula
+twopendula = 0 # if true, show two pendula
 different = 1 # if true, start with theta1 differing by 0.001 radians
 
 print """
@@ -113,8 +110,3 @@ while 1:
         pend.update(dtheta1=dtheta1, dtheta2=dtheta2)
 
     t = t+dt
-
-
-# Copyright (C) Cornell University
-# All rights reserved.
-# Apache License, Version 2.0

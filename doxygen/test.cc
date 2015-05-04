@@ -24,5 +24,8 @@ public:
     void member(); //!< a member function.
 protected:
     int value; /*!< an integer value */
+
+private:
+    int private_value; /**< private count */
 };
 
