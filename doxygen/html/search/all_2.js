@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['member',['member',['../classTest.html#ad86c7affdfb5ca8e720f44ef56169c50',1,'Test']]]
+  ['getmember',['GetMember',['../class_test.html#a822d6da5540e6ad276d28ad738aff656',1,'Test']]]
 ];

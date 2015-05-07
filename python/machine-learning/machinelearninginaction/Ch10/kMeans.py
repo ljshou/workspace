@@ -49,7 +49,7 @@ def kMeans(dataSet, k, distMeas=distEclud, createCent=randCent):
     return centroids, clusterAssment
 
 def biKmeans(dataSet, k, distMeas=distEclud):
-    m = shape(dataSet)[0]
+    m = shape(dataSet)[0] #number of data points
     clusterAssment = mat(zeros((m,2)))
     centroid0 = mean(dataSet, axis=0).tolist()[0]
     centList =[centroid0] #create a list with one centroid
