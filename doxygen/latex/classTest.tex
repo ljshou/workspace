@@ -1,6 +1,14 @@
-\hypertarget{classTest}{\section{Test Class Reference}
+\hypertarget{classTest}{}\section{Test Class Reference}
 \label{classTest}\index{Test@{Test}}
-}
+
+
+a test class  
+
+
+
+
+{\ttfamily \#include $<$test.\+h$>$}
+
 \subsection*{Public Types}
 \begin{DoxyCompactItemize}
 \item 
@@ -11,47 +19,88 @@ enum \hyperlink{classTest_a26bf93efdaea3c6e2cfa4119c3755d3f}{Enum\+Type} \{ \hyp
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classTest_ad86c7affdfb5ca8e720f44ef56169c50}{void \hyperlink{classTest_ad86c7affdfb5ca8e720f44ef56169c50}{member} ()}\label{classTest_ad86c7affdfb5ca8e720f44ef56169c50}
-
-\begin{DoxyCompactList}\small\item\em a member function. \end{DoxyCompactList}\end{DoxyCompactItemize}
+int \hyperlink{classTest_a822d6da5540e6ad276d28ad738aff656}{Get\+Member} (int index) const 
+\begin{DoxyCompactList}\small\item\em member access func \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Attributes}
 \begin{DoxyCompactItemize}
 \item 
 int \hyperlink{classTest_ad55002283eba8ffa062dfb849f6c077c}{value}
+\begin{DoxyCompactList}\small\item\em an integer value \end{DoxyCompactList}\item 
+int $\ast$ \hyperlink{classTest_a5a89a9f0edc6ed59b85e821685bab31b}{members}
+\begin{DoxyCompactList}\small\item\em integer array \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{classTest_a54d452cda3663a038c91b7dd04188be7}{private\+\_\+value}
 \end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-\begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000001}{Todo}]\end{DoxyRefDesc}
+a test class 
+
 \begin{DoxyRefDesc}{Bug}
-\item[\hyperlink{bug__bug000001}{Bug}]A test class \end{DoxyRefDesc}
+\item[\hyperlink{bug__bug000001}{Bug}]\end{DoxyRefDesc}
 
 
 \subsection{Member Enumeration Documentation}
-\hypertarget{classTest_a26bf93efdaea3c6e2cfa4119c3755d3f}{\index{Test@{Test}!Enum\+Type@{Enum\+Type}}
+\hypertarget{classTest_a26bf93efdaea3c6e2cfa4119c3755d3f}{}\index{Test@{Test}!Enum\+Type@{Enum\+Type}}
 \index{Enum\+Type@{Enum\+Type}!Test@{Test}}
-\subsubsection[{Enum\+Type}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Test\+::\+Enum\+Type}}}\label{classTest_a26bf93efdaea3c6e2cfa4119c3755d3f}
-An enum type.
-\begin{DoxyItemize}
-\item The documentation block cannot be put after the enum! 
-\end{DoxyItemize}\begin{Desc}
+\subsubsection[{Enum\+Type}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Test\+::\+Enum\+Type}}\label{classTest_a26bf93efdaea3c6e2cfa4119c3755d3f}
+An enum type. The documentation block cannot be put after the enum! \begin{Desc}
 \item[Enumerator]\par
 \begin{description}
 \index{E\+Val1@{E\+Val1}!Test@{Test}}\index{Test@{Test}!E\+Val1@{E\+Val1}}\item[{\em 
-\hypertarget{classTest_a26bf93efdaea3c6e2cfa4119c3755d3faacfab1e4105c05a2e503931a0e82b5b0}{E\+Val1}\label{classTest_a26bf93efdaea3c6e2cfa4119c3755d3faacfab1e4105c05a2e503931a0e82b5b0}
+\hypertarget{classTest_a26bf93efdaea3c6e2cfa4119c3755d3faacfab1e4105c05a2e503931a0e82b5b0}{}E\+Val1\label{classTest_a26bf93efdaea3c6e2cfa4119c3755d3faacfab1e4105c05a2e503931a0e82b5b0}
 }]enum value 1 \index{E\+Val2@{E\+Val2}!Test@{Test}}\index{Test@{Test}!E\+Val2@{E\+Val2}}\item[{\em 
-\hypertarget{classTest_a26bf93efdaea3c6e2cfa4119c3755d3fae2fa04fb1c4db1f7d72b8781ba19ffcc}{E\+Val2}\label{classTest_a26bf93efdaea3c6e2cfa4119c3755d3fae2fa04fb1c4db1f7d72b8781ba19ffcc}
+\hypertarget{classTest_a26bf93efdaea3c6e2cfa4119c3755d3fae2fa04fb1c4db1f7d72b8781ba19ffcc}{}E\+Val2\label{classTest_a26bf93efdaea3c6e2cfa4119c3755d3fae2fa04fb1c4db1f7d72b8781ba19ffcc}
 }]enum value 2 \end{description}
 \end{Desc}
 
 
+\subsection{Member Function Documentation}
+\hypertarget{classTest_a822d6da5540e6ad276d28ad738aff656}{}\index{Test@{Test}!Get\+Member@{Get\+Member}}
+\index{Get\+Member@{Get\+Member}!Test@{Test}}
+\subsubsection[{Get\+Member}]{\setlength{\rightskip}{0pt plus 5cm}int Test\+::\+Get\+Member (
+\begin{DoxyParamCaption}
+\item[{int}]{index}
+\end{DoxyParamCaption}
+) const}\label{classTest_a822d6da5540e6ad276d28ad738aff656}
+
+
+member access func 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & index of member \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+value of the index\textquotesingle{}th member 
+\end{DoxyReturn}
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000001}{Todo}]\end{DoxyRefDesc}
+
+
 \subsection{Member Data Documentation}
-\hypertarget{classTest_ad55002283eba8ffa062dfb849f6c077c}{\index{Test@{Test}!value@{value}}
+\hypertarget{classTest_a5a89a9f0edc6ed59b85e821685bab31b}{}\index{Test@{Test}!members@{members}}
+\index{members@{members}!Test@{Test}}
+\subsubsection[{members}]{\setlength{\rightskip}{0pt plus 5cm}int$\ast$ Test\+::members\hspace{0.3cm}{\ttfamily [protected]}}\label{classTest_a5a89a9f0edc6ed59b85e821685bab31b}
+
+
+integer array 
+
+\hypertarget{classTest_a54d452cda3663a038c91b7dd04188be7}{}\index{Test@{Test}!private\+\_\+value@{private\+\_\+value}}
+\index{private\+\_\+value@{private\+\_\+value}!Test@{Test}}
+\subsubsection[{private\+\_\+value}]{\setlength{\rightskip}{0pt plus 5cm}int Test\+::private\+\_\+value\hspace{0.3cm}{\ttfamily [private]}}\label{classTest_a54d452cda3663a038c91b7dd04188be7}
+private count \hypertarget{classTest_ad55002283eba8ffa062dfb849f6c077c}{}\index{Test@{Test}!value@{value}}
 \index{value@{value}!Test@{Test}}
-\subsubsection[{value}]{\setlength{\rightskip}{0pt plus 5cm}int Test\+::value\hspace{0.3cm}{\ttfamily [protected]}}}\label{classTest_ad55002283eba8ffa062dfb849f6c077c}
+\subsubsection[{value}]{\setlength{\rightskip}{0pt plus 5cm}int Test\+::value\hspace{0.3cm}{\ttfamily [protected]}}\label{classTest_ad55002283eba8ffa062dfb849f6c077c}
+
+
 an integer value 
+
+
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-\hyperlink{test_8cc}{test.\+cc}\end{DoxyCompactItemize}
+\hyperlink{test_8h}{test.\+h}\end{DoxyCompactItemize}
