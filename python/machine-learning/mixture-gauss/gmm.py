@@ -1,5 +1,4 @@
-#!/usr/local/bin/python3
-#enconding=uft-8
+#!/usr/bin/python
 """
 GMM algorithm
 """
@@ -10,6 +9,7 @@ from matplotlib import pyplot as plt
 #load data from file
 def loadData(filename):
     dataMat=np.genfromtxt(filename)
+    dataMat = dataMat.reshape(1, -1)
     return dataMat
  
 #generate simulation data,generate three Gaussian Distributions here
@@ -19,6 +19,7 @@ def gene1DData(K=1,nSmp=200): #K is the number of Gaussian Distributions
     data=np.zeros((K,nSmp))
     for idx in range(K):
         data[idx]=np.random.normal(mu[idx],sigma[idx],nSmp)
+    np.savetxt("data.txt", data.reshape(-1, 1))
     return data.reshape(1,-1),mu.reshape(1,K),sigma.reshape(K,1,1)
  
  
@@ -45,7 +46,7 @@ class GMM:
                 sample=X[:,idy]
                 t=sample-muK
                 Pro[idx,idy]=np.exp(-np.dot(np.dot(t,invSigmaK).T,t)/2)
-                Pro[idx,idy]/=(np.power(2*np.pi,nDim/2)*(np.sqrt(detSigmaK)))
+                Pro[idx,idy]/=(np.power(2*np.pi,nDim/2.0)*(np.sqrt(detSigmaK)))
         return Pro
     def __computeLogLikelihood(self,Pro):#comupte the log likelihood
         val=np.dot(Pro.T,self.phi)
@@ -106,11 +107,12 @@ def plotObjVal(data):
     #plt.savefig('GMM_convergence.png')
  
 if __name__=='__main__':
-    nSmp=800
-    x,mu,sigma=gene1DData(3,nSmp)
-    gmm=GMM(3)
+    nSmp=400
+    x,mu,sigma=gene1DData(2,nSmp)
+    #x = loadData("data.txt")
+    gmm=GMM(2)
     phi,mu,sigma,his=gmm.train(x)
-    print(phi,mu,sigma)
+    print(mu, sigma, phi)
     plotObjVal(his)
     pred=gmm.predict(np.sort(x))
     plotGMM(x,pred,nSmp)
