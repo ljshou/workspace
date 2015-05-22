@@ -57,18 +57,26 @@
 
 \begin{document}
 \begin{CJK}{UTF8}{gkai}
-	
+
 \title{面向千万亿次计算的高可扩展大型非结构化网格有限元算法研究}
 \author{导师：田荣 \\ 学生：寿林钧} 
 \institute{中国科学院计算技术研究所\\高性能计算机研究中心} 
 \date{\today} 
 
+\pgfdeclareimage[height=0.7cm]{logo}{./ljshou_figures/ICT.png}
+\logo{\pgfuseimage{logo}}
+   
 \begin{frame}
-	\titlepage
+\titlepage
+\begin{figure}
+	\includegraphics[width=2.5in]{./ljshou_figures/UCAS3.png}
+\end{figure}
 \end{frame}
 
-    \begin{frame}
-        \frametitle{提纲}
+\begin{frame}
+   \frametitle{提纲}
+   \tableofcontents
+        
         \begin{itemize}
             \item 研究背景
                 \begin{itemize}
@@ -88,131 +96,138 @@
             \item 算例
             \item 参考文献
         \end{itemize}
-	\end{frame}
-	
+\end{frame}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%------------BACKGROUND--------------------------------%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	\begin{frame}
-	  \frametitle{研究背景: “千万亿次计算”}
+%\section{研究背景}
+%\subsection{“千万亿次计算”现状}
+\begin{frame}
+\frametitle{研究背景: “千万亿次计算”}
+  \begin{itemize}
+\item “千万亿次计算”现状
+   \begin{itemize}
+	\item Top 500列表最新的统计显示，理论峰值1Petaflops以上的超级计算机已经达到55台
+   \end{itemize} 
+   
+\item “千万亿次计算”的关键问题
+   \begin{itemize}
+	\item 程序的可扩展能力
+	\item 程序的可容错能力
+	\item 浮点效率
+	\item 异构协同
+   \end{itemize}
+  \end{itemize}
+\end{frame}
+
+%\subsection{主要技术挑战}
+\begin{frame}
+	\frametitle{研究背景：主要技术挑战(1)}
+	大型复杂非结构化网格有限元模型的建立
+	\begin{itemize}
+	  \item 大规模有限元的成功应用仍以结构化网格为主，非结构化网格应用严重受到网格生成困难的制约
+	  \item {\color{red}\bf 对于非结构化网格，在网格上所花费的时间约占整体计算时间的90\%}
+	  \item IO数据量的挑战
 	  \begin{itemize}
-		\item “千万亿次计算”现状
-		   \begin{itemize}
-			\item Top 500列表最新的统计显示，理论峰值1Petaflops以上的超级计算机已经达到55台
-		   \end{itemize} 
-		   
-		\item “千万亿次计算”的关键问题
-		   \begin{itemize}
-			\item 程序的可扩展能力
-			\item 程序的可容错能力
-			\item 浮点效率
-			\item 异构协同
-		   \end{itemize}
+		\item 100亿自由度网格，输入数据 ~678GB（二进制格式）
 	  \end{itemize}
-	\end{frame}
+	\end{itemize}
+		\begin{figure}
+			\centering
+			\includegraphics[width=3in]{./ljshou_figures/model_io.png}
+		\end{figure}
+\end{frame}
 
 	\begin{frame}
-		\frametitle{研究背景：主要技术挑战(1)}
-		大型复杂非结构化网格有限元模型的建立
-		\begin{itemize}
-		  \item 大规模有限元的成功应用仍以结构化网格为主，非结构化网格应用严重受到网格生成困难的制约
-		  \item {\color{red}\bf 对于非结构化网格，在网格上所花费的时间约占整体计算时间的90\%}
-		  \item IO数据量的挑战
-		  \begin{itemize}
-			\item 100亿自由度网格，输入数据 ~678GB（二进制格式）
-		  \end{itemize}
-		\end{itemize}
+	\frametitle{研究背景：主要技术挑战(2)}
+	\begin{columns}
+		\begin{column}[pos]{0.4\textwidth}
 			\begin{figure}
-				\centering
-				\includegraphics[width=3in]{./ljshou_figures/model_io.png}
+				\includegraphics[width=1.2in]{./ljshou_figures/traditional_fem.eps}
 			\end{figure}
-	\end{frame}
-
-	\begin{frame}
-		\frametitle{研究背景：主要技术挑战(2)}
-		\begin{columns}
-			\begin{column}[pos]{0.4\textwidth}
-				\begin{figure}
-					\includegraphics[width=1.2in]{./ljshou_figures/traditional_fem.eps}
-				\end{figure}
-			\end{column}
-			
-			\begin{column}[pos]{0.6\textwidth}
-				\begin{itemize}
-		  			\item 大多历史遗产代码（特别是国外商业程序）大多诞生于PC时代，算法架构设计没有、也无法考虑目前的海量并行需求
-		  		\begin{itemize}
-					\item 面对未来海量并行，架构性矛盾突出，这是目前商业程序不可扩展的根本原因
-		  		\end{itemize}
-		  		\item 面向P级E级计算，应用数学算法的设计应该考虑并行计算本身的特点，如对并行性，数据移动复杂性，甚至容错性的重视
-		\end{itemize}
-			\end{column}
-		\end{columns}
-		\begin{block}{}
-			\color{red}\bf 历史遗产并行架构在前、后处理上的串行瓶颈
-		\end{block}
-	\end{frame}
-
-
-		\begin{frame}
-		\frametitle{相关研究：协调网格生成}
-		\begin{itemize}
-		  \small
-		  \item Conforming assembly meshing (CUBIT (Blacker,1994); Assembly meshing (Tautges,2001); Tolerant imprinting (Clark et al., 2008); Mesh matching (Staten et al.,2008)(协调的组合网格生成)
+		\end{column}
+		
+		\begin{column}[pos]{0.6\textwidth}
 			\begin{itemize}
-			\scriptsize
-			\item Globally conforming
+	  			\item 大多历史遗产代码（特别是国外商业程序）大多诞生于PC时代，算法架构设计没有、也无法考虑目前的海量并行需求
+	  		\begin{itemize}
+				\item 面对未来海量并行，架构性矛盾突出，这是目前商业程序不可扩展的根本原因
+	  		\end{itemize}
+	  		\item 面向P级E级计算，应用数学算法的设计应该考虑并行计算本身的特点，如对并行性，数据移动复杂性，甚至容错性的重视
+	\end{itemize}
+		\end{column}
+	\end{columns}
+	\begin{block}{}
+		\color{red}\bf 历史遗产并行架构在前、后处理上的串行瓶颈
+	\end{block}
+\end{frame}
+
+%\section{相关研究}
+%\subsection{协调网格生成}
+	\begin{frame}
+	\frametitle{相关研究：协调网格生成}
+	\begin{itemize}
+	  \small
+	  \item Conforming assembly meshing (CUBIT (Blacker,1994); Assembly meshing (Tautges,2001); Tolerant imprinting (Clark et al., 2008); Mesh matching (Staten et al.,2008)(协调的组合网格生成)
+		\begin{itemize}
+		\scriptsize
+		\item Globally conforming
             \item {\color{red}Propagation of mesh and refinement across shared surfaces}
             \item {\color{red}Dirty geometry}: overlap and gap between adjacent CAD model of parts; Without clear definitions of the interfaces between adjacent volumes it is very difficult to generate a conformal assembly mesh (Clark et al., 2008). 
-		  	\end{itemize}
-		  	\begin{figure}
-		  		\includegraphics[width=2in]{./ljshou_figures/mesh_matching.png}
-		  	\end{figure}
-		\end{itemize}
-	\end{frame}
+	  	\end{itemize}
+	  	\begin{figure}
+	  		\includegraphics[width=2in]{./ljshou_figures/mesh_matching.png}
+	  	\end{figure}
+	\end{itemize}
+\end{frame}
 
-	\begin{frame}
-		\frametitle{相关研究：组合网格粘接}
-		\begin{itemize}
-		  %\small
-		  \item Non-conforming assembly mesh gluing using Lagrange multipliers（非协调组合网格的拉格朗日乘子粘接）
-		  \begin{itemize}
-		  	\scriptsize
-			\item Mortar element Methods (Bernardi, Maday and Patera(1990); Belgacem and Maday(1997))
-			\item FETI methods (Farhat and Roux(1991); Farhat and Geradin(1992)) 
-			\item MPCs, tied contact, and gap elements in commercial software
-		  \end{itemize}
-		  \item 缺点： 
-		    \begin{itemize}
-		    \item 在变分意义上满足子网格界面处的连续性要求
-		    \item 方法引入的新的自由度（拉格朗日乘子），容易导致集成的{\color{red}刚度矩阵具有非正定性}，这会对方程的求解带来困难。
-		    \end{itemize}
-		\end{itemize}
-	\end{frame}
+%\subsection{组合网格粘结}
+\begin{frame}
+	\frametitle{相关研究：组合网格粘结}
+	\begin{itemize}
+	  %\small
+	  \item Non-conforming assembly mesh gluing using Lagrange multipliers（非协调组合网格的拉格朗日乘子粘接）
+	  \begin{itemize}
+	  	\scriptsize
+		\item Mortar element Methods (Bernardi, Maday and Patera(1990); Belgacem and Maday(1997))
+		\item FETI methods (Farhat and Roux(1991); Farhat and Geradin(1992)) 
+		\item MPCs, tied contact, and gap elements in commercial software
+	  \end{itemize}
+	  \item 缺点： 
+	    \begin{itemize}
+	    \item 在变分意义上满足子网格界面处的连续性要求
+	    \item 方法引入的新的自由度（拉格朗日乘子），容易导致集成的{\color{red}刚度矩阵具有非正定性}，这会对方程的求解带来困难。
+	    \end{itemize}
+	\end{itemize}
+\end{frame}
 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%------------INTERESTS---------------------------------%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
-		\begin{frame}
-		\frametitle{研究内容：自由网格有限元}
-			\begin{itemize}
-				\item 组合化网格优点: 
-					\begin{itemize}
-						\item 网格生成简单
-						\item 网格局部加密、重构等操作更加容易施加
-						\item 前后处理具有高度并行性
-					\end{itemize}
-					\begin{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
+%\section{研究内容}
+%\subsection{自由网格有限元}
+	\begin{frame}
+	\frametitle{研究内容：自由网格有限元}
+		\begin{itemize}
+			\item 组合化网格优点: 
+				\begin{itemize}
+					\item 网格生成简单
+					\item 网格局部加密、重构等操作更加容易施加
+					\item 前后处理具有高度并行性
+				\end{itemize}
+				\begin{figure}
     					\centering
     					\includegraphics[width=2in]{./ljshou_figures/fem_compare.eps}
     					\caption{并行有限元分析：（a）协调网格 （b）组合网格}
-			        \end{figure}
-			\end{itemize}
-		\end{frame}	
-		
-		\begin{frame}{自由网格有限元：组合网格划分}
+		        \end{figure}
+		\end{itemize}
+	\end{frame}	
+	
+	\begin{frame}{自由网格有限元：组合网格划分}
     		\begin{itemize}
     			\item 组合化网格在网格生成上有天生的并行性。用一个共享内存的刀片（40CPUs），并行地对8669块子部件进行网格划分
     		    \item 划分得到的组合网格由7,493,401个四面体单元组成。而整个网格划分过程仅耗时30分钟
@@ -223,29 +238,29 @@
     		%\caption{Caption}
     		\end{figure}
     		\tiny Tian R*, Wu ZD, Wang CW, Scalable FEA on non-conforming assembly mesh. Computer Methods in Applied Mechanics \& Engineering. 2013; 266: 98-111
-		\end{frame}
-	
-		\begin{frame}
-			\frametitle{自由网格有限元：技术难点}
-					\begin{itemize}
-						\item 如何将网格“粘结”起来？保证内部区域的连续性：
-						\begin{equation*}
-							{\bf u}^i = {\bf u}^j \text{ on } \Gamma_{ij} = \Omega_i \cap \Omega_j
-						\end{equation*}
-					\end{itemize}
-					\begin{figure}
-						\centering
-						\includegraphics[width=2in]{./ljshou_figures/combined_mesh.eps}
-						\caption{组合网格界面非连续性}
-					\end{figure}
-		\end{frame}
-				
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{自由网格有限元：技术难点}
+				\begin{itemize}
+					\item 如何将网格“粘结”起来？保证内部区域的连续性：
+					\begin{equation*}
+						{\bf u}^i = {\bf u}^j \text{ on } \Gamma_{ij} = \Omega_i \cap \Omega_j
+					\end{equation*}
+				\end{itemize}
+				\begin{figure}
+					\centering
+					\includegraphics[width=2in]{./ljshou_figures/combined_mesh.eps}
+					\caption{组合网格界面非连续性}
+				\end{figure}
+	\end{frame}
+			
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%----------------ALGORITHM-------------------------------------%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  		
-		\begin{frame}{进展之一：自由网格组合算法}
-		    网格耦合算法: 数学插值与几何网格拓扑分离
+	\begin{frame}{进展之一：自由网格组合算法}
+	    网格耦合算法: 数学插值与几何网格拓扑分离
     		\begin{enumerate}
         		\item 算法1：背景网格法
                 \item 算法2：全域无网格粘结
@@ -268,22 +283,22 @@
 			%the right column
     			\begin{column}[pos]{0.5\textwidth}
     				\begin{figure}
-	                	\centering
-	                	\includegraphics[width=1.5in]{./ljshou_figures/interface_glue2.eps}
-	                	\caption{算法2, 3}
-	                \end{figure}
-	                \begin{itemize}
-	                \item \color{blue}独立网格的无网格粘结技术(高可扩展性，不增加方程求解困难)
-	                \end{itemize}
-	                
+                	\centering
+                	\includegraphics[width=1.5in]{./ljshou_figures/interface_glue2.eps}
+                	\caption{算法2, 3}
+                \end{figure}
+                \begin{itemize}
+                \item \color{blue}独立网格的无网格粘结技术(高可扩展性，不增加方程求解困难)
+                \end{itemize}
+                
     			\end{column}
-		    \end{columns}
-		\end{frame}
-	
-		\begin{frame}
-			\frametitle{背景网格法: step TL算法}
-			\begin{columns}
-			    %the left column
+	    \end{columns}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{背景网格法: step TL算法}
+		\begin{columns}
+		    %the left column
     			\begin{column}[pos]{0.4\textwidth}
     				\begin{figure}
     					\centering
@@ -327,8 +342,8 @@
     			    \end{itemize}
             			
     			\end{column}
-			\end{columns}
-		\end{frame}	
+		\end{columns}
+	\end{frame}	
 
 
         \begin{frame}{进展之二：非线性大变形程序统一实现}
@@ -354,31 +369,31 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%------------IMPLEMENTATION------------------------------------%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%        
-        \begin{frame}
-			\frametitle{背景网格粘结： 弱形式积分策略(技术难点)}
-			\begin{itemize}
-				\item 直接积分法
-				    \begin{itemize}
-				        \item 实现简单，但是精度差
-				    \end{itemize}
-				\item 数学网格切割法
+\begin{frame}
+\frametitle{背景网格粘结： 弱形式积分策略(技术难点)}
+\begin{itemize}
+	\item 直接积分法
+	    \begin{itemize}
+	        \item 实现简单，但是精度差
+	    \end{itemize}
+	\item 数学网格切割法
     				\begin{itemize}
     					\item Pros: 精度高
                         \item Cons: 四面体与六面体切割非常耗时
     				\end{itemize}
-			\end{itemize}
-			\begin{figure}
-					\centering
-					\includegraphics[width=3in]{./ljshou_figures/integration.eps}
-					%\caption{}
-			\end{figure}
-			\begin{block}{}
-				\bf \color{red} 如何提高数学网格法切割效率？
-			\end{block}
-		\end{frame}
-		
-		\begin{frame}{四面体与六面体求交算法}
-		    Key observations:
+\end{itemize}
+\begin{figure}
+		\centering
+		\includegraphics[width=3in]{./ljshou_figures/integration.eps}
+		%\caption{}
+\end{figure}
+\begin{block}{}
+	\bf \color{red} 如何提高数学网格法切割效率？
+\end{block}
+\end{frame}
+
+\begin{frame}{四面体与六面体求交算法}
+    Key observations:
                 \begin{itemize}
                     \item 凸多面体的交一定也是凸多面体
                     \item 凸多面体可以由凸多面体的顶点唯一确定
@@ -393,34 +408,34 @@
                     \item 在小四面体网格中直接布置高斯积分点
                 \end{enumerate}
                 \end{block}
-		\end{frame}
-		
-		\begin{frame}{Delaunay三角剖分}
-		    \begin{itemize}
-		    \item 三角剖分定义:
-		        \begin{itemize}
-		        \item 在数学和计算几何学中，非结构化点集合{\bfP}的三角剖分就是点集的凸包的一个四面体（3D）的网格剖分，并且网格的顶点集合就是点集{\bfP}
-		        \end{itemize}
-		    \item 空外接圆（球）性质:
-		        \begin{itemize}
-		        \item 三角剖分的任意一个三角形（2D）的外接圆内部不包含其他的顶点
-		        \end{itemize}
-		    \end{itemize}
-		    
-		    \begin{figure}
-		    \centering
-		    \includegraphics[width=2in]{./ljshou_figures/triangulation.png}
-		    \includegraphics[width=2in]{./ljshou_figures/empty_circum.png}
-		    \caption{Delaunay三角剖分定义}
-		    \end{figure}
-	\end{frame}
-		
-		\begin{frame}{Bowyer-Watson算法}
-		    \begin{itemize}
+\end{frame}
+	
+\begin{frame}{Delaunay三角剖分}
+    \begin{itemize}
+    \item 三角剖分定义:
+        \begin{itemize}
+        \item 在数学和计算几何学中，非结构化点集合{\bf P}的三角剖分就是点集的凸包的一个四面体（3D）的网格剖分，并且网格的顶点集合就是点集{\bf P}
+        \end{itemize}
+    \item 空外接圆（球）性质:
+        \begin{itemize}
+        \item 三角剖分的任意一个三角形（2D）的外接圆内部不包含其他的顶点
+        \end{itemize}
+    \end{itemize}
+    
+    \begin{figure}
+    \centering
+    \includegraphics[width=2in]{./ljshou_figures/triangulation.png}
+    \includegraphics[width=2in]{./ljshou_figures/empty_circum.png}
+    \caption{Delaunay三角剖分定义}
+    \end{figure}
+\end{frame}
+	
+\begin{frame}{Bowyer-Watson算法}
+    \begin{itemize}
     		    \item 增量的算法
     		    \item 利用{\bf空外接圆（球）}的性质
     		    \item 通过在一个初始的三角剖分中，不断地加入新的节点，这种增量迭代的方式，最终得到Delaunay三角剖分
-		    \end{itemize}
+    \end{itemize}
             以二维情况为例，Bowyer-Watson算法流程如下：
             \begin{block}{Bowyer-Watson Algorithm}
                 \begin{enumerate}
@@ -429,45 +444,45 @@
                     \item 去掉初始的超三角形的边。
                 \end{enumerate}
             \end{block}
-		\end{frame}
-		
-		\begin{frame}{新的切割算法正确性}
-		    Proof:
-		    \begin{itemize}
+\end{frame}
+
+\begin{frame}{新的切割算法正确性}
+    Proof:
+    \begin{itemize}
     		    \item 算法考虑的是两个凸多面体（六面体与四面体）的交，而凸多面体的交一定还是凸多面体
     		    \item 由凸多面体的性质可知，凸多面体的顶点的凸包与该凸多面体是完全等价的
     		    \item Delaunay三角剖分得到的是离散点集的凸包的三角划分
-		    \end{itemize}
-		    \begin{block}{}
-		    \color{red}\bf 以四面体与六面体交的顶点为输入，Delaunay三角剖分算法划分得到的网格正好就是四面体与六面体的交。
-	        \end{block}
-		\end{frame}
-		
-		\begin{frame}{切割算法性能测试}
-		新的切割算法相比 CGAL（计算几何算法库）{\color{red}提高了两个数量级（100倍）}，而几乎不损失精度。
-			\begin{figure}
-				\centering
-				\includegraphics[width=2.7in]{./ljshou_figures/tet_cube_test.eps}
-				\caption{切割算法性能测试}
-			\end{figure}
-		\end{frame}
-		
-		\begin{frame}
-			\frametitle{背景网格粘结： 弱形式积分策略(技术难点)}
-			\begin{itemize}
-				\item 剖分仅在材料边界处进行
-				\item 内部数学cell直接布高斯积分点
+    \end{itemize}
+    \begin{block}{}
+    \color{red}\bf 以四面体与六面体交的顶点为输入，Delaunay三角剖分算法划分得到的网格正好就是四面体与六面体的交。
+        \end{block}
+\end{frame}
+
+\begin{frame}{切割算法性能测试}
+新的切割算法相比 CGAL（计算几何算法库）{\color{red}提高了两个数量级（100倍）}，而几乎不损失精度。
+	\begin{figure}
+		\centering
+		\includegraphics[width=2.7in]{./ljshou_figures/tet_cube_test.eps}
+		\caption{切割算法性能测试}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{背景网格粘结： 弱形式积分策略(技术难点)}
+	\begin{itemize}
+		\item 剖分仅在材料边界处进行
+		\item 内部数学cell直接布高斯积分点
   				\item 极大地减少计算量
-			\end{itemize}
-			\begin{figure}
-					\centering
-			    	\includegraphics[width=3in]{./ljshou_figures/mesh_cut.eps}
-					\caption{“边界”数学网格与“内部”数学网格}
-			\end{figure}
-			\begin{block}{}
-				\bf \color{blue} 如何快速找到边界数学单元?
-			\end{block}
-		\end{frame}
+	\end{itemize}
+	\begin{figure}
+			\centering
+	    	\includegraphics[width=3in]{./ljshou_figures/mesh_cut.eps}
+			\caption{“边界”数学网格与“内部”数学网格}
+	\end{figure}
+	\begin{block}{}
+		\bf \color{blue} 如何快速找到边界数学单元?
+	\end{block}
+\end{frame}
         
         \begin{frame}{边界数学单元搜索}
             Key Observations:
@@ -477,12 +492,12 @@
                 \item "边界几何单元"可以在O(N)的时间内求出
                 \end{itemize}
         		\begin{figure}
-				\centering
-			   	\includegraphics[width=3.0in]{./ljshou_figures/pysedo_math_cell.eps}
-				%\caption{"伪"边界数学单元}
-			\end{figure}
-			\begin{block}{Algorithm}
-				\small
+		\centering
+	   	\includegraphics[width=3.0in]{./ljshou_figures/pysedo_math_cell.eps}
+		%\caption{"伪"边界数学单元}
+	\end{figure}
+	\begin{block}{Algorithm}
+		\small
                 \begin{enumerate}
                 \item 找出\emph{"边界几何单元"}(3D)
                 \item 找出与\emph{"边界几何单元"}相交的数学单元
@@ -491,22 +506,22 @@
             \end{block}
         \end{frame}
         
-				
-		\begin{frame}
-			\frametitle{大应变计算：变形信息映射}
-			\begin{itemize}
-				\item 变形信息(例如变形梯度 $F^n$)存储在高斯积分点上
-				\item 更新时，需要将变形信息从旧的高斯点映射到新的高斯点上
-				\item 张量插值问题（技术难点）
-			\end{itemize}
+		
+\begin{frame}
+	\frametitle{大应变计算：变形信息映射}
+	\begin{itemize}
+		\item 变形信息(例如变形梯度 $F^n$)存储在高斯积分点上
+		\item 更新时，需要将变形信息从旧的高斯点映射到新的高斯点上
+		\item 张量插值问题（技术难点）
+	\end{itemize}
         	\begin{figure}
         		\centering
         		\includegraphics[width=3.5in]{./ljshou_figures/projection.eps}
         		\caption{变形信息映射}
         	\end{figure}
-		\end{frame}	
-		
-	\begin{frame}
+\end{frame}	
+	
+\begin{frame}
     	\frametitle{大应变计算：变形信息映射}	
     	\begin{itemize}
     		\item 张量插值问题（技术难点）
@@ -541,52 +556,52 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%------------RESULT------------------------------------%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	
+%\section{算例}
 \begin{frame}
-	\frametitle{背景网格法-收敛性分析}
-	\begin{itemize}
-		\item 泊松方程求解：
-		%\begin{equation}
-			$-\Delta u = f, \quad in [-1, 1]^3$
-		%\end{equation}
-		\item 精确解是
-		%\begin{equation}
-			$u = (1-x^2)(1-y^2)(1-z^2)$
-		%\end{equation}
-	\end{itemize}
-		\begin{figure}
-		\centering
-		\includegraphics[width=3in]{./ljshou_figures/poisson_test.eps}
-		\caption{背景网格法收敛性测试}
-	\end{figure}
+\frametitle{背景网格法-收敛性分析}
+\begin{itemize}
+	\item 泊松方程求解：
+	%\begin{equation}
+		$-\Delta u = f, \quad in [-1, 1]^3$
+	%\end{equation}
+	\item 精确解是
+	%\begin{equation}
+		$u = (1-x^2)(1-y^2)(1-z^2)$
+	%\end{equation}
+\end{itemize}
+	\begin{figure}
+	\centering
+	\includegraphics[width=3in]{./ljshou_figures/poisson_test.eps}
+	\caption{背景网格法收敛性测试}
+\end{figure}
 \end{frame}
 
 \begin{frame}
-	\frametitle{背景网格法的数值积分方案与最优收敛}
+\frametitle{背景网格法的数值积分方案与最优收敛}
+\begin{itemize}
+	\item 在组合几何网格上的数值积分
 	\begin{itemize}
-		\item 在组合几何网格上的数值积分
-		\begin{itemize}
-			\item 直接积分（图中pGFEM\_1\_1和pGFEM\_1\_2）；
-			\item 数学网格切割（图中pGFEM\_cut）。
-		\end{itemize}
-		\item 目前的工作实践证明了\bf{数学网格切割法}是精确、实际可行的方法，确保了方法的理论严密性。
+		\item 直接积分（图中pGFEM\_1\_1和pGFEM\_1\_2）；
+		\item 数学网格切割（图中pGFEM\_cut）。
 	\end{itemize}
-	
-	\begin{figure}
-		\centering
-		\includegraphics[width=2.5in]{./ljshou_figures/math_test.eps}
-		\caption{背景网格法的数值积分方案测试}
-	\end{figure}
+	\item 目前的工作实践证明了\bf{数学网格切割法}是精确、实际可行的方法，确保了方法的理论严密性。
+\end{itemize}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=2.5in]{./ljshou_figures/math_test.eps}
+	\caption{背景网格法的数值积分方案测试}
+\end{figure}
 \end{frame}
 
 \begin{frame}
-	\frametitle{大变形问题中网格扭曲极端测试-负雅克比网格}
-	\begin{figure}
-		\centering
-		\includegraphics[width=4.0in]{./ljshou_figures/jacobian_test.eps}
-		\caption{大变形分析中典型的广义有限元网格构型(左).}
-		\caption{数学网格法，即使在几何网格在严重扭曲的情况下，仍然可以给出与最规则网格有限元相一致的结果(右). }
-	\end{figure}
+\frametitle{大变形问题中网格扭曲极端测试-负雅克比网格}
+\begin{figure}
+	\centering
+	\includegraphics[width=4.0in]{./ljshou_figures/jacobian_test.eps}
+	\caption{大变形分析中典型的广义有限元网格构型(左).}
+	\caption{数学网格法，即使在几何网格在严重扭曲的情况下，仍然可以给出与最规则网格有限元相一致的结果(右). }
+\end{figure}
 \end{frame}
 
 
@@ -594,7 +609,7 @@
 同样针对悬臂梁问题，几何网格由一个四面体网格组成。几何网格主要在于描述求解区域的几何形状和内、外材料边界。插值精度通过调整数学网格尺寸来实现。
 
 \begin{table}[h] 
-\small %此处写字体大小控制命令 
+\scriptsize %此处写字体大小控制命令 
     \begin{tabular}{ccc} 
     \toprule
     Math grid & Geometric grid & Multiple solution\\
@@ -623,11 +638,11 @@
         \item 可压缩Neo-Hooken材料，$\mu=80769.23kN/mm^2$, $\lambda =121153.86kN/mm^2$，泊松比0.3，$E=210000kN/mm^2$
         \item 平板的上下表面简支，下表面中心点固定，上表面施加x轴正方向的均布载荷
     \end{itemize}
-	\begin{figure}
-		\centering
-		\includegraphics[width=3.5in]{./ljshou_figures/strip.png}
-		\caption{小孔平板网格. (a)变形前；(b)变形后}
-	\end{figure}
+\begin{figure}
+	\centering
+	\includegraphics[width=3.5in]{./ljshou_figures/strip.png}
+	\caption{小孔平板网格. (a)变形前；(b)变形后}
+\end{figure}
 \end{frame}
 \begin{frame}{小孔平板剪切—大变形能力测试}
     \begin{itemize}
@@ -635,10 +650,10 @@
     \end{itemize}
 
 	\begin{figure}
-		\centering
-		\includegraphics[width=2.5in]{./ljshou_figures/strip.eps}
-		\caption{小孔平板问题算法精度对比}
-	\end{figure}
+	\centering
+	\includegraphics[width=2.5in]{./ljshou_figures/strip.eps}
+	\caption{小孔平板问题算法精度对比}
+\end{figure}
 \end{frame}
 
 
@@ -648,13 +663,13 @@
     \item 待解问题为一个协调网格悬臂梁。采用有限元法、全域无网格法、背景网格法计算梁的大变形（本例采用协调网格）
     \item 左端全部固定，自由端受均布力荷载。比较各加载步下梁自由端挠度
     \end{itemize}
-	\begin{figure}
-		\centering
-		\includegraphics[width=1.3in]{./ljshou_figures/conforming_canti.png}
-		%\caption{悬臂梁网格：(a)变形前；(b)变形后}
-		\includegraphics[width=2.3in]{./ljshou_figures/conforming_canti.eps}
-		\caption{悬臂梁精度对比图}
-	\end{figure}
+\begin{figure}
+	\centering
+	\includegraphics[width=1.3in]{./ljshou_figures/conforming_canti.png}
+	%\caption{悬臂梁网格：(a)变形前；(b)变形后}
+	\includegraphics[width=2.3in]{./ljshou_figures/conforming_canti.eps}
+	\caption{悬臂梁精度对比图}
+\end{figure}
 \end{frame}
 
 
@@ -664,12 +679,12 @@
     \item 待解问题为一个由三个子结构组成的变截面悬臂梁。采用背景网格法，局部无网格法和全域无网格法计算梁的大变形。
     \item 左端全部固定，自由端受均布力荷载。比较各加载步下梁自由端挠度
     \end{itemize}
-	\begin{figure}
-		\centering
-		\includegraphics[width=1.3in]{./ljshou_figures/assembly_canti2.png}
-		\includegraphics[width=2.3in]{./ljshou_figures/assembly_canti.eps}
-		\caption{三种组合网格算法精度的比较}
-	\end{figure}
+\begin{figure}
+	\centering
+	\includegraphics[width=1.3in]{./ljshou_figures/assembly_canti2.png}
+	\includegraphics[width=2.3in]{./ljshou_figures/assembly_canti.eps}
+	\caption{三种组合网格算法精度的比较}
+\end{figure}
 \end{frame}
 
 
@@ -681,41 +696,46 @@
     \includegraphics[width=1.2in]{./ljshou_figures/simulation_result.png}
     \caption{核反应堆自重下位移}
     \end{figure}
-	\begin{block}{}
-		\color{red}\bf 对于如此复杂的工程结构，生成连续协调的网格变得极其困难！而对于组合网格有限元，网格生成仅花费30分钟。
-	\end{block}
+\begin{block}{}
+	\color{red}\bf 对于如此复杂的工程结构，生成连续协调的网格变得极其困难！而对于组合网格有限元，网格生成仅花费30分钟。
+\end{block}
 \end{frame}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%------------------------ABSTRACT--------------------------%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\section{参考文献}
 \begin{frame}
-	\frametitle{参考文献}
-	\begin{enumerate}
-		\tiny
-		\item Tian R*, Wu ZD, Wang CW, Scalable FEA on non-conforming assembly mesh. Computer Methods in Applied Mechanics \& Engineering. 2013; 266: 98-111
-		\item Tian R*, Meshfree/GFEM in hardware-efficiency prospective. Interaction and multiscale mechanics. DOI:10.12989/imm. 2013.6.2.000, 2013 
-		\item Tian R*, Extra-dof-free and linearly independent enrichments in GFEM. Computer Methods in Applied Mechanics \& Engineering. 2013; 266: 1-22
-		\item Y. Sudhakar, Wolfgang A. Wall, Quadrature schemes for arbitrary convex/concave volumes and integration of weak form in enriched partition of unity methods. Comput. Methods Appl. Mech. Engrg. 258 (2013) 39–54
-		\item Tian R*, Simulation at Extreme-Scale: Co-Design Thinking and Practices. Archive of Computational Methods in Engineering, DOI 10.1007/s11831-014-9095-y, 2014
-		\item Rong Tian, Albert C. To, Wing Kam Liu. Conforming local meshfree method. International Journal for Numerical Methods in Engineering 2011; 86(3): 335-357.
-		\item Luis Quiroz, Pierre Beckers. Non-conforming mesh gluing in the finite elements method. International Journal for Numerical Methods in Engineering 1995; 38: 2165 – 2184.
-		\item Rong Tian, G. Yagawa. Non-matching mesh gluing by meshless interpolation – an alternative to Lagrange multipliers. International Journal for Numerical Methods in Engineering 2007; 71: 473-503.
-		\item Powell MJD. The theory of radial basis function approximation in 1990. In Advances in Numerical Analysis, Light FW (ed.), Oxford: Clarendon Press, 1992; 105–203.
-		\item J.G. Wang, G.R. Liu. A point interpolation meshless method based on radial basis functions. International Journal for Numerical Methods in Engineering 2002; 54: 1623 – 1648.
-		
-	\end{enumerate}
+\frametitle{参考文献}
+\begin{enumerate}
+	\tiny
+	\item Tian R*, Wu ZD, Wang CW, Scalable FEA on non-conforming assembly mesh. Computer Methods in Applied Mechanics \& Engineering. 2013; 266: 98-111
+	\item Tian R*, Meshfree/GFEM in hardware-efficiency prospective. Interaction and multiscale mechanics. DOI:10.12989/imm. 2013.6.2.000, 2013 
+	\item Tian R*, Extra-dof-free and linearly independent enrichments in GFEM. Computer Methods in Applied Mechanics \& Engineering. 2013; 266: 1-22
+	\item Y. Sudhakar, Wolfgang A. Wall, Quadrature schemes for arbitrary convex/concave volumes and integration of weak form in enriched partition of unity methods. Comput. Methods Appl. Mech. Engrg. 258 (2013) 39–54
+	\item Tian R*, Simulation at Extreme-Scale: Co-Design Thinking and Practices. Archive of Computational Methods in Engineering, DOI 10.1007/s11831-014-9095-y, 2014
+	\item Rong Tian, Albert C. To, Wing Kam Liu. Conforming local meshfree method. International Journal for Numerical Methods in Engineering 2011; 86(3): 335-357.
+	\item Luis Quiroz, Pierre Beckers. Non-conforming mesh gluing in the finite elements method. International Journal for Numerical Methods in Engineering 1995; 38: 2165 – 2184.
+	\item Rong Tian, G. Yagawa. Non-matching mesh gluing by meshless interpolation – an alternative to Lagrange multipliers. International Journal for Numerical Methods in Engineering 2007; 71: 473-503.
+	\item Powell MJD. The theory of radial basis function approximation in 1990. In Advances in Numerical Analysis, Light FW (ed.), Oxford: Clarendon Press, 1992; 105–203.
+	\item J.G. Wang, G.R. Liu. A point interpolation meshless method based on radial basis functions. International Journal for Numerical Methods in Engineering 2002; 54: 1623 – 1648.
+	
+\end{enumerate}
 \end{frame}
+
 
 %\section{Thanks}
 \begin{frame}	
-	%\Huge{\centerline{Thank You!}}
-	\begin{block}
-		\Huge{\centerline{Thank you}}
-		\centerline{shoulinjun@ncic.ac.cn}
-	\end{block}
+%\Huge{\centerline{Thank You!}}
+\begin{block}
+	\Huge{\centerline{Thank you}}
+	\centerline{shoulinjun@ncic.ac.cn}
+\end{block}
+\begin{figure}
+	\includegraphics[width=2.5in]{./ljshou_figures/UCAS3.png}
+\end{figure}
 \end{frame}
-		
+	
 \end{CJK}
 \end{document}
