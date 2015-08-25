@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 
 namespace Test 
 {
@@ -24,6 +25,14 @@ namespace Test
 				Console.Write(i + " ");
 			}
 			Console.Write('\n');
+
+			ArrayList al = new ArrayList();
+			al.Add("hello");
+			al.Add(1);
+
+			Console.Write(al[0] + " ");
+			Console.Write(al[1] + " ");
+			Console.WriteLine();
 			Console.ReadKey();
 		}
 	}
