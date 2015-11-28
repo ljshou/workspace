@@ -41,7 +41,12 @@ namespace Test
 	{
 		static void Main(string[] args)
 		{
-			Debug.Assert(1 == 2);
+			// Debug.Assert(1 == 2);
+			string a = "ass";
+			string b = "{a}, {b}, {c}";
+			b = b.Replace("},", "}##TAB##");
+			Console.Write(b);
+			Console.Write("ass" == "c");
 			Console.ReadKey();
 		}
 	}
