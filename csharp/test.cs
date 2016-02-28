@@ -43,6 +43,11 @@ namespace Test
 		{
 			//Debug.Assert(1 == 2);
 			Console.WriteLine("hello world");
+			string a = "ass";
+			string b = "{a}, {b}, {c}";
+			b = b.Replace("},", "}##TAB##");
+			Console.Write(b);
+			Console.Write("ass" == "c");
 			Console.ReadKey();
 		}
 	}

@@ -1,0 +1,180 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Medium Length Professional CV
+% LaTeX Template
+% Version 2.0 (8/5/13)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Trey Hunner (http://www.treyhunner.com/)
+%
+% Important note:
+% This template requires the resume.cls file to be in the same directory as the
+% .tex file. The resume.cls file provides the resume style used for structuring the
+% document.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass{resume} % Use the custom resume.cls style
+
+\usepackage[left=0.65in,top=0.5in,right=0.65in,bottom=0.5in]{geometry} % Document margins
+\usepackage{CJK}
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage[colorlinks=true,linkcolor=black,urlcolor=black,hyperindex,CJKbookmarks]{hyperref}
+
+\begin{CJK}{UTF8}{gkai}
+
+\name{寿林钧} % Your name
+\address{{Date: 1989-10-21} \hfill {Email: shoulinjun@126.com}}
+\address{{Blog: {\url{http://blog.csdn.net/shoulinjun}}} \hfill {Phone: (+86)131-4692-5206}}
+
+%----------------------------------------------------------------------------------------
+%	EDUCATION SECTION
+%----------------------------------------------------------------------------------------
+\begin{document} 
+\begin{rSection}{求职意向} 
+ 游戏研发工程师 R \& D (2015年7月毕业) 
+\end{rSection} 
+
+\begin{rSection}{教育背景} 
+\begin{itemize} 
+  \setlength{\itemsep}{0pt} %条目间距 
+  \setlength{\parsep}{0pt} %段落间距 
+  \setlength{\parskip}{0pt} %列表到上下文的垂直距离 
+\item {\bf 中国科学院计算技术研究所 高性能计算机研究中心} \hfill {2012.09 - 2015.07} \\ 
+工学硕士   计算机应用技术 (保送) \hfill 研究方向: 数值模拟算法研究 
+\vspace{1mm}
+\item {\bf 上海大学 理学院} \hfill {2008.09 - 2012.06} \\ 
+理学学士   理科基地班  \hfill 绩点: {\bf 3.80/4.0} 专业排名: {\bf 1/52}\\
+以{\bf专业第一名}，{\bf学院第二名}(共{\bf297}人)的成绩保送到中国科学院大学 {\hfill}成绩：{\bf 前 $1\%$}
+\end{itemize}
+\end{rSection}
+
+%----------------------------------------------------------------------------------------
+%	WORK EXPERIENCE SECTION
+%----------------------------------------------------------------------------------------
+
+\begin{rSection}{项目经历}
+
+\begin{rSubsection}{新型数值模拟算法研究及 pGFEM 软件的实现}{2013.07 - 2014.05}{\bf 核心开发人员}{\bf 中科院计算所}
+
+\item {简介:}
+\setlength{\itemsep}{0pt} %条目间距
+\setlength{\parsep}{0pt} %段落间距
+\setlength{\parskip}{0pt} %列表到上下文的垂直距离
+\begin{itemize}
+\setlength{\itemsep}{0pt} %条目间距
+\setlength{\parsep}{0pt} %段落间距
+\setlength{\parskip}{0pt} %列表到上下文的垂直距离
+  \item 提出了一种新型有限元数值算法，可有效用于桥梁受载、高速运动高铁车厢受力、导弹打靶等问题的模拟，以及电影特效制作中的场景动态仿真。
+  \item 该算法通过将实际物体离散化为网格或者质点，用网格或质点的速度、压强、密度等变量(位置和时间的函数)模拟实际的运动。根据能量泛函最小化得到关于节点位置与时间的非线性方程组，进而用牛顿-拉夫森迭代方法求解。
+\end{itemize}
+
+\item 职责：
+\setlength{\itemsep}{0pt} %条目间距
+\setlength{\parsep}{0pt} %段落间距
+\setlength{\parskip}{0pt} %列表到上下文的垂直距离
+\begin{itemize}
+\setlength{\itemsep}{0pt} %条目间距
+\setlength{\parsep}{0pt} %段落间距
+\setlength{\parskip}{0pt} %列表到上下文的垂直距离
+    \item 独立完成整个算法的实现与测试;
+    \item 负责整个软件的整体框架设计;
+    \item 负责代码计算模块的性能优化；
+    \item 设计面向对象的数据结构，提高代码重用性，便于用户进行二次开发，不必考虑算法细节。
+\end{itemize}
+\item 成果: 
+\begin{itemize}
+\setlength{\itemsep}{0pt} %条目间距
+\setlength{\parsep}{0pt} %段落间距
+\setlength{\parskip}{0pt} %列表到上下文的垂直距离
+\item 本算法的实验数值精度相较于主流方法提高了{\bf 10\%}以上;
+\item 本算法克服了传统算法在超大变形问题模拟中的网格重构问题，大大减少了计算量;
+\item 完成 pGFEM 软件代码的编写，并已经与某电影制作公司合作进行场景动态仿真。
+\end{itemize}
+
+\item 关键词: \\
+  C++ \quad 数值计算 \quad 代码优化 \quad 面向对象
+
+\end{rSubsection}
+
+%------------------------------------------------
+
+\begin{rSubsection}{C++经典开源代码学习}{2013.09 - 2014.04}{}{}
+\item C++ STL标准程序库
+\setlength{\itemsep}{0pt} %条目间距
+\setlength{\parsep}{0pt} %段落间距
+\setlength{\parskip}{0pt} %列表到上下文的垂直距离
+
+\begin{itemize}
+\setlength{\itemsep}{0pt} %条目间距
+\setlength{\parsep}{0pt} %段落间距
+\setlength{\parskip}{0pt} %列表到上下文的垂直距离
+  \item 熟悉内存配置器、容器与算法三部分，并自行实现了vector、list、deque、string等容器与算法;
+  \item 熟悉 Copy On Write、智能指针、引用计数、Traits、垃圾回收等技术，并将其用到项目之中;
+\end{itemize}
+
+\item LevelDB 数据库
+\begin{itemize}
+\setlength{\itemsep}{0pt} %条目间距
+\setlength{\parsep}{0pt} %段落间距
+\setlength{\parskip}{0pt} %列表到上下文的垂直距离
+  \item 重点研读 Memtable、内存分配器等部分;
+  \item 对 NoSQL数据库的设计与实现有一定的了解。
+\end{itemize}
+\item 关键词:\\ 
+  STL源码 \quad Traits  \quad 智能指针 \quad {Copy On Write}  \quad NoSQL 
+
+\end{rSubsection}
+
+\end{rSection}
+
+%----------------------------------------------------------------------------------------
+%	REWARDS SECTION
+%----------------------------------------------------------------------------------------
+
+\begin{rSection}{所获奖励}
+
+\begin{tabular}{ @{} >{}l @{\hspace{2ex}} lll }
+  2008/09/10 & {\bf特等奖学金}三次({\bf 前 1\%}) & 2009/10 & 优秀学生两次  \\ 
+  2010 & {\bf国家奖学金}（{\bf 前 1\%}）& 2012  & 上海市优秀毕业生({\bf 前 1\%}) \\
+  2012 & 中国科学院大学三好学生 (前 5\%)     \\
+\end{tabular}
+
+\end{rSection}
+
+%----------------------------------------------------------------------------------------
+%	TECHNICAL STRENGTHS SECTION
+%----------------------------------------------------------------------------------------
+
+\begin{rSection}{个人技能}
+
+\begin{tabular}{ @{} >{}l @{\hspace{5ex}} l }
+  算法能力 & 良好的算法和数据结构基础 \\
+  编程能力 & 熟悉 linux 下 C/C++ 编程，了解面向对象基本思想\\
+  英语水平 & 雅思 {\bf 7.0}，六级 {\bf 617} 分\\
+  综合能力 & 极强的学习能力，喜欢钻研问题
+\end{tabular}
+
+\end{rSection}
+
+%----------------------------------------------------------------------------------------
+%	EXAMPLE SECTION
+%----------------------------------------------------------------------------------------
+
+%\begin{rSection}{Section Name}
+
+%Section content\ldots
+
+%\end{rSection}
+
+%----------------------------------------------------------------------------------------
+
+\end{CJK}
+\end{document}
