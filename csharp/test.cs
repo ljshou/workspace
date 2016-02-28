@@ -41,7 +41,8 @@ namespace Test
 	{
 		static void Main(string[] args)
 		{
-			Debug.Assert(1 == 2);
+			//Debug.Assert(1 == 2);
+			Console.WriteLine("hello world");
 			Console.ReadKey();
 		}
 	}
